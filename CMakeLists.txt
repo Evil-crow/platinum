@@ -10,22 +10,23 @@ set(CMAKE_CXX_STANDARD 11)
 # add include directory
 include_directories(include)
 
-# add source directory
-aux_source_directory(src/thread_pool SOURCE_THREADPOOL)
-aux_source_directory(src/socket SOURCE_SOCKET)
-
 # set files
 set(
         INCLUDE_FILES
-        include/threadpool/blocked_queue.hpp
-        include/threadpool/thread_pool.h
-        include/socket/socket.h
+        include/blocked_queue.hpp
+        include/thread_pool.h
+        include/socket.h
+        include/epoll.h
+        include/http_response.h
 )
 set(
         SOURCE_FILES
         src/main.cc
-        ${SOURCE_THREADPOOL}
-        ${SOURCE_SOCKET}
+        src/socket.cc
+        src/epoll.cc
+        src/thread_pool.cc
+        src/http_response.cc
+        src/http_affair.cc
 )
 set(
         EXECUTABLE_FILES
@@ -36,7 +37,6 @@ set(
 # add executable files
 add_executable(PlatinumServer ${EXECUTABLE_FILES})
 
-# add dynamic link libarary
-link_directories(/usr/lib64)
-target_link_libraries(PlatinumServer curl)
-target_link_libraries(PlatinumServer pthread)
+# add link libarary
+link_libraries(pthread)      # Dynamic library
+link_libraries(httpxx)       # Static  library
