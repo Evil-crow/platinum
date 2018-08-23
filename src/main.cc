@@ -1,32 +1,31 @@
 #include <iostream>
 #include <thread>
-#include <iostream>
 #include <unistd.h>
-#include "threadpool/thread_pool.h"
+#include "thread_pool.h"
 
-void foo(void)
+void foo()
 {
     std::cout << "this is foo" << std::endl;
 }
 
-void too(void)
+void too()
 {
     std::cout << "this is too" << std::endl;
 }
 
-void func(void)
+void func()
 {
     std::cout << "this is func" << std::endl;
 }
 
-void fuck(void)
+void fuck()
 {
     std::cout << "this is fuck" << std::endl;
 }
 
 int main(int argc, char *argv[])
 {
-    thread_pool pool(1);
+    PlatinumServer::thread_pool pool(2);
 
     auto i = [](){ return foo(); };
     auto j = [](){ return too(); };
@@ -37,8 +36,7 @@ int main(int argc, char *argv[])
     pool.submit_task({j});
     pool.submit_task({k});
     pool.submit_task({l});
+    usleep(100);
 
-    sleep(1);
-    pool.release();
     return 0;
 }
