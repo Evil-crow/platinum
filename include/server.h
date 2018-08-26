@@ -11,9 +11,10 @@
 
 #include <arpa/inet.h>
 #include "epoll.h"
+#include "socket.h"
 
 void epoll_server(in_port_t port);
 
-void epoll_deal(int listen_fd, PlatinumServer::epoll &epollobj, struct epoll_event *evlist);
+void epoll_deal(PlatinumServer::socket &listen_socket, PlatinumServer::epoll &epollobj, struct epoll_event *evlist);
 
 #endif //PLATINUMSERVER_SERVER_H
