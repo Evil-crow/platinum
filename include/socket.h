@@ -15,33 +15,34 @@
 
 #include <sys/socket.h>
 #include <sys/types.h>
+#include <arpa/inet.h>
 
 namespace PlatinumServer {
-  class socket {
-  public:
-      explicit socket(int _domain = AF_INET, int _type = SOCK_STREAM, in_port_t _port = 80);
-      explicit socket(int sock_fd);
-      socket(const socket &) = delete;
-      socket &operator=(const socket &) = delete;
-      ~socket();
-      void close();
-      void connect();
-      inline int get_fd()
-      {
-          return this->sock_fd;
-      }
-      int accept(struct sockaddr_in client);
-  private:
-      int sock_fd;
-      int sock_domain;
-      int sock_type;
-      in_port_t sock_port;
-      struct sockaddr_in sock_sockaddr;
+class socket {
+public:
+    socket() = default;
+    explicit socket(in_port_t _port);
+    explicit socket(int sock_fd);
+    socket(const socket &) = default;
+    socket &operator=(const socket &) = delete;
+    ~socket();
+    void close();
+    void connect();
+    static void set_non_blocking(int sock_fd);
+    int accept();
+    inline int get_fd() const
+    {
+        return this->sock_fd;
+    }
 
-      bool _bind();
-      bool _listen();
-      constexpr int backlog() { return 1024; }
-  };
+private:
+    int sock_fd;
+    struct sockaddr_in sock_sockaddr;
+
+    bool bind();
+    bool listen();
+    constexpr int backlog(){ return 1024; }
+};
 }
 
 #endif //PLATINUMSERVER_SOCKET_H
