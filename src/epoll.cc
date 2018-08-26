@@ -4,6 +4,7 @@
  */
 
 #include <stdexcept>
+#include <iostream>
 #include "epoll.h"
 
 #define ERR_HANDLE(msg) \
@@ -17,30 +18,30 @@ PlatinumServer::epoll::epoll() noexcept
         ERR_HANDLE("epoll_create");
 }
 
-void PlatinumServer::epoll::set(struct epoll_event &event, std::initializer_list<unsigned int> &ev)
+void PlatinumServer::epoll::set(struct epoll_event &event, const std::initializer_list<uint32_t> &ev)
 {
-    for (unsigned int iter : ev)
-        event.events |= iter;
+    for (unsigned int i : ev)
+        event.events |= i;
 }
 
-bool PlatinumServer::epoll::add(int fd, std::initializer_list<unsigned int> events)
+bool PlatinumServer::epoll::add(int fd, std::initializer_list<uint32_t> events)
 {
-    struct epoll_event event{ };
+    struct epoll_event event{};
 
-    set(event, events);
     event.data.fd = fd;
+    set(event, events);
     if (::epoll_ctl(this->epoll_fd, EPOLL_CTL_ADD, fd, &event) == -1)
         ERR_HANDLE("epoll_ctl");
 
     return true;
 }
 
-bool PlatinumServer::epoll::modify(int fd, std::initializer_list<unsigned int> events)
+bool PlatinumServer::epoll::modify(int fd, std::initializer_list<uint32_t> events)
 {
-    struct epoll_event event{ };
+    struct epoll_event event{};
 
-    set(event, events);
     event.data.fd = fd;
+    set(event, events);
     if (::epoll_ctl(this->epoll_fd, EPOLL_CTL_MOD, fd, &event) == -1)
         ERR_HANDLE("epoll_ctl");
 
@@ -57,20 +58,13 @@ bool PlatinumServer::epoll::del(int fd)
 
 bool PlatinumServer::epoll::wait(struct epoll_event *events, int max_events, int timeout)
 {
-    int ret_val;
-
-    if ((ret_val = epoll_wait(this->epoll_fd, events, max_events, timeout)) <= 0) {
-        switch (ret_val) {
-            case 0: ERR_HANDLE("epoll_wait");
-                break;
-            case -1: ERR_HANDLE("epoll_wait");
-                break;
-            default:break;
-        }
-    }
+    int ret_val = epoll_wait(this->epoll_fd, events, max_events, timeout);
 
     this->io_count = ret_val;            // get the io_cout;
     return true;
 }
 
-
+int PlatinumServer::epoll::get_io_count()
+{
+        return this->io_count;
+}
