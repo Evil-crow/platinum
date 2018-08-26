@@ -1,14 +1,14 @@
 /*
  * Created by Crow on 8/23/18.
  * Description: I have used httpxx to parse the HTTP Request
- *           But I must build a response by myself,
+ *           But I must build a response by myself
  *           So, I should inherit a class from http::MessageBuilder to build my class
  * API:
- *          (non)               http_response::http_response();      // Constructor
- *          const std::string         &http_response::get_response();      // return the http-response
- *          bool                http_response::build();             // Build the response string
- *          bool                http_response::set_header();        // set the header;
- *          bool                http_response::set_body();          // set the body
+ *          (non)                http_response::http_response();      // Constructor
+ *          const std::string   &http_response::get_response();      // return the http-response
+ *          bool                 http_response::build();             // Build the response string
+ *          bool                 http_response::set_header();        // set the header;
+ *          bool                 http_response::set_body();          // set the body
  *          const std::string   &get_body();                        // get the body
  */
 
@@ -20,19 +20,19 @@
 #include <string>
 
 namespace PlatinumServer {
-  class http_response : public http::ResponseBuilder {
-  public:
-      http_response() = default;
-      ~http_response() = default;
-      const std::string &get_response();
-      bool build();                                                         // build the response base on the Message class
-      bool set_header(std::string &key, std::string &val);                  // the important function to set headers
-      bool set_body(std::string &body);                                     // set the body;
-      const std::string &get_body();                                       // get the body;
-  private:
-      std::string myResponseBody;
-      std::string server_response;
-  };
+class http_response : public http::ResponseBuilder {
+public:
+    http_response() = default;
+    ~http_response() = default;
+    const std::string &get_response();
+    bool build();                                                         // build the response base on the Message class
+    bool set_header(std::string &&key, std::string &&val);                  // the important function to set headers
+    bool set_body(std::string &&body);                                     // set the body;
+    const std::string &get_body();                                       // get the body;
+private:
+    std::string myResponseBody;
+    std::string server_response;
+};
 }
 
 #endif //PLATINUMSERVER_HTTP_RESPONSE_H
