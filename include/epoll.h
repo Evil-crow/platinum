@@ -18,25 +18,22 @@
 #include <initializer_list>
 
 namespace PlatinumServer {
-  class epoll {
-  public:
-      epoll() noexcept;
-      epoll(const epoll &) = delete;
-      epoll &operator=(const epoll &) = delete;
-      bool add(int fd, std::initializer_list<unsigned int> events);
-      bool modify(int fd, std::initializer_list<unsigned int> events);
-      bool del(int fd);
-      bool wait(struct epoll_event *events, int max_events, int timeout);
+class epoll {
+public:
+    epoll() noexcept;
+    epoll(const epoll &) = default;
+    epoll &operator=(const epoll &) = delete;
+    int get_io_count();
+    bool add(int fd, std::initializer_list<uint32_t> events);
+    bool modify(int fd, std::initializer_list<uint32_t> events);
+    bool del(int fd);
+    bool wait(struct epoll_event *events, int max_events, int timeout);
+private:
+    int epoll_fd;
+    int io_count;
 
-      enum EVENT {
-        IN = EPOLLIN, ET = EPOLLET, OUT = EPOLLOUT, RDHUP = EPOLLRDHUP, ONESHOT = EPOLLONESHOT,
-      };
-  private:
-      int epoll_fd;
-      int io_count;
-
-      void set(struct epoll_event &, std::initializer_list<unsigned int> &);
-  };
+    void set(struct epoll_event &, const std::initializer_list<uint32_t> &);
+};
 }
 
 #endif //PLATINUMSERVER_EPOLL_H
