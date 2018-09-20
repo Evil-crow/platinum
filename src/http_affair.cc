@@ -9,15 +9,18 @@
 #include <string>
 #include <exception>
 #include <cstring>
+#include <cstddef>
 #include <sys/socket.h>
 #include <httpxx/Request.hpp>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/mman.h>
 #include <unistd.h>
 #include <dirent.h>
 #include <fcntl.h>
 #include "http_affair.h"
 #include "http_response.h"
+
 
 bool is_static(http::Request &request)
 {
@@ -66,14 +69,14 @@ bool get_request(http::Request &request, PlatinumServer::socket &conn_sock)
     return true;
 }
 
-long int find_file(http::Request &request)
+long int find_file(const std::string &request_url)
 {
     DIR *dp = nullptr;
     struct dirent *p = nullptr;
     bool flag = false;
 
     std::string url(".");
-    url += request.url();
+    url += request_url;
 
     const std::string filename = get_filename(url);
 
@@ -83,30 +86,34 @@ long int find_file(http::Request &request)
         std::cout << get_dir(url) << std::endl;
         if (dp == nullptr)
             throw std::runtime_error("opendir() error");
-    } catch (std::runtime_error re) {
+    } catch (std::runtime_error &re) {
         std::cout << "Runtime Error: " << re.what() << std::endl;
-        ::closedir(dp);
         std::abort();
     }
 
     while ((p = readdir(dp)) != nullptr) {
-        if (std::strcmp(p->d_name, filename.c_str()) == 0)
+        std::cout << filename << " -> " << p->d_name << std::endl;
+        if (std::strcmp(p->d_name, filename.c_str()) == 0) {
             flag = true;
+            std::cout << "find it!" << std::endl;
+            break;
+        }
     }
     ::closedir(dp);
     if (!flag)
         return -1;
 
-    struct stat *stat_buf{};
+    struct stat stat_buf{};
     long int file_size;
     try {
-        int ret = ::lstat(url.c_str(), stat_buf);
+        std::cout << url.c_str() << std::endl;
+        int ret = ::lstat(url.c_str(), &stat_buf);
         if (ret == -1) {
             std::cout << "error code: " << errno << std::endl;
             throw std::runtime_error("lstat error");
         }
-        file_size = stat_buf->st_size;
-    } catch(std::runtime_error re) {
+        file_size = stat_buf.st_size;
+    } catch(std::runtime_error &re) {
         std::cout << "Runtime Error: " << re.what() << std::endl;
         std::abort();
     }
@@ -132,27 +139,32 @@ bool build_response(PlatinumServer::http_response &response, http::Request &requ
     response.set_header("Server", "PlatinumServer/1.0");
 
     long int file_size = 0;
-    if ((file_size = find_file(request)) == -1) {
+    if ((file_size = find_file(request.url())) == -1) {
         response.set_status(404);
         url = "./404.html";
+        file_size = find_file("/404.html");
     }
     std::cout << "file_size: " << file_size << std::endl;
+    std::cout << "Url: " << url << std::endl;
     response.set_status(200);
     response.set_header("Content-Length", std::to_string(file_size));
 
     std::string response_body;
     long int sum = 0;
-    char buffer[250];
+    char buffer[251];
     int fd = ::open(url.c_str(), O_RDWR, 0777);
     while (sum != file_size) {
+        ::memset(buffer, 0, sizeof(buffer));
+        std::cout << sum << " -> " << file_size << std::endl;
         try {
             auto temp = ::read(fd, buffer, 250);
+            std::cout << "buffer_size: " << temp << std::endl << buffer << std::endl;
             if (temp == -1) {
-                throw std::runtime_error("read error");
+                throw std::runtime_error("READ ERROR");
             }
             sum += temp;
             response_body += buffer;
-        } catch (std::runtime_error re) {
+        } catch (std::runtime_error &re) {
             std::cout << "Runtime Error: " << re.what() << std::endl;
             std::abort();
         }
@@ -186,7 +198,7 @@ void deal_http_affair(PlatinumServer::socket &conn_socket, PlatinumServer::epoll
 
     // 2. judge the static/dynamic request
     if (!is_static(request)) {
-        std::cout << "Now, We can support the dynamic request" << std::endl;
+        std::cout << "Now, We can't support the dynamic request" << std::endl;
         return ;
     }
 
@@ -194,6 +206,10 @@ void deal_http_affair(PlatinumServer::socket &conn_socket, PlatinumServer::epoll
     // 4. build the response
     ::build_response(response, request);
     response.build();
+
+    std::string _res = response.get_response();
+    std::cout << _res << std::endl;
+    // std::abort();
 
     // 5. send the response
     std::string res = response.get_response();
