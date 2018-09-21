@@ -30,13 +30,15 @@ const std::string get_filename(std::string &url);
 
 bool get_request(http::Request &request, PlatinumServer::socket &conn_sock);
 
-long int find_file(http::Request &request);
+long int find_file(const std::string &request_url);
 
 bool is_alive(http::Request &request);
 
 bool build_response(PlatinumServer::http_response &response, http::Request &request);
 
-
+bool send_response(http::Request &request,
+        PlatinumServer::http_response &response,
+        PlatinumServer::socket &conn_socket, bool isExist);
 
 void deal_http_affair(PlatinumServer::socket &conn_socket, PlatinumServer::epoll &epollobj);
 #endif //PLATINUMSERVER_HTTP_AFFAIR_H
