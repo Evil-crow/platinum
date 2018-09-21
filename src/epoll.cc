@@ -7,15 +7,18 @@
 #include <iostream>
 #include "epoll.h"
 
-#define ERR_HANDLE(msg) \
-           do { perror(msg); exit(EXIT_FAILURE); } while (0)
+inline void err_handle(const std::string &msg)
+{
+    perror(msg.c_str());
+    exit(EXIT_FAILURE);
+}
 
 PlatinumServer::epoll::epoll() noexcept
 {
     io_count = 0;
     epoll_fd = ::epoll_create(10);
     if (epoll_fd == -1)
-        ERR_HANDLE("epoll_create");
+        err_handle("epoll_create");
 }
 
 void PlatinumServer::epoll::set(struct epoll_event &event, const std::initializer_list<uint32_t> &ev)
@@ -31,7 +34,7 @@ bool PlatinumServer::epoll::add(int fd, std::initializer_list<uint32_t> events)
     event.data.fd = fd;
     set(event, events);
     if (::epoll_ctl(this->epoll_fd, EPOLL_CTL_ADD, fd, &event) == -1)
-        ERR_HANDLE("epoll_ctl");
+        err_handle("epoll_ctl");
 
     return true;
 }
@@ -43,7 +46,7 @@ bool PlatinumServer::epoll::modify(int fd, std::initializer_list<uint32_t> event
     event.data.fd = fd;
     set(event, events);
     if (::epoll_ctl(this->epoll_fd, EPOLL_CTL_MOD, fd, &event) == -1)
-        ERR_HANDLE("epoll_ctl");
+        err_handle("epoll_ctl");
 
     return true;
 }
@@ -51,7 +54,7 @@ bool PlatinumServer::epoll::modify(int fd, std::initializer_list<uint32_t> event
 bool PlatinumServer::epoll::del(int fd)
 {
     if (::epoll_ctl(this->epoll_fd, EPOLL_CTL_DEL, fd, nullptr) == -1)
-        ERR_HANDLE("epoll_ctl");
+        err_handle("epoll_ctl");
 
     return true;
 }
@@ -66,5 +69,5 @@ bool PlatinumServer::epoll::wait(struct epoll_event *events, int max_events, int
 
 int PlatinumServer::epoll::get_io_count()
 {
-        return this->io_count;
+    return this->io_count;
 }
