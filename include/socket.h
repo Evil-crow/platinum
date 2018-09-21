@@ -28,7 +28,6 @@ public:
     ~socket();
     void close();
     void connect();
-    static void set_non_blocking(int sock_fd);
     int accept();
     inline int get_fd() const
     {
