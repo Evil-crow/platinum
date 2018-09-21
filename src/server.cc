@@ -10,8 +10,11 @@
 #include "http_affair.h"
 #include "server.h"
 
-#define ERR_HANDLE(msg) \
-           do { perror(msg); exit(EXIT_FAILURE); } while (0)
+inline void err_handle(const std::string &msg)
+{
+    perror(msg.c_str());
+    exit(EXIT_FAILURE);
+}
 
 const int MAX_EPOLL_LIST = 1000;
 PlatinumServer::thread_pool pool(8);
@@ -28,7 +31,7 @@ void epoll_server(in_port_t port)
         epoll.wait(evlist, MAX_EPOLL_LIST, -1);
         switch (epoll.get_io_count()) {
             case -1:                                                                          // epoll_wait() error
-                ERR_HANDLE("epoll_wait");
+                err_handle("epoll_wait");
                 break;
             default:                                                                          // IO event
                 epoll_deal(listen_socket, epoll, evlist);                                     // deal with the epoll I/O event

@@ -7,7 +7,6 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <unistd.h>
-#include <fcntl.h>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
@@ -15,14 +14,17 @@
 #include <iostream>
 #include "socket.h"
 
-#define ERR_HANDLE(msg) \
-           do { perror(msg); exit(EXIT_FAILURE); } while (0)
+inline void err_handle(const std::string &msg)
+{
+    perror(msg.c_str());
+    exit(EXIT_FAILURE);
+}
 
 PlatinumServer::socket::socket(in_port_t _port)
 {
     sock_fd = ::socket(AF_INET, SOCK_STREAM, 0);
     if (sock_fd == -1)
-        ERR_HANDLE("socket");
+        err_handle("socket");
 
     bzero(&sock_sockaddr, sizeof(struct sockaddr_in));
     sock_sockaddr.sin_family = AF_INET;
@@ -65,9 +67,9 @@ void PlatinumServer::socket::connect()
     int buf = 1;
     setsockopt(sock_fd, SOL_SOCKET, SO_REUSEADDR, &buf, sizeof(int));
     if (!bind())
-        ERR_HANDLE("bind");
+        err_handle("bind");
     if (!listen())
-        ERR_HANDLE("listen");
+        err_handle("listen");
 }
 
 int PlatinumServer::socket::accept()
@@ -76,18 +78,3 @@ int PlatinumServer::socket::accept()
 
     return ret;                    // get the conn_fd by socket class
 }
-
-void PlatinumServer::socket::set_non_blocking(int sock_fd)
-{
-    int flags = ::fcntl(sock_fd, F_GETFL);
-
-    if ((flags & O_NONBLOCK) == 0) {
-        flags |= O_NONBLOCK;
-        ::fcntl(sock_fd, F_SETFL, flags);
-    }
-}
-
-
-
-
-
