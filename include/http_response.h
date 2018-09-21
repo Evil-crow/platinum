@@ -8,8 +8,6 @@
  *          const std::string   &http_response::get_response();      // return the http-response
  *          bool                 http_response::build();             // Build the response string
  *          bool                 http_response::set_header();        // set the header;
- *          bool                 http_response::set_body();          // set the body
- *          const std::string   &get_body();                        // get the body
  */
 
 #ifndef PLATINUMSERVER_HTTP_RESPONSE_H
@@ -27,10 +25,7 @@ public:
     const std::string &get_response();
     bool build();                                                         // build the response base on the Message class
     bool set_header(std::string &&key, std::string &&val);                  // the important function to set headers
-    bool set_body(std::string &&body);                                     // set the body;
-    const std::string &get_body();                                       // get the body;
 private:
-    std::string myResponseBody;
     std::string server_response;
 };
 }
