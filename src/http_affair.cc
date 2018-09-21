@@ -9,15 +9,14 @@
 #include <string>
 #include <exception>
 #include <cstring>
-#include <cstddef>
 #include <sys/socket.h>
-#include <httpxx/Request.hpp>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <sys/mman.h>
+#include <sys/sendfile.h>
 #include <unistd.h>
 #include <dirent.h>
 #include <fcntl.h>
+#include <httpxx/Request.hpp>
 #include "http_affair.h"
 #include "http_response.h"
 
@@ -92,10 +91,8 @@ long int find_file(const std::string &request_url)
     }
 
     while ((p = readdir(dp)) != nullptr) {
-        std::cout << filename << " -> " << p->d_name << std::endl;
         if (std::strcmp(p->d_name, filename.c_str()) == 0) {
             flag = true;
-            std::cout << "find it!" << std::endl;
             break;
         }
     }
@@ -108,10 +105,8 @@ long int find_file(const std::string &request_url)
     try {
         std::cout << url.c_str() << std::endl;
         int ret = ::lstat(url.c_str(), &stat_buf);
-        if (ret == -1) {
-            std::cout << "error code: " << errno << std::endl;
+        if (ret == -1)
             throw std::runtime_error("lstat error");
-        }
         file_size = stat_buf.st_size;
     } catch(std::runtime_error &re) {
         std::cout << "Runtime Error: " << re.what() << std::endl;
@@ -131,51 +126,47 @@ bool is_alive(http::Request &request)
 
 bool build_response(PlatinumServer::http_response &response, http::Request &request)
 {
-    std::string url(".");
-    url += request.url();
-
+    // General headers
     response.set_major_version(1);
     response.set_minor_version(1);
     response.set_header("Server", "PlatinumServer/1.0");
-
-    long int file_size = 0;
-    if ((file_size = find_file(request.url())) == -1) {
-        response.set_status(404);
-        url = "./404.html";
-        file_size = find_file("/404.html");
-    }
-    std::cout << "file_size: " << file_size << std::endl;
-    std::cout << "Url: " << url << std::endl;
-    response.set_status(200);
-    response.set_header("Content-Length", std::to_string(file_size));
-
-    std::string response_body;
-    long int sum = 0;
-    char buffer[251];
-    int fd = ::open(url.c_str(), O_RDWR, 0777);
-    while (sum != file_size) {
-        ::memset(buffer, 0, sizeof(buffer));
-        std::cout << sum << " -> " << file_size << std::endl;
-        try {
-            auto temp = ::read(fd, buffer, 250);
-            std::cout << "buffer_size: " << temp << std::endl << buffer << std::endl;
-            if (temp == -1) {
-                throw std::runtime_error("READ ERROR");
-            }
-            sum += temp;
-            response_body += buffer;
-        } catch (std::runtime_error &re) {
-            std::cout << "Runtime Error: " << re.what() << std::endl;
-            std::abort();
-        }
-    }
-    response.set_body(std::move(response_body));
-
     if (!is_alive(request))
         response.set_header("Connection", "close");
     response.set_header("Connection", "Keep-Alive");
 
+    long int file_size = 0;
+    if ((file_size = find_file(request.url())) == -1) {
+        file_size = find_file("/404.html");
+        response.set_status(404);
+        response.set_header("Content-Length", std::to_string(file_size));
+        return false;
+    }
+    response.set_status(200);
+    response.set_header("Content-Length", std::to_string(file_size));
+
     return true;
+}
+
+bool send_response(http::Request &request,
+        PlatinumServer::http_response &response,
+        PlatinumServer::socket &conn_socket, bool isExist)
+{
+    std::string file_name(".");
+    file_name += request.url();
+    std::string res = response.get_response();
+    auto headers_map = response.headers();
+    auto file_size = ::atol(headers_map["Content-Length"].c_str());
+
+    // Deal with 404.html
+    if (!isExist) {
+        std::cout << "404!" << std::endl;
+        file_name = "./404.html";
+    }
+
+    // Send the response and body(request file)
+    auto fd = ::open(file_name.c_str(), O_RDWR, 0777);
+    ::send(conn_socket.get_fd(), res.c_str(), res.size(), 0);
+    ::sendfile64(conn_socket.get_fd(), fd, nullptr, static_cast<size_t>(file_size));
 }
 
 void deal_http_affair(PlatinumServer::socket &conn_socket, PlatinumServer::epoll &epollobj)
@@ -204,7 +195,7 @@ void deal_http_affair(PlatinumServer::socket &conn_socket, PlatinumServer::epoll
 
     // 3. find the file for request (in ::build_response())
     // 4. build the response
-    ::build_response(response, request);
+    auto isExist = ::build_response(response, request);
     response.build();
 
     std::string _res = response.get_response();
@@ -212,15 +203,16 @@ void deal_http_affair(PlatinumServer::socket &conn_socket, PlatinumServer::epoll
     // std::abort();
 
     // 5. send the response
-    std::string res = response.get_response();
-    ::send(conn_socket.get_fd(), res.c_str(), res.size(), 0);
-    std::cout << "get out!" << std::endl;
+    ::send_response(request, response, conn_socket, isExist);
 
+    // 6. HTTP/1.1 Keep-Alive
     if (request.header("Connection") == "close") {
         epollobj.del(conn_socket.get_fd());
         ::close(conn_socket.get_fd());
     }
 
-    // Register the EPOLL event
+    // Register the EPOLL event again
     epollobj.modify(conn_socket.get_fd(), { EPOLLIN, EPOLLONESHOT });
 }
+
+
