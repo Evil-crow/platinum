@@ -64,8 +64,10 @@ bool PlatinumServer::socket::listen()
 
 void PlatinumServer::socket::connect()
 {
+
     int buf = 1;
-    setsockopt(sock_fd, SOL_SOCKET, SO_REUSEADDR, &buf, sizeof(int));
+    setsockopt(this->sock_fd, SOL_SOCKET, SO_REUSEPORT, &buf, sizeof(int));
+
     if (!bind())
         err_handle("bind");
     if (!listen())
