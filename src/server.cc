@@ -10,6 +10,8 @@
 #include "http_affair.h"
 #include "server.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wmissing-noreturn"
 inline void err_handle(const std::string &msg)
 {
     perror(msg.c_str());
@@ -23,7 +25,7 @@ void epoll_server(in_port_t port)
 {
     struct epoll_event evlist[MAX_EPOLL_LIST];
     PlatinumServer::epoll epoll;
-    PlatinumServer::socket listen_socket(port);                                                 // create socket object
+    PlatinumServer::socket listen_socket(port);// create socket object
     listen_socket.connect();                                                                    // finish the bind() and listen()
 
     epoll.add(listen_socket.get_fd(), { EPOLLIN });                                           // add listen fd to epoll event table
@@ -54,3 +56,4 @@ void epoll_deal(PlatinumServer::socket &listen_socket, PlatinumServer::epoll &ep
         }
     }
 }
+#pragma clang diagnostic pop
