@@ -33,13 +33,13 @@ public:
     {
         return this->sock_fd;
     }
-
 private:
     int sock_fd;
     struct sockaddr_in sock_sockaddr;
 
     bool bind();
     bool listen();
+
     constexpr int backlog(){ return 1024; }
 };
 }
