@@ -1,0 +1,20 @@
+# This is Platinum's config.
+# you can set you own config in this config YAML file
+# what you should remember is that:
+#       Don't leave the configuration item to be blank !
+#       If you don't want to set this item, No, you can't!
+#       You must set every necessary option !
+
+server:
+  port: 9887                             # server port (NECESSARY)
+  epoll_event: 30                       # epoll events (NECESSARY)
+
+#  WARNING! You must set you method or make it a empty sequence
+method: [GET, HEAD, POST, OPTION]        # default (you can only add which method you want in seq)
+
+index: index.html                        # The default index html (default: index.html
+www-root: /var/www-root                  # The default www-root directory (default: /var/www-root
+
+thread pool:
+  enable: true                           # enable/disable thread poll. you can choose turn on it or not
+  thread_num: 8                          # thread mount in the pool. If you turn off the pool, you should set this value to -1
