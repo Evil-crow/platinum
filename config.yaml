@@ -12,6 +12,7 @@ server:
 #  WARNING! You must set you method or make it a empty sequence
 method: [GET, HEAD, POST, OPTION]        # default (you can only add which method you want in seq)
 
+log_enable: true
 index: index.html                        # The default index html (default: index.html
 www-root: /var/www-root                  # The default www-root directory (default: /var/www-root
 
