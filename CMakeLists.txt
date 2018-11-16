@@ -8,7 +8,7 @@ set(PROJECT_VERSION_MINOR  0)
 #set(CMAKE_CXX_COMPILER "g++")
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_FLAGS -g)
-set(CMAKE_CXX_FLAGS -DLOGOFF)
+set(CMAKE_CXX_FLAGS -DLOGON)
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
@@ -31,7 +31,8 @@ set(
 
 set(
         _PLATINUM_LOG
-        utility/log.hpp
+        utility/log.h
+        utility/log.cc
 )
 
 set(
