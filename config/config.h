@@ -6,8 +6,9 @@
 #define PLATINUM_CONFIG_H
 
 #include <netinet/in.h>
-#include <string>
+
 #include <set>
+#include <string>
 
 namespace Platinum {
 
@@ -15,11 +16,10 @@ struct YAMLData {
   int epoll_events;
   in_port_t server_port;
 
+  bool log_enable;
+
   std::string www_root;
   std::string index;
-
-  bool log_enable;
-  std::string log_path;
 
   bool thread_pool_enable;
   int thread_num;
@@ -29,29 +29,31 @@ struct YAMLData {
 
 class Config {
  public:
-  explicit Config(YAMLData &&data) noexcept : data_(data) { ; }
-//  ~Config() = default;
-//  Config(const Config &) = delete;
-//  Config operator=(const Config &) = delete;
-//  Config(const Config &&) = delete;
-//  Config operator=(Config &&) = delete;
+  static Config &GetInstance();
 
-  int epoll_event() const { return data_.epoll_events; }
-  in_port_t server_port() const { return data_.server_port; }
+  Config(const Config &) = delete;
+  Config operator=(const Config &) = delete;
 
-  std::string www_root() const { return data_.www_root; }
-  std::string index() const { return data_.index; }
+  int epoll_event() const         { return data_.epoll_events; }
+  in_port_t server_port() const   { return data_.server_port; }
 
-  bool IsThreadPool() const { return data_.thread_pool_enable;}
-  int thread_num() const { return data_.thread_num; }
+  bool IsLogOn() const            { return data_.log_enable; }
 
-  bool IsGetVaild() const { return data_.method_list.count("GET") > 0; }
-  bool IsPostvaild() const { return data_.method_list.count("HEAD") > 0; }
-  bool IsHeadVaild() const { return data_.method_list.count("HEAD") > 0; }
-  bool IsOptionVaild() const { return data_.method_list.count("OPTION") > 0; }
+  std::string www_root() const    { return data_.www_root; }
+  std::string index() const       { return data_.index; }
 
-  static YAMLData GetData();
+  bool IsThreadPoolOn() const       { return data_.thread_pool_enable; }
+  int thread_num() const          { return data_.thread_num; }
+
+  bool IsGetVaild() const         { return data_.method_list.count("GET") > 0; }
+  bool IsPostvaild() const        { return data_.method_list.count("HEAD") > 0; }
+  bool IsHeadVaild() const        { return data_.method_list.count("HEAD") > 0; }
+  bool IsOptionVaild() const      { return data_.method_list.count("OPTION") > 0; }
+
  private:
+  explicit Config(YAMLData &&data) : data_(data) { ; }
+  static YAMLData GetData();
+
   YAMLData data_;
 };
 
