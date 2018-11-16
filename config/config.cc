@@ -6,6 +6,7 @@
 
 #include <cassert>
 #include <string>
+#include <utility>
 
 #include <yaml-cpp/yaml.h>
 
@@ -68,18 +69,21 @@ struct convert<ThreadPool> {
 
 }
 
+Config &Config::GetInstance()
+{
+  static Config config(std::move(GetData()));
+  return config;
+}
+
 YAMLData Config::GetData()
 {
   auto config = YAML::LoadFile("../config.yaml");
-
   assert(config["server"]);
   assert(config["method"]);
 
   auto server_config = config["server"].as<Server>();
   auto thread_pool_config = config["thread pool"].as<ThreadPool>();
   auto method_seq = config["method"].as<std::vector<std::string>>();
-
-
   YAMLData data{};
 
   data.server_port = server_config.port;
@@ -88,10 +92,11 @@ YAMLData Config::GetData()
   data.thread_pool_enable = thread_pool_config.thread_pool_enable;
   data.thread_num = thread_pool_config.thread_num;
 
-  data.method_list = std::set<std::string>(method_seq.cbegin(), method_seq.cend());
-
+  data.log_enable = config["log_enable"].as<bool>();
   data.index = config["index"].as<std::string>();
   data.www_root = config["www-root"].as<std::string>();
+
+  data.method_list = std::set<std::string>(method_seq.cbegin(), method_seq.cend());
 
   return data;
 }
