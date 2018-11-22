@@ -35,10 +35,30 @@ set(
 )
 
 set(
+        _PLATINUM_TCP_LISTEN_SOCKET
+        utility/socket/tcp_listen_socket.h
+        utility/socket/tcp_listen_socket.cc
+)
+
+set(
+        _PLATINUM_IP_ADDRESS
+        utility/socket/ip_address.h
+        utility/socket/ip_address.cc
+)
+
+set(
+        _PLATINUM_SOCKET
+        ${_PLATINUM_SOCKETOPS}
+        ${_PLATINUM_TCP_LISTEN_SOCKET}
+        ${_PLATINUM_IP_ADDRESS}
+)
+
+
+
+set(
         _PLATINUM_UTILITY
         ${_PLATINUM_LOGGER}
         ${_PLATINUM_SOCKET}
-        ${_PLATINUM_SOCKETOPS}
         utility/noncopyable.h
 )
 
