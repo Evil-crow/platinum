@@ -9,10 +9,9 @@
 #include <unistd.h>
 #include <cstring>
 
-#include "logger/logger.h"
+#include "utility/logger/logger.h"
 
 using namespace platinum;
-using socket;
 
 int socket::Socket()
 {
@@ -84,6 +83,11 @@ sockaddr_in socket::GetPeerName(int sockfd)
   return sockaddr;
 }
 
+sockaddr *socket::SockaddrCast(sockaddr_in *sockaddr_)
+{
+  return reinterpret_cast<sockaddr *>(sockaddr_);
+}
+
 bool socket::Close(int sockfd)
 {
   if (::close(sockfd)) {
@@ -100,3 +104,4 @@ bool socket::ShutdownWrite(int sockfd)
     std::abort();
   }
 }
+#pragma clang diagnostic pop
