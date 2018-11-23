@@ -7,36 +7,21 @@
 
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <netinet/in.h>
 
 namespace platinum {
 
 namespace socket {
 
-enum class SocketDomain {
-  INET = AF_INET,
-  INET6 = AF_INET6,
-};
-
-enum class SocketType {
-  STREAM = SOCK_STREAM,
-  DGRAM = SOCK_DGRAM,
-};
-
-int socket_(SocketDomain domain, SocketType type);
-
-int bind_(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
-
-int listen_(int sockfd, int backlog);
-
-int accept_(int sockfd, sockaddr *addr, socklen_t *addrlen);
-
-int getsockname_(int sockfd, sockaddr *addr, socklen_t *addrlen);
-
-int getpeername_(int sockfd, sockaddr *addr, socklen_t *addrlen);
-
-int getsocketopt_(int sockfd, int level, int optname, void *optval, socklen_t *optlen);
-
-int setsockopt_(int sockfd, int level, int optname, const void *optval, socklen_t optlen);
+int Socket();
+bool BindOrDie(int sockfd, const struct sockaddr *addr);
+bool ListenOrDie(int sockfd, int backlog);
+int Accept(int sockfd);
+bool Close(int sockfd);
+bool ShutdownWrite(int sockfd);
+sockaddr_in GetSockName(int sockfd);
+sockaddr_in GetPeerName(int sockfd);
+sockaddr* SockaddrCast(sockaddr_in *sockaddr_);
 
 }
 
