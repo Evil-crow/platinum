@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "logger/logger.h"
+#include "utility/logger/logger.h"
 #include "config/config.h"
 
 using namespace platinum;
