@@ -46,7 +46,7 @@ class Config {
   std::string www_root() const    { return data_.www_root; }
   std::string index() const       { return data_.index; }
 
-  bool IsThreadPoolOn() const       { return data_.thread_pool_enable; }
+  bool IsThreadPoolOn() const     { return data_.thread_pool_enable; }
   int thread_num() const          { return data_.thread_num; }
 
   bool IsGetVaild() const         { return data_.method_list.count("GET") > 0; }

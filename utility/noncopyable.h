@@ -4,14 +4,16 @@
  *      Copyconstructor, copy operator=, Moveconstructor, move operator=
 */
 
-class noncopyable {
+namespace platinum {
+
+class Noncopyable {
  public:
-  noncopyable(const noncopyable &) = delete;
-  noncopyable &operator=(const noncopyable &) = delete;
+  Noncopyable(const Noncopyable &) = delete;
+  Noncopyable &operator=(const Noncopyable &) = delete;
 
  protected:
-  noncopyable() = default;
-  ~noncopyable() = default;
+  Noncopyable() = default;
+  virtual ~noncopyable() = default;
 };
-
+}
 

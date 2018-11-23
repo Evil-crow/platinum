@@ -13,8 +13,9 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
 #set include directories, can avoid UNIX style ".." and "." replace compiler option "-I"
-include_directories(config)
-include_directories(utility)
+# include_directories(config)
+# include_directories(utility)
+include_directories(${PROJECT_SOURCE_DIR})
 
 set(
         _PLATINUM_CONFIG
@@ -29,31 +30,12 @@ set(
 )
 
 set(
-        _PLATINUM_SOCKETOPS
+        _PLATINUM_SOCKET
+        utility/socket/ip_address.h
+        utility/socket/ip_address.cc
         utility/socket/socketops.h
         utility/socket/socketops.cc
 )
-
-set(
-        _PLATINUM_TCP_LISTEN_SOCKET
-        utility/socket/tcp_listen_socket.h
-        utility/socket/tcp_listen_socket.cc
-)
-
-set(
-        _PLATINUM_IP_ADDRESS
-        utility/socket/ip_address.h
-        utility/socket/ip_address.cc
-)
-
-set(
-        _PLATINUM_SOCKET
-        ${_PLATINUM_SOCKETOPS}
-        ${_PLATINUM_TCP_LISTEN_SOCKET}
-        ${_PLATINUM_IP_ADDRESS}
-)
-
-
 
 set(
         _PLATINUM_UTILITY
@@ -63,10 +45,19 @@ set(
 )
 
 set(
+        _PLATINUM_CORE
+        core/tcp_listen_socket.cc
+        core/tcp_listen_socket.h
+        core/tcp_connection.h
+        core/tcp_connection.cc
+)
+
+set(
         EXECUTE_FILE
         platinum.cc
         ${_PLATINUM_CONFIG}
         ${_PLATINUM_UTILITY}
+        ${_PLATINUM_CORE}
 )
 
 # add sub directory, these directory must have their own CMakeLists.txt

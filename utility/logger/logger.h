@@ -9,7 +9,7 @@
 #include <vector>
 #include <mutex>
 
-#include "config.h"
+#include "config/config.h"
 
 namespace platinum {
 
