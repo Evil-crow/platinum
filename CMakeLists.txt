@@ -46,10 +46,12 @@ set(
 
 set(
         _PLATINUM_CORE
-        core/tcp_listen_socket.cc
-        core/tcp_listen_socket.h
         core/tcp_connection.h
         core/tcp_connection.cc
+        utility/socket/socket.cc
+        utility/socket/socket.h
+        core/acceptor.cc
+        core/acceptor.h
 )
 
 set(
