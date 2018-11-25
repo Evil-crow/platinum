@@ -5,17 +5,33 @@
 #ifndef PLATINUM_TCP_CONNECTION_H
 #define PLATINUM_TCP_CONNECTION_H
 
+#include "core/channel.h"
+#include "utility/noncopyable.h"
+#include "utility/socket/ip_address.h"
+
+
 namespace platinum {
 
-class TCPListenSocket;
-class TCPConnection {
-  friend class TCPListenSocket;
+class IPAddress;
+class TCPChannel;
+class Acceptor;
+class TCPConnection : public Noncopyable {
+  friend class Acceptor;
  public:
+  TCPConnection(const TCPConnection &) = delete;
+  TCPConnection operator=(const TCPConnection &) = delete;
+  IPAddress GetHostInfo();
+  IPAddress GetPeerInfo();
+
 
  private:
-  TCPConnection();
+  TCPConnection(int connect_fd);
+  ~TCPConnection() override;
 
-
+  int connfd_;
+  TCPChannel channel_;
+  IPAddress hostinfo_;
+  IPAddress peerinfo_;
 };
 
 }
