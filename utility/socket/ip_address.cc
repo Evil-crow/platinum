@@ -4,9 +4,40 @@
 
 #include "ip_address.h"
 
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+
 #include "utility/logger/logger.h"
 
 using namespace platinum;
+
+IPAddress::IPAddress(in_port_t port)
+      : family_(AF_INET), port_(port)
+{
+  in_addr temp{INADDR_ANY};
+  auto str = ::inet_ntoa(temp);
+  ip_ = std::string(str);
+}
+
+explicit IPAddress::IPAddress(sockaddr_in sockaddr)
+      : family_(sockaddr.sin_family),
+        port_(::ntohs(sockaddr.sin_port))
+{
+    in_addr temp{sockaddr.sin_addr};
+    auto str = ::inet_ntoa(temp);
+    ip_ = std::string(str);
+}
+
+IPAddress::IPAddress(sa_family_t family, in_port_t port)
+      : family_(family), port_(port)
+{
+    in_addr temp{INADDR_ANY};
+    auto str = ::inet_ntoa(temp);
+    ip_ = std::string(str);
+}
+
 
 sockaddr_in IPAddress::ToSockaddrIn() const
 {
@@ -32,3 +63,4 @@ inline const std::string &IPAddress::ip() const
 {
   return ip_;
 }
+
