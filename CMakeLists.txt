@@ -25,33 +25,38 @@ set(
 
 set(
         _PLATINUM_LOGGER
-        utility/logger/logger.h
-        utility/logger/logger.cc
-)
-
-set(
-        _PLATINUM_SOCKET
-        utility/socket/ip_address.h
-        utility/socket/ip_address.cc
-        utility/socket/socketops.h
-        utility/socket/socketops.cc
+        utility/logger.h
+        utility/logger.cc
 )
 
 set(
         _PLATINUM_UTILITY
         ${_PLATINUM_LOGGER}
-        ${_PLATINUM_SOCKET}
         utility/noncopyable.h
 )
 
 set(
-        _PLATINUM_CORE
-        core/tcp_connection.h
-        core/tcp_connection.cc
-        utility/socket/socket.cc
-        utility/socket/socket.h
-        core/acceptor.cc
-        core/acceptor.h
+        _PLATINUM_REACTOR
+        reactor/epoller.h
+        reactor/epoller.cc
+        reactor/event_loop.h
+        reactor/event_loop.cc
+        reactor/channel.h
+        reactor/channel.cc
+)
+
+set(
+        _PLATINUM_NET
+        net/tcp_connection.h
+        net/tcp_connection.cc
+        net/ip_address.h
+        net/ip_address.cc
+        net/socketops.h
+        net/socketops.cc
+        net/socket.cc
+        net/socket.h
+        net/acceptor.cc
+        net/acceptor.h
 )
 
 set(
@@ -59,7 +64,8 @@ set(
         platinum.cc
         ${_PLATINUM_CONFIG}
         ${_PLATINUM_UTILITY}
-        ${_PLATINUM_CORE}
+        ${_PLATINUM_NET}
+        ${_PLATINUM_REACTOR}
 )
 
 # add sub directory, these directory must have their own CMakeLists.txt
