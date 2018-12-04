@@ -26,7 +26,7 @@ EPoller::~EPoller()
   ::close(epoll_fd_);
 }
 
-void EPoller::Poll(int timeout, std::vector<Channel *> &active_channels)
+void EPoller::Poll(int timeout, std::vector<std::shared_ptr<Channel>> &active_channels)
 {
   loop_->AssertInLoopThread();
   auto event_nums = ::epoll_wait(epoll_fd_,
@@ -37,7 +37,7 @@ void EPoller::Poll(int timeout, std::vector<Channel *> &active_channels)
   FillActiveChannel(event_nums, active_channels);
 }
 
-void EPoller::FillActiveChannel(int event_nums, std::vector<Channel *> &active_channel)
+void EPoller::FillActiveChannel(int event_nums, std::vector<std::shared_ptr<Channel>> &active_channel)
 {
   Channel *channelptr(nullptr);
   for (auto var : event_list) {
