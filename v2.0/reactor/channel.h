@@ -5,9 +5,8 @@
 #ifndef PLATINUM_TCP_CHANNEL_H
 #define PLATINUM_TCP_CHANNEL_H
 
+#include <atomic>
 #include <functional>
-
-#include "reactor/event_loop.h"
 
 namespace platinum {
 
