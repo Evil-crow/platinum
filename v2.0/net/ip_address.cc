@@ -9,7 +9,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 
-#include "utility/logger/logger.h"
+#include "utility/logger.h"
 
 using namespace platinum;
 

@@ -5,8 +5,8 @@
 #ifndef PLATINUM_ACCEPTOR_H
 #define PLATINUM_ACCEPTOR_H
 
-#include "core/tcp_connection.h"
-#include "utility/socket/socket.h"
+#include "tcp_connection.h"
+#include "net/socket.h"
 
 namespace platinum {
 

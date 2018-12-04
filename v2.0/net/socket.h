@@ -5,8 +5,8 @@
 #ifndef PLATINUM_SOCKET_H
 #define PLATINUM_SOCKET_H
 
-#include "utility/socket/ip_address.h"
-#include "utility/socket/socketops.h"
+#include "ip_address.h"
+#include "socketops.h"
 
 namespace platinum {
 

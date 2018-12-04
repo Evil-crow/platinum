@@ -4,7 +4,7 @@
 
 #include <netinet/tcp.h>
 
-#include "utility/logger/logger.h"
+#include "utility/logger.h"
 #include "socket.h"
 
 using namespace platinum;

@@ -9,7 +9,7 @@
 #include <unistd.h>
 #include <cstring>
 
-#include "utility/logger/logger.h"
+#include "utility/logger.h"
 
 using namespace platinum;
 
