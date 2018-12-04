@@ -5,8 +5,9 @@
 #ifndef PLATINUM_EPOLLER_H
 #define PLATINUM_EPOLLER_H
 
-#include <vector>
 #include <sys/epoll.h>
+#include <memory>
+#include <vector>
 
 namespace platinum {
 
@@ -17,12 +18,12 @@ class EPoller {
   explicit EPoller(EventLoop *loop);
   ~EPoller();
 
-  void Poll(int timeout, std::vector<Channel *> &active_channel);
+  void Poll(int timeout, std::vector<std::shared_ptr<Channel>> &active_channel);
   void AddChannel(Channel *channel);
   void RemoveChannel(Channel *channel);
 
  private:
-  void FillActiveChannel(int eventnums, std::vector<Channel *> &active_channel);
+  void FillActiveChannel(int eventnums, std::vector<std::shared_ptr<Channel>> &active_channel);
 
   EventLoop *loop_;
   int epoll_fd_;
