@@ -44,12 +44,14 @@ void Channel::HandleEvent()
   event_handling_.store(false);
 }
 
-inline void Channel::SetEvents(unsigned int events) { revents_ = events; }
+void Channel::SetEvents(unsigned int events) { revents_ = events; }
 
-inline void Channel::EnableReading()       { events_ |= EPOLLIN; }
+void Channel::EnableReading()       { events_ |= EPOLLIN; }
 
-inline void Channel::EnableWriteing()      { events_ |= EPOLLOUT; }
+void Channel::EnableWriteing()      { events_ |= EPOLLOUT; }
 
-inline void Channel::DisableWriting()      { events_ &= ~EPOLLOUT; }
+void Channel::EnableET()            { events_ |= EPOLLET; }
 
-inline void Channel::DisableALL()          { events_ = 0; }
+void Channel::DisableWriting()      { events_ &= ~EPOLLOUT; }
+
+void Channel::DisableALL()          { events_ = 0; }

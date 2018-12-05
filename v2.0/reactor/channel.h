@@ -27,12 +27,9 @@ class Channel {
   void SetEvents(unsigned int events);
   void EnableReading();
   void EnableWriteing();
+  void EnableET();
   void DisableWriting();
   void DisableALL();
-
-  // Actually use EventLoop::*Channel() => Epoller::*Channel() to complete the operation
-//  void AddChannel(Channel *channel_);
-//  void RemoveChannel(Channel *channel_);
 
   int fd()                 { return fd_; }
   unsigned int events()    { return events_; }
@@ -40,10 +37,10 @@ class Channel {
  private:
   EventLoop *loop_;                                     // loop:   Eventloop, we need this to call some callback operation
 
-  std::atomic<bool> event_handling_;                    // bool:  to identify is handling event, can't destructor at now.
   int fd_;                                              // fd:    to store the fd, but the RAII Handle is in EventLoop.
   unsigned int events_;                                 // event: to record which events we're instered in , for epoller.
   unsigned int revents_;                                // event: which events has happen on this Channel, fill by epoller
+  std::atomic<bool> event_handling_;                    // bool:  to identify is handling event, can't destructor at now.
 
   // CallBacks, we use these callback to complete event driven model
   EventCallBack read_callback_;
