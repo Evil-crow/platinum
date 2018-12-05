@@ -26,7 +26,7 @@ int socket::Socket()
 
 bool socket::BindOrDie(int sockfd, const struct sockaddr *addr)
 {
-  if (::bind(sockfd, addr, sizeof(addr))) {
+  if (::bind(sockfd, addr, sizeof(struct sockaddr))) {
     LOG(ERROR) << "socket::BindOrDie";
     std::abort();
   }
@@ -49,7 +49,7 @@ int socket::Accept(int sockfd)
   int connfd = ::accept4(sockfd, nullptr, nullptr, SOCK_NONBLOCK | SOCK_CLOEXEC);
   if (connfd < 0) {
     if (errno == EAGAIN || errno == EWOULDBLOCK) {
-      LOG(INFO) << "socket: accept (Maybe Non-block socket)";
+      return -1;
     } else {
       LOG(INFO) << "socket::accept";
       std::abort();
@@ -63,7 +63,7 @@ sockaddr_in socket::GetSockName(int sockfd)
 {
   sockaddr_in sockaddr{};
   socklen_t len = sizeof(sockaddr);
-  if (::getsockname(sockfd, reinterpret_cast<sockaddr *>(&sockaddr), &len)) {
+  if (::getsockname(sockfd, reinterpret_cast<struct sockaddr *>(&sockaddr), &len)) {
     LOG(ERROR) << "socket::GetSockName";
     std::abort();
   }
@@ -75,7 +75,7 @@ sockaddr_in socket::GetPeerName(int sockfd)
 {
   sockaddr_in sockaddr{};
   socklen_t len = sizeof(sockaddr);
-  if (::getsockname(sockfd, reinterpret_cast<sockaddr *>(&sockaddr), &len)) {
+  if (::getsockname(sockfd, reinterpret_cast<struct sockaddr *>(&sockaddr), &len)) {
     LOG(ERROR) << "socket::GetSockName";
     std::abort();
   }
@@ -85,7 +85,7 @@ sockaddr_in socket::GetPeerName(int sockfd)
 
 sockaddr *socket::SockaddrCast(sockaddr_in *sockaddr_)
 {
-  return reinterpret_cast<sockaddr *>(sockaddr_);
+  return reinterpret_cast<struct sockaddr *>(sockaddr_);
 }
 
 bool socket::Close(int sockfd)
@@ -104,4 +104,3 @@ bool socket::ShutdownWrite(int sockfd)
     std::abort();
   }
 }
-#pragma clang diagnostic pop
