@@ -43,13 +43,14 @@ class EventLoop {
   void AbortInLoopThread();                                    // Log ERROR and abort programm.
   bool IsInLoopThread();
 
-  int wakeup_fd_;                                              // fd:        wakeup_fd_ , to wakeup IO thread, when block on EventLoop::loop()->poll;
-  std::unique_ptr<EPoller> epoller_;                           // epoller:    IO Mulplexing
-  std::shared_ptr<Channel> wakeup_channel_;                    // channel:   use this to register into epoller and handle read event.
-  std::vector<std::shared_ptr<Channel>> active_channels_;      // channel:   IO Mulplexing return the active channels;
   std::atomic<bool> looping_;                                  // bool:      to record the looping state, for ~EventLoop()
   std::atomic<bool> quit_;                                     // bool:      to record loop() state, use this to judge if go to next loop;
   std::atomic<bool> eventing_handling_;                        // bool:      to record event handling state
+  int wakeup_fd_;                                              // fd:        wakeup_fd_ , to wakeup IO thread, when block on EventLoop::loop()->poll;
+  std::unique_ptr<EPoller> epoller_;                           // epoller:    IO Mulplexing
+  std::shared_ptr<Channel> wakeup_channel_;                    // channel:   use this to register into epoller and handle read event.
+//  std::vector<std::shared_ptr<Channel>> active_channels_;      // channel:   IO Mulplexing return the active channels;
+  std::vector<Channel *> active_channels_;
   std::mutex mutex_;                                           // mutex:     for pending_functors_ , this may cause race-condition.
   std::thread::id thread_id_;                                  // thread_id: record the EventLoop thread, which make it one loop per thread
 

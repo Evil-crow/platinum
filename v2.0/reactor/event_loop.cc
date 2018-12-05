@@ -6,8 +6,8 @@
 #include <unistd.h>
 #include <sys/eventfd.h>
 #include <thread>
-#include <utility/logger.h>
 
+#include "utility/logger.h"
 #include "reactor/epoller.h"
 #include "reactor/channel.h"
 
@@ -33,7 +33,7 @@ EventLoop::EventLoop()
   }
 
   wakeup_channel_->EnableReading();
-  wakeup_channel_->SetReadCallback([]() { HandleWakeUp(); });
+  wakeup_channel_->SetReadCallback([this]() { HandleWakeUp(); });
   epoller_->AddChannel(wakeup_channel_.get());
 }
 
@@ -46,12 +46,12 @@ EventLoop::~EventLoop()
 void EventLoop::Loop()
 {
   looping_.store(true);
-  quit_.store(true);
+  quit_.store(false);
 
   AssertInLoopThread();
   while (!quit_.load()) {
-    active_channels_.clear();
     eventing_handling_.store(true);
+    active_channels_.clear();
     epoller_->Poll(12, active_channels_);
     for (const auto &channel : active_channels_)
       channel->HandleEvent();
