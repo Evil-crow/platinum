@@ -18,16 +18,16 @@ class EPoller {
   explicit EPoller(EventLoop *loop);
   ~EPoller();
 
-  void Poll(int timeout, std::vector<std::shared_ptr<Channel>> &active_channel);
+  void Poll(int timeout, std::vector<Channel*> &active_channel);
   void AddChannel(Channel *channel);
   void RemoveChannel(Channel *channel);
 
  private:
-  void FillActiveChannel(int eventnums, std::vector<std::shared_ptr<Channel>> &active_channel);
+  void FillActiveChannel(int eventnums, std::vector<Channel*> &active_channel);
 
   EventLoop *loop_;
   int epoll_fd_;
-  std::vector<epoll_event> event_list;
+  std::vector<epoll_event> events_;
   static constexpr int MAXEPOLLEVENT() { return 1024; };
 };
 
