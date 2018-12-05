@@ -69,7 +69,7 @@ struct convert<ThreadPool> {
 
 }
 
-inline Config &Config::GetInstance()
+Config &Config::GetInstance()
 {
   static Config config(std::move(GetData()));
   return config;
