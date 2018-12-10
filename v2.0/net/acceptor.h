@@ -5,24 +5,37 @@
 #ifndef PLATINUM_ACCEPTOR_H
 #define PLATINUM_ACCEPTOR_H
 
-#include "tcp_connection.h"
-#include "net/socket.h"
+#include <atomic>
+#include <memory>
+#include <functional>
 
+#include "reactor/channel.h"
+#include "net/socket.h"
 namespace platinum {
 
-class TCPConnection;
+class Channel;                    // forward declaration
+class IPAddress;                  // forward declaration
+class EventLoop;                  // forward declaration
+
 class Acceptor {
  public:
-  explicit Acceptor(in_port_t port);
-  Acceptor(in_port_t port, const std::string &ip);
+  using NewConnectionCallback = std::function<void(int, const IPAddress &)>;         // for connection callback
+  explicit Acceptor(EventLoop *loop, const IPAddress &address);
   ~Acceptor() = default;
 
-  void Listening();
-  TCPConnection AcceptConnection();
+  void Listening();                                                            // start listening
+  void HandleEvent();                                                          // deal with the readable event -> Get Connection
+  void SetConnectionCallback(NewConnectionCallback callback);
 
  private:
+  bool IsListening();
+
+  EventLoop *loop_;
   Socket listenfd_;
   IPAddress address_;
+  std::unique_ptr<Channel> channel_;
+  NewConnectionCallback callback_;
+  std::atomic<bool> listening_;
 };
 
 }
