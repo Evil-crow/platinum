@@ -1,44 +1,70 @@
 //
-// Created by Crow on 11/25/18.
+// Created by Crow on 12/10/18.
 //
 
-#include "acceptor.h"
+#include "net/acceptor.h"
 
+#include <memory>
+
+#include "net/socket.h"
+#include "net/ip_address.h"
+#include "reactor/event_loop.h"
+#include "reactor/channel.h"
 #include "utility/logger.h"
 
 using namespace platinum;
 
-Acceptor::Acceptor(in_port_t port)
-    : address_(port)
+Acceptor::Acceptor(EventLoop *loop, const IPAddress &address)
+    : loop_(loop),
+      address_(address),
+      listenfd_(socket::Socket()),
+      channel_(std::make_unique<Channel>(loop, listenfd_.fd())),
+      listening_(false)
 {
-  ;
-}
-
-Acceptor::Acceptor(in_port_t port, const std::string &ip)
-    : address_(port, ip)
-{
-  ;
+  listenfd_.SetReusePort(true);
+  listenfd_.SetTcpNoDelay(true);
+  listenfd_.SetKeepAlive(true);
 }
 
 void Acceptor::Listening()
 {
-  if (listenfd_.SetKeepAlive(true)
-      && listenfd_.SetReusePort(true)
-      && listenfd_.SetTcpNoDelay(true)) {
-    LOG(INFO) << "Acceptor Listening OK!";
-  } else {
-    LOG(ERROR) << "Acceptor Listening ERROR!";
-  }
-
+  listening_.store(true);
   listenfd_.Bind(address_);
   listenfd_.Listen();
+  channel_->EnableET();
+  channel_->EnableReading();
+  channel_->SetReadCallback([this]() { HandleEvent(); });
+  loop_->AddChannel(channel_.get());
 }
 
-TCPConnection Acceptor::AcceptConnection()
+void Acceptor::HandleEvent()
 {
+  IPAddress peer_address;
+  while (true) {
+    int connfd = listenfd_.Accept(peer_address);
+    if (connfd > 0) {
+      if (callback_)
+        callback_(connfd, peer_address);
+    } else {
+      if (errno == EAGAIN || errno == EWOULDBLOCK) {
+        LOG(INFO) << "Acceptor::HandleEvent Accept OK!";
+        break;
+      } else {
+        LOG(ERROR) << "Acceptor::HAndleEvent ERR";
+        std::abort();
+      }
+    }
+  }
+}
 
+bool Acceptor::IsListening()
+{
+  return listening_.load();
+}
 
-  return
+void Acceptor::SetConnectionCallback(Acceptor::NewConnectionCallback callback)
+{
+  callback_ = std::move(callback);
 }
 
 
