@@ -2,7 +2,7 @@
 // Created by Crow on 11/25/18.
 //
 
-#include "epoller.h"
+#include "reactor/epoller.h"
 
 #include <unistd.h>
 #include <sys/epoll.h>
@@ -72,7 +72,7 @@ void EPoller::AddChannel(Channel *channel)
   }
 }
 
-void EPoller::RemoveChannel(platinum::Channel *channel)
+void EPoller::RemoveChannel(Channel *channel)
 {
   loop_->AssertInLoopThread();
 
