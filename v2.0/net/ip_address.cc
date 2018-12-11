@@ -2,7 +2,7 @@
 // Created by Crow on 11/22/18.
 //
 
-#include "ip_address.h"
+#include "net/ip_address.h"
 
 #include <netinet/in.h>
 #include <arpa/inet.h>
@@ -56,3 +56,29 @@ const std::string &IPAddress::ip() const
   return ip_;
 }
 
+void IPAddress::set_port(in_port_t port)
+{
+  port_ = port;
+}
+
+void IPAddress::set_ip(std::string str)
+{
+  ip_ = std::move(str);
+}
+
+IPAddress::IPAddress(const IPAddress &&address) noexcept
+{
+  family_ =address.family_;
+  port_ = address.port_;
+  ip_ = address.ip_;
+}
+
+
+IPAddress& IPAddress::operator=(const IPAddress &&address)
+{
+  family_ = address.family_;
+  port_ = address.port_;
+  ip_ = address.ip_;
+
+  return *this;
+}
