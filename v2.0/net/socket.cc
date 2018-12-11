@@ -2,10 +2,11 @@
 // Created by Crow on 11/25/18.
 //
 
+#include "net/socket.h"
+
 #include <netinet/tcp.h>
 
 #include "utility/logger.h"
-#include "socket.h"
 
 using namespace platinum;
 
@@ -19,6 +20,16 @@ Socket::Socket(int sockfd) : sockfd_(sockfd)
   ;
 }
 
+Socket::Socket(const Socket &&socket) noexcept
+{
+  sockfd_ = socket.sockfd_;
+}
+
+Socket& Socket::operator=(const Socket &&socket) noexcept
+{
+  sockfd_ = socket.sockfd_;
+  return *this;
+}
 
 Socket::~Socket()
 {
@@ -36,9 +47,9 @@ void Socket::Listen()
   socket::ListenOrDie(sockfd_, SOMAXCONN);
 }
 
-int Socket::Accept()
+int Socket::Accept(IPAddress &address)
 {
-  int connfd = socket::Accept(sockfd_);
+  int connfd = socket::Accept(sockfd_, address);
   return connfd;
 }
 
