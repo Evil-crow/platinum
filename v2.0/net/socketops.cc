@@ -2,7 +2,7 @@
 // Created by Crow on 11/21/18.
 //
 
-#include "socketops.h"
+#include "net/socketops.h"
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -10,6 +10,7 @@
 #include <cstring>
 
 #include "utility/logger.h"
+#include "net/ip_address.h"
 
 using namespace platinum;
 
@@ -44,9 +45,15 @@ bool socket::ListenOrDie(int sockfd, int backlog)
   return true;
 }
 
-int socket::Accept(int sockfd)
+int socket::Accept(int sockfd, IPAddress &address)
 {
-  int connfd = ::accept4(sockfd, nullptr, nullptr, SOCK_NONBLOCK | SOCK_CLOEXEC);
+  sockaddr_in sockaddrin{};
+  socklen_t len = sizeof(sockaddrin);
+  int connfd = ::accept4(sockfd,
+      reinterpret_cast<struct sockaddr *>(&sockaddrin),
+      &len,
+      SOCK_NONBLOCK | SOCK_CLOEXEC);
+
   if (connfd < 0) {
     if (errno == EAGAIN || errno == EWOULDBLOCK) {
       return -1;
@@ -55,6 +62,8 @@ int socket::Accept(int sockfd)
       std::abort();
     }
   } else {
+    address.set_port(::ntohs(sockaddrin.sin_port));
+    address.set_ip(::inet_ntoa(sockaddrin.sin_addr));
     return connfd;
   }
 }

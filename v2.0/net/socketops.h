@@ -11,12 +11,13 @@
 
 namespace platinum {
 
+class IPAddress;
 namespace socket {
 
 int Socket();
 bool BindOrDie(int sockfd, const struct sockaddr *addr);
 bool ListenOrDie(int sockfd, int backlog);
-int Accept(int sockfd);
+int Accept(int sockfd, IPAddress &address);
 bool Close(int sockfd);
 bool ShutdownWrite(int sockfd);
 sockaddr_in GetSockName(int sockfd);
