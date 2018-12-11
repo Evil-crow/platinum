@@ -1,7 +1,7 @@
 // Created by Crow on 11/25/18.
 //
 
-#include "event_loop.h"
+#include "reactor/event_loop.h"
 
 #include <unistd.h>
 #include <sys/eventfd.h>
@@ -78,7 +78,7 @@ void EventLoop::AddChannel(Channel *channel)
   epoller_->AddChannel(channel);
 }
 
-void EventLoop::RemoveChannel(Channel *channel)
+void EventLoop::RemoveChannel(Channel* channel)
 {
   if (!IsInLoopThread()) {
     LOG(ERROR) << "Not in EventLoop Thread";
