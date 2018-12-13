@@ -51,6 +51,10 @@ set(
         ${_PLATINUM_SOCKET}
         ../net/acceptor.h
         ../net/acceptor.cc
+        ../net/tcp_server.h
+        ../net/tcp_server.cc
+        ../net/tcp_connection.h
+        ../net/tcp_connection.cc
 )
 
 # test file
@@ -89,3 +93,10 @@ add_executable(reactor_Acceptor reactor_Acceptor.cc
         ${_PLATINUM_UTILITY}
         ${_PLATINUM_NET})
 target_link_libraries(reactor_Acceptor yaml-cpp)
+
+add_executable(tcp_server_connection tcp_server_connection.cc
+        ${_PLATINUM_REACTOR}
+        ${_PLATINUM_CONFIG}
+        ${_PLATINUM_UTILITY}
+        ${_PLATINUM_NET})
+target_link_libraries(tcp_server_connection yaml-cpp)
