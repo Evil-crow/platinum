@@ -25,7 +25,7 @@ Socket::Socket(const Socket &&socket) noexcept
   sockfd_ = socket.sockfd_;
 }
 
-Socket& Socket::operator=(const Socket &&socket) noexcept
+Socket& Socket::operator=(Socket &&socket) noexcept
 {
   sockfd_ = socket.sockfd_;
   return *this;

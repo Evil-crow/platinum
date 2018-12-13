@@ -15,10 +15,11 @@ class Socket {
  public:
   Socket();
   explicit Socket(int sockfd);
+//  Socket Resource Class not support Copy Constructor
   Socket(const Socket &) = default;
   Socket &operator=(const Socket &) = default;
-  Socket(const Socket &&) noexcept ;
-  Socket &operator=(const Socket &&) noexcept ;
+  Socket(const Socket &&) noexcept;
+  Socket& operator=(Socket &&) noexcept;
   ~Socket();
 
   void Bind(const IPAddress &address);
@@ -29,7 +30,7 @@ class Socket {
   bool SetTcpNoDelay(bool on);
   bool SetKeepAlive(bool on);
 
-  int fd() { return sockfd_; }
+  int fd() const { return sockfd_; }
  private:
   int sockfd_;
 };
