@@ -18,18 +18,19 @@ class Channel {
   Channel(EventLoop *loop, int fd);
   ~Channel();
 
-  void SetReadCallback(EventCallBack &&cb)      { read_callback_ = cb; }
-  void SetWriteCallBack(EventCallBack &&cb)     { write_callback_ = cb; }
-  void SetCloseCallBack(EventCallBack &&cb)     { close_callback_ = cb; }
-  void SetErrorCallBack(EventCallBack &&cb)     { error_callback_ = cb; }
+  void SetReadCallback(const EventCallBack &cb)      { read_callback_ = cb; }
+  void SetWriteCallBack(const EventCallBack &cb)     { write_callback_ = cb; }
+  void SetCloseCallBack(const EventCallBack &cb)     { close_callback_ = cb; }
+  void SetErrorCallBack(const EventCallBack &cb)     { error_callback_ = cb; }
 
   void HandleEvent();
   void SetEvents(unsigned int events);
+
   void EnableReading();
   void EnableWriteing();
-  void EnableET();
   void DisableWriting();
   void DisableALL();
+  void EnableET();
 
   int fd()                 { return fd_; }
   unsigned int events()    { return events_; }
