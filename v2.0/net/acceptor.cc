@@ -4,6 +4,7 @@
 
 #include "net/acceptor.h"
 
+#include <iostream>
 #include <memory>
 
 #include "net/socket.h"
@@ -35,18 +36,24 @@ void Acceptor::Listening()
   // Set Channel insterested events
   channel_->EnableET();
   channel_->EnableReading();
-  channel_->SetReadCallback([this]() { HandleEvent(); });
+  channel_->SetReadCallback([this]() { Acceptor::HandleEvent(); });
   loop_->AddChannel(channel_.get());                           // Add Channel to EPoller
 }
 
 void Acceptor::HandleEvent()
 {
   IPAddress peer_address;
-  while (true) {                                               // Beacuse we use EPoll::ET + Non-Block, so when can't break until EAGAIN/EWOULDBLOCK
+  // Beacuse we use EPoll::ET + Non-Block, so when can't break until EAGAIN/EWOULDBLOCK
+  while (true) {
     int connfd = listenfd_.Accept(peer_address);
+    std::cout << "connfd: " << connfd << std::endl;
     if (connfd > 0) {
+      // WARNING: NOT copy ctor, RAII Handle will close fd, you have three methods:
+      // 1. move arguments
+      // 2. use file descriptor, NOT directly RAII Handle, unless use move, you'll release resource when leave this scope
+      // 3. use smart pointer. std::unique_ptr / std::shared_ptr.
       if (callback_)
-        callback_(std::move(Socket(connfd)), std::move(peer_address));
+        callback_(connfd, peer_address);
     } else {
       if (errno == EAGAIN || errno == EWOULDBLOCK) {
         LOG(INFO) << "Acceptor::HandleEvent Accept OK!";
@@ -64,10 +71,10 @@ bool Acceptor::IsListening()
   return listening_.load();
 }
 
-void Acceptor::SetConnectionCallback(NewConnectionCallback callback)
+void Acceptor::SetConnectionCallback(const NewConnectionCallback &callback)
 {
   if (!IsListening())
-    callback_ = std::move(callback);
+    callback_ = callback;
 }
 
 

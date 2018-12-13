@@ -28,13 +28,13 @@ class EventLoop;                  // forward declaration
 
 class Acceptor {
  public:
-  using NewConnectionCallback = std::function<void(Socket &&, IPAddress &&)>;         // for connection callback
+  using NewConnectionCallback = std::function<void(int, const IPAddress &)>;         // for connection callback
   explicit Acceptor(EventLoop *loop, const IPAddress &address);
   ~Acceptor() = default;
 
   void Listening();                                                            // start listening
   void HandleEvent();                                                          // deal with the readable event -> Get Connection
-  void SetConnectionCallback(NewConnectionCallback callback);                  // To Set callback event when on connection
+  void SetConnectionCallback(const NewConnectionCallback &callback);           // To Set callback event when on connection
 
  private:
   bool IsListening();
