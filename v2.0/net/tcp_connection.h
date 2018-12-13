@@ -1,37 +1,57 @@
 //
-// Created by Crow on 11/23/18.
+// Created by Crow on 12/11/18.
 //
 
 #ifndef PLATINUM_TCP_CONNECTION_H
 #define PLATINUM_TCP_CONNECTION_H
 
-#include "reactor/channel.h"
-#include "utility/noncopyable.h"
-#include "net/ip_address.h"
+#include <memory>
+#include <functional>
 
+#include "net/ip_address.h"
+#include "utility/noncopyable.h"
 
 namespace platinum {
 
 class Socket;
-class Acceptor;
 class IPAddress;
-class TCPChannel;
+class EventLoop;
+class Channel;
 class TCPConnection : public Noncopyable {
-  friend class Acceptor;
  public:
-  TCPConnection(const TCPConnection &) = delete;
-  TCPConnection operator=(const TCPConnection &) = delete;
-  IPAddress GetHostInfo() const { return hostinfo_; }
-  IPAddress GetPeerInfo() const { return peerinfo_; }
+  using EventCallback = std::function<void ()>;
+  using CloseCallback = std::function<void (int)>;
 
- private:
-  TCPConnection(int connect_fd);
+  TCPConnection(EventLoop *loop,
+                int fd,
+                const IPAddress &local_address,
+                const IPAddress &peer_address);
   ~TCPConnection() override;
 
-  Socket connfd_;
-  TCPChannel channel_;
-  IPAddress hostinfo_;
-  IPAddress peerinfo_;
+  // move TCPConnection callback to Channel
+  void ConnectionEstablished();
+
+  // copy TCPServer callback -> TCPConnection, can't move, we'll create much TCPConnection by TCPServer::*callback
+  void SetConnectionCallback(const EventCallback &callback);
+  void SetMessageCallback(const EventCallback &callback);
+  void SetCloseCallback(const EventCallback &callback);
+
+ private:
+  void HandleRead();
+  void HandleWrite(){};
+  inline void HandleError();
+  inline void HandleClose();
+
+  void ErrorCallback();                                // private function to record the error situation
+
+  EventLoop *loop_;
+  std::unique_ptr<Socket> socket_;
+  std::unique_ptr<Channel> channel_;
+  EventCallback connection_callback_;                  // register by user provide function -> OnConnection fucntion
+  EventCallback message_callback_;                     // register by user provide function -> OnMessage Function
+  CloseCallback close_callback_;                       // register as TCPServer::RemoveConnection
+  IPAddress local_addrss_;
+  IPAddress peer_address_;
 };
 
 }
