@@ -72,11 +72,11 @@ void EPoller::AddChannel(Channel *channel)
   }
 }
 
-void EPoller::RemoveChannel(Channel *channel)
+void EPoller::RemoveChannel(int fd)
 {
   loop_->AssertInLoopThread();
 
-  if (::epoll_ctl(epoll_fd_, EPOLL_CTL_DEL, channel->fd(), nullptr) < 0) {
+  if (::epoll_ctl(epoll_fd_, EPOLL_CTL_DEL, fd, nullptr) < 0) {
     LOG(ERROR) << "EPoller Del ERR";
     std::abort();
   }
