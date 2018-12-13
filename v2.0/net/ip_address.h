@@ -18,7 +18,7 @@ class IPAddress {
   explicit IPAddress(in_port_t port);
   explicit IPAddress(sockaddr_in sockaddr);
   IPAddress(const IPAddress &&address) noexcept;
-  IPAddress &operator=(const IPAddress &&address) noexcept;
+  IPAddress &operator=(IPAddress &&address) noexcept;
 
   IPAddress(const IPAddress &rhs) = default;
   IPAddress(in_port_t port, std::string ip)

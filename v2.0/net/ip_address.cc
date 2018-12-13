@@ -74,7 +74,7 @@ IPAddress::IPAddress(const IPAddress &&address) noexcept
 }
 
 
-IPAddress& IPAddress::operator=(const IPAddress &&address)
+IPAddress& IPAddress::operator=(IPAddress &&address) noexcept
 {
   family_ = address.family_;
   port_ = address.port_;
