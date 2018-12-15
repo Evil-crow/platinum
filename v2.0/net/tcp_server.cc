@@ -53,7 +53,7 @@ void TCPServer::OnConnectionCallback(int fd, const IPAddress &peer_address)
   connection_ptr->ConnectionEstablished();
 
   TCPConnectionMap_.emplace(fd, connection_ptr);
-  LOG(INFO) << "TCPServer::OnConnectionCallback Connection set OK!";
+  LOG(INFO) << "TCPServer::OnConnectionCallback";
 }
 
 void TCPServer::EraseConnection(int fd)
@@ -63,7 +63,7 @@ void TCPServer::EraseConnection(int fd)
     loop_->RemoveChannel(fd);
     TCPConnectionMap_.erase(fd);
   }
-  LOG(INFO) << "Erase TCPConnection from TCPServerMap";
+  LOG(INFO) << "TCPServer::EraseConnection";
 }
 
 void TCPServer::SetConnectionCallback(const EventCallback &callback)
