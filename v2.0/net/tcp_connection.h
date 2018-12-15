@@ -34,7 +34,7 @@ class TCPConnection : public Noncopyable {
   // copy TCPServer callback -> TCPConnection, can't move, we'll create much TCPConnection by TCPServer::*callback
   void SetConnectionCallback(const EventCallback &callback);
   void SetMessageCallback(const EventCallback &callback);
-  void SetCloseCallback(const EventCallback &callback);
+  void SetCloseCallback(const CloseCallback &callback);
 
  private:
   void HandleRead();
