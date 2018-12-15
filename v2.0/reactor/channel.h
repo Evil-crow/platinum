@@ -27,6 +27,7 @@ class Channel {
   void SetEvents(unsigned int events);
 
   void EnableReading();
+  void EnableHangUp();
   void EnableWriteing();
   void DisableWriting();
   void DisableALL();
