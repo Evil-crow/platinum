@@ -2,7 +2,6 @@
 // Created by Crow on 12/11/18.
 //
 
-#include <iostream>
 #include "tcp_connection.h"
 
 #include "net/socket.h"
@@ -34,6 +33,7 @@ void TCPConnection::ConnectionEstablished()
 {
   channel_->EnableET();
   channel_->EnableReading();
+  channel_->EnableHangUp();
   channel_->SetReadCallback  ([this]()  { TCPConnection::HandleRead(); });
   channel_->SetCloseCallBack ([this]()  { TCPConnection::HandleClose(); });
   loop_->AddChannel(channel_.get());
@@ -41,18 +41,17 @@ void TCPConnection::ConnectionEstablished()
 
 void TCPConnection::HandleRead()
 {
-  std::cout << "get into HandleRead()" << '\n';
   char buf[1000];
   auto ret = ::recv(socket_->fd(), buf, 1000, 0);
-  std::cout << buf << std::endl;
   if (ret > 0) {
-    std::cout << "ret > 0" << '\n';
     message_callback_();
-  } else if (ret == 0) {
-    HandleClose();
-  } else {
-    HandleError();
+    ::send(socket_->fd(), buf, 1000, 0);
   }
+//  } else if (ret == 0) {
+//    HandleClose();
+//  } else {
+//    HandleError();
+//  }
 }
 
 void TCPConnection::HandleError()
@@ -62,8 +61,7 @@ void TCPConnection::HandleError()
 
 void TCPConnection::HandleClose()
 {
-  if (close_callback_)
-    close_callback_(socket_->fd());
+  loop_->RunInLoop([this]() { close_callback_(socket_->fd()); });
 }
 
 void TCPConnection::ErrorCallback()
@@ -82,7 +80,7 @@ void TCPConnection::SetMessageCallback(const EventCallback &callback)
   message_callback_ = callback;
 }
 
-void TCPConnection::SetCloseCallback(const EventCallback &callback)
+void TCPConnection::SetCloseCallback(const CloseCallback &callback)
 {
   close_callback_ = callback;
 }
