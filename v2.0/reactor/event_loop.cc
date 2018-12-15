@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <sys/eventfd.h>
 #include <thread>
+#include <iostream>
 
 #include "utility/logger.h"
 #include "reactor/epoller.h"
@@ -55,8 +56,8 @@ void EventLoop::Loop()
     epoller_->Poll(12, active_channels_);
     for (const auto &channel : active_channels_)
       channel->HandleEvent();
+    DoPendingFunctors();
     eventing_handling_.store(false);
-    //DoPendingFunctors();
   }
 
   looping_.store(false);
@@ -78,13 +79,13 @@ void EventLoop::AddChannel(Channel *channel)
   epoller_->AddChannel(channel);
 }
 
-void EventLoop::RemoveChannel(Channel* channel)
+void EventLoop::RemoveChannel(int fd)
 {
   if (!IsInLoopThread()) {
     LOG(ERROR) << "Not in EventLoop Thread";
     std::abort();
   }
-  epoller_->RemoveChannel(channel);
+  epoller_->RemoveChannel(fd);
 }
 
 void EventLoop::WakeUp()
@@ -100,22 +101,6 @@ void EventLoop::HandleWakeUp()
   ::read(wakeup_fd_, &u, sizeof(u));
   LOG(INFO) << "Handle Wake Event";
 }
-
-/*
-void EventLoop::DoPendingFunctors()
-{
-  calling_pending_functor_.store(true);
-  std::vector<Functor> vec_func;               // Minimize the critical zone size as much as possible
-  {
-    std::lock_guard<std::mutex> lk(mutex_);
-    vec_func.swap(pending_functors_);
-  }
-
-  for (const auto &functor : vec_func)        // Don't use while(vec.func.empty()), because you may stay here forever, when task is heavy
-    functor();
-  calling_pending_functor_.store(false);
-}
-*/
 
 bool EventLoop::AssertInLoopThread()
 {
@@ -135,23 +120,30 @@ void EventLoop::AbortInLoopThread()
   std::abort();
 }
 
-/*
-void EventLoop::RunInLoop(EventLoop::Functor &cb)
+void EventLoop::DoPendingFunctors()
 {
-  if (IsInLoopThread())
-    cb();
-  else
+  calling_pending_functor_.store(true);
+  std::vector<Functor> temp;               // Minimize the critical zone size as much as possible
+  {
+    std::lock_guard<std::mutex> lk(mutex_);
+    temp.swap(pending_functors_);
+  }
+  for (const auto &functor : temp)        // Don't use while(vec.func.empty()), because you may stay here forever, when task is heavy
+    functor();
+  calling_pending_functor_.store(false);
+}
+
+void EventLoop::RunInLoop(const EventLoop::Functor &cb)
+{
     QueueInLoop(cb);
 }
 
-void EventLoop::QueueInLoop(EventLoop::Functor &cb)
+void EventLoop::QueueInLoop(const EventLoop::Functor &cb)
 {
   {
     std::lock_guard<std::mutex> lk(mutex_);
-    pending_functors_.push_back(std::move(cb));
+    pending_functors_.push_back(cb);
   }
-  
   if (!IsInLoopThread() || calling_pending_functor_.load())
     WakeUp();
 }
-*/
