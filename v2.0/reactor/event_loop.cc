@@ -6,7 +6,6 @@
 #include <unistd.h>
 #include <sys/eventfd.h>
 #include <thread>
-#include <iostream>
 
 #include "utility/logger.h"
 #include "reactor/epoller.h"
@@ -77,6 +76,15 @@ void EventLoop::AddChannel(Channel *channel)
     std::abort();
   }
   epoller_->AddChannel(channel);
+}
+
+void EventLoop::UpdateChannel(Channel *channel)
+{
+    if (!IsInLoopThread()) {
+        LOG(ERROR) << "Not in EventLoop Thread";
+        std::abort();
+    }
+    epoller_->UpdateChannel(channel);
 }
 
 void EventLoop::RemoveChannel(int fd)
