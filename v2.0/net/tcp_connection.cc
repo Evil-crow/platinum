@@ -4,6 +4,9 @@
 
 #include "tcp_connection.h"
 
+#include <iostream>
+#include <unistd.h>
+
 #include "net/socket.h"
 #include "reactor/event_loop.h"
 #include "reactor/channel.h"
@@ -31,32 +34,37 @@ TCPConnection::~TCPConnection()
 
 void TCPConnection::ConnectionEstablished()
 {
-  channel_->EnableET();
+//  channel_->EnableET();
   channel_->EnableReading();
   channel_->EnableHangUp();
+  channel_->EnableError();
   channel_->SetReadCallback  ([this]()  { TCPConnection::HandleRead(); });
-  channel_->SetCloseCallBack ([this]()  { TCPConnection::HandleClose(); });
+  channel_->SetCloseCallback ([this]()  { TCPConnection::HandleClose(); });
+  channel_->SetErrorCallback ([this]()  { TCPConnection::HandleError(); });
   loop_->AddChannel(channel_.get());
 }
 
-void TCPConnection::HandleRead()
+void TCPConnection::SendData(const void *data, size_t length)
 {
-  char buf[1000];
-  auto ret = ::recv(socket_->fd(), buf, 1000, 0);
-  if (ret > 0) {
-    message_callback_();
-    ::send(socket_->fd(), buf, 1000, 0);
-  }
-//  } else if (ret == 0) {
-//    HandleClose();
-//  } else {
-//    HandleError();
-//  }
+  channel_->EnableWriteing();
+  channel_->SetWriteCallback([this]() { TCPConnection::HandleWrite(); });
+  loop_->UpdateChannel(channel_.get());
+  write_queue_.TaskInQueue(socket_->fd(), data, length);
 }
 
-void TCPConnection::HandleError()
+void TCPConnection::HandleRead() {
+  read_buffer_.ReadFd(socket_->fd());
+  if (message_callback_(this, read_buffer_))
+    read_buffer_.Reprepare();
+}
+
+void TCPConnection::HandleWrite()
 {
-  ErrorCallback();
+  std::cout << "Handle Write" << std::endl;
+  if (write_queue_.DoTask()) {
+    channel_->DisableWriting();
+    loop_->UpdateChannel(channel_.get());
+  }
 }
 
 void TCPConnection::HandleClose()
@@ -64,10 +72,15 @@ void TCPConnection::HandleClose()
   loop_->RunInLoop([this]() { close_callback_(socket_->fd()); });
 }
 
+void TCPConnection::HandleError()
+{
+  loop_->RunInLoop([this]() { ErrorCallback(); });
+}
+
 void TCPConnection::ErrorCallback()
 {
-  LOG(WARN) << "TCPConnection::ErrorCallback: Handle Event Error, Close Connection";
-  close_callback_(socket_->fd());
+  LOG(ERROR) << "TCPConnection::ErrorCallback: Handle Event Error, Close Connection";
+  HandleClose();
 }
 
 void TCPConnection::SetConnectionCallback(const EventCallback &callback)
@@ -75,7 +88,7 @@ void TCPConnection::SetConnectionCallback(const EventCallback &callback)
   connection_callback_ = callback;
 }
 
-void TCPConnection::SetMessageCallback(const EventCallback &callback)
+void TCPConnection::SetMessageCallback(const MessageCallback &callback)
 {
   message_callback_ = callback;
 }
@@ -84,4 +97,3 @@ void TCPConnection::SetCloseCallback(const CloseCallback &callback)
 {
   close_callback_ = callback;
 }
-
