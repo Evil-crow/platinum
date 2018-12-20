@@ -13,22 +13,23 @@ namespace platinum {
 class EventLoop;
 class Channel {
  public:
-  using EventCallBack = std::function<void ()>;
+  using EventCallback = std::function<void ()>;
 
   Channel(EventLoop *loop, int fd);
   ~Channel();
 
-  void SetReadCallback(const EventCallBack &cb)      { read_callback_ = cb; }
-  void SetWriteCallBack(const EventCallBack &cb)     { write_callback_ = cb; }
-  void SetCloseCallBack(const EventCallBack &cb)     { close_callback_ = cb; }
-  void SetErrorCallBack(const EventCallBack &cb)     { error_callback_ = cb; }
+  void SetReadCallback(const EventCallback &cb)      { read_callback_ = cb; }
+  void SetWriteCallback(const EventCallback &cb)     { write_callback_ = cb; }
+  void SetCloseCallback(const EventCallback &cb)     { close_callback_ = cb; }
+  void SetErrorCallback(const EventCallback &cb)     { error_callback_ = cb; }
 
   void HandleEvent();
   void SetEvents(unsigned int events);
 
   void EnableReading();
-  void EnableHangUp();
   void EnableWriteing();
+  void EnableHangUp();
+  void EnableError();
   void DisableWriting();
   void DisableALL();
   void EnableET();
@@ -45,10 +46,10 @@ class Channel {
   std::atomic<bool> event_handling_;                    // bool:  to identify is handling event, can't destructor at now.
 
   // CallBacks, we use these callback to complete event driven model
-  EventCallBack read_callback_;
-  EventCallBack write_callback_;
-  EventCallBack close_callback_;
-  EventCallBack error_callback_;
+  EventCallback read_callback_;
+  EventCallback write_callback_;
+  EventCallback close_callback_;
+  EventCallback error_callback_;
 };
 
 }

@@ -34,26 +34,27 @@ void Channel::HandleEvent()
 {
   event_handling_.store(true);
 
+  // handle error
+  if (revents_ & EPOLLERR) {
+    if (error_callback_)
+      error_callback_();
+  }
   // handle hangup event
-  if (revents_ & EPOLLRDHUP) {                  // EPOLLRDHUP => EPOLLIN | EPOLLHUP
+  else if (revents_ & EPOLLRDHUP) {                  // EPOLLRDHUP => EPOLLIN | EPOLLHUP
     if (close_callback_)
       close_callback_();
   }
-
   // handle readable event, e.g. OnMessage
-  if (revents_ & EPOLLIN) {
+  else if (revents_ & EPOLLIN) {
     if (read_callback_)
       read_callback_();
   }
-
-  // handle writeable event, e.g. WriteFd
-  if (revents_ & EPOLLOUT) {
+  // handle writeable event, e.g. WriteQueue
+  else if (revents_ & EPOLLOUT) {
     if (write_callback_)
       write_callback_();
   }
   event_handling_.store(false);
-  std::cout << "Channel::HandleEvent() Ends" << '\n';
-  std::cout << "channel: " << fd_ << '\n';
 }
 
 void Channel::SetEvents(unsigned int events) { revents_ = events; }
@@ -65,6 +66,8 @@ void Channel::EnableWriteing()      { events_ |= EPOLLOUT; }
 void Channel::EnableET()            { events_ |= EPOLLET; }
 
 void Channel::EnableHangUp()        { events_ |= EPOLLRDHUP; }
+
+void Channel::EnableError()         { events_ |= EPOLLERR; }
 
 void Channel::DisableWriting()      { events_ &= ~EPOLLOUT; }
 
