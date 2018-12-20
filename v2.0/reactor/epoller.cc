@@ -72,6 +72,19 @@ void EPoller::AddChannel(Channel *channel)
   }
 }
 
+void EPoller::UpdateChannel(Channel *channel)
+{
+    loop_->AssertInLoopThread();
+
+    epoll_event event{};
+    event.data.ptr = channel;
+    event.events = channel->events();
+    if (::epoll_ctl(epoll_fd_, EPOLL_CTL_MOD, channel->fd(), &event) < 0) {
+        LOG(ERROR) << "EPoller Mod ERR";
+        std::abort();
+    }
+}
+
 void EPoller::RemoveChannel(int fd)
 {
   loop_->AssertInLoopThread();

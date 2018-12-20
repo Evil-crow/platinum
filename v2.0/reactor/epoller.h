@@ -20,6 +20,7 @@ class EPoller {
 
   void Poll(int timeout, std::vector<Channel*> &active_channel);
   void AddChannel(Channel *channel);
+  void UpdateChannel(Channel *channel);
   void RemoveChannel(int fd);
 
  private:
