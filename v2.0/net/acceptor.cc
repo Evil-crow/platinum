@@ -4,7 +4,7 @@
 
 #include "net/acceptor.h"
 
-#include <iostream>
+#include <cerrno>
 #include <memory>
 
 #include "net/socket.h"
@@ -46,11 +46,10 @@ void Acceptor::HandleEvent()
   // Beacuse we use EPoll::ET + Non-Block, so when can't break until EAGAIN/EWOULDBLOCK
   while (true) {
     int connfd = listenfd_.Accept(peer_address);
-    std::cout << "connfd: " << connfd << std::endl;
     if (connfd > 0) {
       // WARNING: NOT copy ctor, RAII Handle will close fd, you have three methods:
-      // 1. move arguments
-      // 2. use file descriptor, NOT directly RAII Handle, unless use move, you'll release resource when leave this scope
+      // 1. move arguments, NOT USE MOVE , It'll close Handle!
+      // 2. use file descriptor, NOT directly RAII Handle,(RAII Handle will close the fd)
       // 3. use smart pointer. std::unique_ptr / std::shared_ptr.
       if (callback_)
         callback_(connfd, peer_address);
