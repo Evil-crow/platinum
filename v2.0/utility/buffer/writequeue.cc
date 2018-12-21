@@ -15,17 +15,23 @@ using namespace platinum;
 // so this won't cause race condition,
 // This means , we need't use lock to make it thread-safe
 
-void WriteQueue::TaskInQueue(int fd, const void *data, size_t total)
+void WriteQueue::TaskInQueue(int fd, const char *data, off64_t completed, size_t total)
 {
-  std::cout << "into taskinqueue" << '\n';
-  auto ptr = new platinum::WriteTask(fd, data, total);
-  queue_.push_front(ptr);
+  queue_.push_front(std::make_shared<WriteTask>(fd, data, completed, total));
+//  queue_.push_front(std::shared_ptr<Task>(new WriteTask(fd, data, total)));
 }
 
-//void WriteQueue::TaskInQueue(int outfd, int infd, size_t total)
-//{
-//  queue_.push_front(new SendTask(outfd, infd, total));
-//}
+void WriteQueue::TasKInQueue(int fd, const std::string &data, off64_t completed)
+{
+  TaskInQueue(fd, data.c_str(), completed, data.size());
+}
+
+void WriteQueue::TaskInQueue(int outfd, int infd, off64_t completed, size_t total)
+{
+  queue_.push_front(std::make_shared<SendTask>(outfd, infd, completed, total));
+//  queue_.push_front(std::shared_ptr<Task>(new SendTask(outfd, infd, total)));
+}
+
 
 /*
  * prototype:   bool WriteQueue::DoTask()

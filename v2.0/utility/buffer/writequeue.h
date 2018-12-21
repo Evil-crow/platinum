@@ -11,15 +11,16 @@
 
 namespace platinum {
 
-class WriteTask;
+class Task;
 class WriteQueue {
  public:
-  void TaskInQueue(int fd, const void *data, size_t total);
-//  void TaskInQueue(int outfd, int infd, size_t total);
+  void TaskInQueue(int fd, const char *data, off64_t completed, size_t total);
+  void TasKInQueue(int fd, const std::string &data, off64_t completed);
+  void TaskInQueue(int outfd, int infd, off64_t completed, size_t total);
   bool DoTask();
  private:
   // in order to avoid STL memory leak => shared_ptr, NOT unique_ptr ? think the essence of STL behavior
-  std::deque<WriteTask *> queue_;
+  std::deque<std::shared_ptr<Task>> queue_;
 };
 
 }
