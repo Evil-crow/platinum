@@ -30,8 +30,19 @@ set(
 )
 
 set(
+        _PLATINUM_BUFFER
+        utility/buffer/buffer.h
+        utility/buffer/buffer.cc
+        utility/buffer/writequeue.h
+        utility/buffer/writequeue.cc
+        utility/buffer/task.h
+        utility/buffer/task.cc
+)
+
+set(
         _PLATINUM_UTILITY
         ${_PLATINUM_LOGGER}
+        ${_PLATINUM_BUFFER}
         utility/noncopyable.h
 )
 
