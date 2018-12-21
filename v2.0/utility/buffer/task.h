@@ -11,13 +11,12 @@ namespace platinum {
 class WriteQueue;
 class Task {
  public:
-  Task() = default;
-  Task(int fd, size_t total);
+//  Task() = default;
+  Task(int fd, off64_t completed, size_t total);
   virtual ~Task() = default;
   virtual bool operator()(){};
 
  protected:
-
   int fd_{};
   size_t total_{};
   size_t remained_{};
@@ -26,19 +25,18 @@ class Task {
 
 class WriteTask : public Task {
  public:
-  WriteTask(int fd, const void *data, size_t total);
+  WriteTask(int fd, const char *data, off64_t completed, size_t total);
   ~WriteTask() override = default;
   bool operator()() final;
 
  private:
-  const void *data_;
+  const char *data_;
 };
 
 class SendTask : public Task {
  public:
-  SendTask(int outfd, int infd, size_t total);
+  SendTask(int outfd, int infd, off64_t completed, size_t total);
   ~SendTask() override = default;
-
   bool operator()() final;
 
  private:

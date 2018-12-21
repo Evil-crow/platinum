@@ -11,17 +11,17 @@
 #include "utility/logger.h"
 using namespace platinum;
 
-Task::Task(int fd, size_t total)
+Task::Task(int fd, off64_t completed, size_t total)
     : fd_(fd),
       total_(total),
       remained_(total),
-      completed_(0)
+      completed_(completed)
 {
   ;
 }
 
-WriteTask::WriteTask(int fd, const void *data, size_t total)
-    : Task(fd, total),
+WriteTask::WriteTask(int fd, const char *data, off64_t  completed, size_t total)
+    : Task(fd, completed, total),
       data_(data)
 {
   ;
@@ -41,13 +41,14 @@ bool WriteTask::operator()()
         return false;
       } else {
         LOG(ERROR) << "WriteTask::operator()";
+        std::abort();
       }
     }
   }
 }
 
-SendTask::SendTask(int outfd, int infd, size_t total)
-    : Task(outfd, total),
+SendTask::SendTask(int outfd, int infd, off64_t completed, size_t total)
+    : Task(outfd, completed, total),
       infd_(infd)
 {
   ;
@@ -67,6 +68,7 @@ bool SendTask::operator()()
         return false;
       } else {
         LOG(ERROR) << "SendTask::operator()";
+        std::abort();
       }
     }
   }
