@@ -55,10 +55,10 @@ void Acceptor::HandleEvent()
         callback_(connfd, peer_address);
     } else {
       if (errno == EAGAIN || errno == EWOULDBLOCK) {
-        LOG(INFO) << "Acceptor::HandleEvent Accept OK!";
+        LOG(INFO) << "Acceptor::HandleEvent";
         break;
       } else {
-        LOG(ERROR) << "Acceptor::HAndleEvent ERR";
+        LOG(ERROR) << "Acceptor::HAndleEvent()";
         std::abort();
       }
     }
