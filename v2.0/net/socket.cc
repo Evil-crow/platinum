@@ -61,7 +61,7 @@ bool Socket::SetReusePort(bool on)
       &val, static_cast<socklen_t>(sizeof(val)));
 
   if (ret < 0 && on) {
-    LOG(ERROR) << "Socket::SetReusePort";
+    LOG(ERROR) << "Socket::SetReusePort()";
     std::abort();
   }
 
@@ -76,7 +76,7 @@ bool Socket::SetKeepAlive(bool on)
       &val, static_cast<socklen_t>(sizeof(val)));
 
   if (ret < 0 && on) {
-    LOG(ERROR) << "Socket::SetKeepAlive";
+    LOG(ERROR) << "Socket::SetKeepAlive()";
     std::abort();
   }
 
@@ -91,7 +91,7 @@ bool Socket::SetTcpNoDelay(bool on)
       &val, static_cast<socklen_t>(sizeof(val)));
 
   if (ret < 0 && val) {
-    LOG(ERROR) << "Socket::SetTcpNoDelay";
+    LOG(ERROR) << "Socket::SetTcpNoDelay()";
     std::abort();
   }
 

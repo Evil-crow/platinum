@@ -18,7 +18,7 @@ int socket::Socket()
 {
   int fd = ::socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, IPPROTO_TCP);
   if (fd < 0) {
-    LOG(ERROR) << "socket::Socket";
+    LOG(ERROR) << "socket::Socket()";
     std::abort();
   }
 
@@ -28,7 +28,7 @@ int socket::Socket()
 bool socket::BindOrDie(int sockfd, const struct sockaddr *addr)
 {
   if (::bind(sockfd, addr, sizeof(struct sockaddr))) {
-    LOG(ERROR) << "socket::BindOrDie";
+    LOG(ERROR) << "socket::BindOrDie()";
     std::abort();
   }
 
@@ -38,7 +38,7 @@ bool socket::BindOrDie(int sockfd, const struct sockaddr *addr)
 bool socket::ListenOrDie(int sockfd, int backlog)
 {
   if (::listen(sockfd, backlog)) {
-    LOG(ERROR) << "socket::Listen";
+    LOG(ERROR) << "socket::Listen()";
     std::abort();
   }
 
@@ -58,7 +58,7 @@ int socket::Accept(int sockfd, IPAddress &address)
     if (errno == EAGAIN || errno == EWOULDBLOCK) {
       return -1;
     } else {
-      LOG(INFO) << "socket::accept";
+      LOG(ERROR) << "socket::Accept()";
       std::abort();
     }
   } else {
@@ -73,7 +73,7 @@ sockaddr_in socket::GetSockName(int sockfd)
   sockaddr_in sockaddr{};
   socklen_t len = sizeof(sockaddr);
   if (::getsockname(sockfd, reinterpret_cast<struct sockaddr *>(&sockaddr), &len)) {
-    LOG(ERROR) << "socket::GetSockName";
+    LOG(ERROR) << "socket::GetSockName()";
     std::abort();
   }
 
@@ -85,7 +85,7 @@ sockaddr_in socket::GetPeerName(int sockfd)
   sockaddr_in sockaddr{};
   socklen_t len = sizeof(sockaddr);
   if (::getsockname(sockfd, reinterpret_cast<struct sockaddr *>(&sockaddr), &len)) {
-    LOG(ERROR) << "socket::GetSockName";
+    LOG(ERROR) << "socket::GetPeerName()";
     std::abort();
   }
 
@@ -100,7 +100,7 @@ sockaddr *socket::SockaddrCast(sockaddr_in *sockaddr_)
 bool socket::Close(int sockfd)
 {
   if (::close(sockfd)) {
-    LOG(ERROR) << "Close Error";
+    LOG(ERROR) << "socket::Close()";
     std::abort();
   }
   return true;
@@ -109,7 +109,7 @@ bool socket::Close(int sockfd)
 bool socket::ShutdownWrite(int sockfd)
 {
   if (::shutdown(sockfd, SHUT_WR)) {
-    LOG(ERROR) << "socket::ShutdownWrite";
+    LOG(ERROR) << "socket::ShutdownWrite()";
     std::abort();
   }
 }
