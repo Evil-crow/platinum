@@ -18,7 +18,7 @@ class EPoller {
   explicit EPoller(EventLoop *loop);
   ~EPoller();
 
-  void Poll(int timeout, std::vector<Channel*> &active_channel);
+  void EPoll(int timeout, std::vector<Channel*> &active_channel);
   void AddChannel(Channel *channel);
   void UpdateChannel(Channel *channel);
   void RemoveChannel(int fd);

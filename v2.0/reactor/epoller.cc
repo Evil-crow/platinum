@@ -26,7 +26,7 @@ EPoller::~EPoller()
   ::close(epoll_fd_);
 }
 
-void EPoller::Poll(int timeout, std::vector<Channel*> &active_channels)
+void EPoller::EPoll(int timeout, std::vector<Channel*> &active_channels)
 {
   loop_->AssertInLoopThread();
   events_.clear();
@@ -35,7 +35,7 @@ void EPoller::Poll(int timeout, std::vector<Channel*> &active_channels)
                                  MAXEPOLLEVENT(),
                                  timeout);
   if (event_nums < 0) {
-    LOG(ERROR) << "EPoll ERROR";
+    LOG(ERROR) << "EPoller::EPoll()";
     std::abort();
   }
   FillActiveChannel(event_nums, active_channels);
@@ -67,7 +67,7 @@ void EPoller::AddChannel(Channel *channel)
   event.data.ptr = channel;
   event.events = channel->events();
   if (::epoll_ctl(epoll_fd_, EPOLL_CTL_ADD, channel->fd(), &event) < 0) {
-    LOG(ERROR) << "EPoller Add ERR";
+    LOG(ERROR) << "EPoller::AddChannel()";
     std::abort();
   }
 }
@@ -80,7 +80,7 @@ void EPoller::UpdateChannel(Channel *channel)
     event.data.ptr = channel;
     event.events = channel->events();
     if (::epoll_ctl(epoll_fd_, EPOLL_CTL_MOD, channel->fd(), &event) < 0) {
-        LOG(ERROR) << "EPoller Mod ERR";
+        LOG(ERROR) << "EPoller::UpdateChannel()";
         std::abort();
     }
 }
@@ -90,7 +90,7 @@ void EPoller::RemoveChannel(int fd)
   loop_->AssertInLoopThread();
 
   if (::epoll_ctl(epoll_fd_, EPOLL_CTL_DEL, fd, nullptr) < 0) {
-    LOG(ERROR) << "EPoller Del ERR";
+    LOG(ERROR) << "EPoller::RemoveChannel()";
     std::abort();
   }
 }
