@@ -4,7 +4,7 @@
  * brief: 
  */
 
-#include "request.h"
+#include "request_builder.h"
 
 #include <cstring>
 #include <algorithm>
@@ -64,9 +64,9 @@ bool RequestBuilder::BuildParamImpl(const std::string &name, const std::string &
                 static_cast<int>(ct_len),
                 static_cast<int>(pd_len));
 
-  auto param_ptr = std::shared_ptr<FCGIChar>(
-      new FCGIChar[total_len],
-      std::default_delete<RequestBuilder::FCGIChar []>());
+  auto param_ptr = std::shared_ptr<FCGIData>(
+      new FCGIData[total_len],
+      std::default_delete<fcgi::FCGIData []>());
   auto temp(param_ptr.get());
 
   ::memcpy(temp, &header, Base::FCGI_HEADER_LEN);
@@ -103,9 +103,9 @@ bool RequestBuilder::BuildEmptyParam()
   Header header(Type::FCGI_PARAMS,
                 request_id_,
                 0, 0);
-  auto param_ptr = std::shared_ptr<FCGIChar>(
-      new FCGIChar[Base::FCGI_HEADER_LEN],
-      std::default_delete<RequestBuilder::FCGIChar []>());
+  auto param_ptr = std::shared_ptr<FCGIData>(
+      new FCGIData[Base::FCGI_HEADER_LEN],
+      std::default_delete<fcgi::FCGIData []>());
   ::memcpy(param_ptr.get(), &header, Base::FCGI_HEADER_LEN);
   fcgi_params_.insert({param_ptr, Base::FCGI_HEADER_LEN});
 
@@ -133,9 +133,9 @@ bool RequestBuilder::BuildStdinImpl()
                   request_id_,
                   ct_len,
                   pd_len);
-    auto in_ptr = std::shared_ptr<FCGIChar>(
-        new FCGIChar[total_len],
-        std::default_delete<RequestBuilder::FCGIChar []>());
+    auto in_ptr = std::shared_ptr<FCGIData>(
+        new FCGIData[total_len],
+        std::default_delete<fcgi::FCGIData []>());
     auto temp(in_ptr.get());
 
     ::memcpy(temp, &header, Base::FCGI_HEADER_LEN);
@@ -161,9 +161,9 @@ bool RequestBuilder::BuildEmptyStdin()
   Header header(Type::FCGI_STDIN,
                 request_id_,
                 0, 0);
-  auto in_ptr = std::shared_ptr<FCGIChar>(
-      new FCGIChar[Base::FCGI_HEADER_LEN],
-      std::default_delete<RequestBuilder::FCGIChar []>());
+  auto in_ptr = std::shared_ptr<FCGIData>(
+      new FCGIData[Base::FCGI_HEADER_LEN],
+      std::default_delete<fcgi::FCGIData []>());
   ::memcpy(in_ptr.get(), &header, Base::FCGI_HEADER_LEN);
   fcgi_ins_.insert({in_ptr, Base::FCGI_HEADER_LEN});
 
