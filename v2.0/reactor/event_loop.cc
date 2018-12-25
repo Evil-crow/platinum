@@ -25,11 +25,11 @@ EventLoop::EventLoop()
       thread_id_(std::this_thread::get_id())
 {
   if (t_event_loop) {
-    LOG(ERROR) << "EventLoop has been created";
+    LOG(ERROR) << "EventLoop::EventLoop()";
     AbortInLoopThread();
   } else {
     t_event_loop = this;
-    LOG(INFO) << "EventLoop Created Success";
+    LOG(INFO) << "EventLoop has been created";
   }
 
   wakeup_channel_->EnableReading();
@@ -52,7 +52,7 @@ void EventLoop::Loop()
   while (!quit_.load()) {
     eventing_handling_.store(true);
     active_channels_.clear();
-    epoller_->Poll(12, active_channels_);
+    epoller_->EPoll(-1, active_channels_);
     for (const auto &channel : active_channels_)
       channel->HandleEvent();
     DoPendingFunctors();
@@ -72,7 +72,7 @@ void EventLoop::Quit()
 void EventLoop::AddChannel(Channel *channel)
 {
   if (!IsInLoopThread()) {
-    LOG(ERROR) << "Not in EventLoop Thread";
+    LOG(ERROR) << "EventLoop::AddChannel()";
     std::abort();
   }
   epoller_->AddChannel(channel);
@@ -81,7 +81,7 @@ void EventLoop::AddChannel(Channel *channel)
 void EventLoop::UpdateChannel(Channel *channel)
 {
     if (!IsInLoopThread()) {
-        LOG(ERROR) << "Not in EventLoop Thread";
+        LOG(ERROR) << "EventLoop::UpdateChannel()";
         std::abort();
     }
     epoller_->UpdateChannel(channel);
@@ -90,7 +90,7 @@ void EventLoop::UpdateChannel(Channel *channel)
 void EventLoop::RemoveChannel(int fd)
 {
   if (!IsInLoopThread()) {
-    LOG(ERROR) << "Not in EventLoop Thread";
+    LOG(ERROR) << "EventLoop::RemoveChannel()";
     std::abort();
   }
   epoller_->RemoveChannel(fd);
@@ -124,7 +124,7 @@ bool EventLoop::IsInLoopThread()
 
 void EventLoop::AbortInLoopThread()
 {
-  LOG(ERROR) << "EventLoop::AbortInLoopThread";
+  LOG(ERROR) << "EventLoop::AbortInLoopThread()";
   std::abort();
 }
 
