@@ -19,7 +19,6 @@ namespace fcgi {
 class BeginRequestRecord;
 class RequestBuilder {
  public:
-  using FCGIChar = unsigned char;
   RequestBuilder(int request_id,
                  int content_length,
                  const std::string &in,
@@ -27,10 +26,10 @@ class RequestBuilder {
 
   bool Build();
   auto begin_requset() -> const BeginRequestRecord & { return begin_request_; }
-  auto fcgi_params() -> const std::map<std::shared_ptr<unsigned char>, int> & {
+  auto fcgi_params() -> const std::map<std::shared_ptr<FCGIData>, int> & {
     return fcgi_params_;
   }
-  auto fcgi_in() -> const std::map<std::shared_ptr<unsigned char>, int> & {
+  auto fcgi_in() -> const std::map<std::shared_ptr<FCGIData>, int> & {
     return fcgi_ins_;
   }
 
@@ -48,8 +47,8 @@ class RequestBuilder {
   std::string in_;
   std::map<std::string, std::string> params_;
 
-  std::map<std::shared_ptr<unsigned char>, int> fcgi_params_;
-  std::map<std::shared_ptr<unsigned char>, int> fcgi_ins_;
+  std::map<std::shared_ptr<FCGIData>, int> fcgi_params_;
+  std::map<std::shared_ptr<FCGIData>, int> fcgi_ins_;
 };
 
 }
