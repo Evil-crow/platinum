@@ -33,7 +33,9 @@ class TCPConnection : public Noncopyable {
 
   // move TCPConnection callback to Channel
   void ConnectionEstablished();
-  void SendData(const void *data, size_t length);
+  void ShutDownConnection();
+  void SendData(const char *data, size_t total);
+  void SendFile(int file_fd, size_t total);
 
   // copy TCPServer callback -> TCPConnection, can't move, we'll create much TCPConnection by TCPServer::*callback
   void SetConnectionCallback(const EventCallback &callback);
@@ -47,6 +49,7 @@ class TCPConnection : public Noncopyable {
   void HandleClose();                                  // deal with hangup event, doing by Channel::close_callback_
 
   void ErrorCallback();                                // private function to record the error situation
+  void ShutdownInLoop();                               // push task in Loop to shutdown the connection
 
   EventLoop *loop_;
   std::unique_ptr<Socket> socket_;
