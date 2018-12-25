@@ -26,6 +26,19 @@ Header::Header(Type type,
   ;
 }
 
+Header::Header(Header::const_iter iter)
+    : version_(*iter),
+      type_(*(iter + 1)),
+      request_idB1(*(iter + 2)),
+      request_idB0(*(iter + 3)),
+      content_lengthB1(*(iter + 4)),
+      content_lengthB0(*(iter + 5)),
+      padding_length_(*(iter + 6)),
+      reserved_(*(iter + 7))
+{
+  ;
+}
+
 BeginRequestRecord::BeginRequestRecord(fcgi::Role role_,
                                        bool keeplive,
                                        fcgi::Type type,
@@ -38,4 +51,15 @@ BeginRequestRecord::BeginRequestRecord(fcgi::Role role_,
       flags_(static_cast<unsigned char>(keeplive ? 1 : 0))
 {
   ;
+}
+
+EndRequestRocord::EndRequestRocord(EndRequestRocord::const_iter iter)
+    : header_(iter)
+{
+  iter += 8;
+  appStatusB3    = (*iter);
+  appStatusB2    = (*(iter + 1));
+  appStatusB1    = (*(iter + 2));
+  appStatusB0    = (*(iter + 3));
+  protocolStatus = (*(iter + 4));
 }
