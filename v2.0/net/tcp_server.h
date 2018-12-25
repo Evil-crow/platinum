@@ -15,19 +15,21 @@
 namespace platinum {
 
 class Socket;
+class Buffer;
 class IPAddress;
 class EventLoop;
 class TCPConnection;
 class TCPServer {
  public:
   using EventCallback = std::function<void ()>;
+  using MessageCallback = std::function<bool (TCPConnection *, Buffer &)>;
 
   TCPServer(EventLoop *loop, IPAddress &address);
   ~TCPServer() = default;
 
   void Start();                                                             // When set all thing, we can start the server;
   void SetConnectionCallback(const EventCallback &callback);                // I don't use it usually, It means resource initlization for users connection
-  void SetMessageCallback(const EventCallback &callback);                   // When message on, callback for user to perform logical business
+  void SetMessageCallback(const MessageCallback &callback);                 // When message on, callback for user to perform logical business
                                               // Erase the TCPConnection which will be removed
 
  private:
@@ -38,7 +40,7 @@ class TCPServer {
   std::unique_ptr<Acceptor> acceptor_;                               // TCPServer holds Acceptor exclusivly
   std::unordered_map<int, std::shared_ptr<TCPConnection>> TCPConnectionMap_;              // use unordered_map to improve search efficiency
   EventCallback connection_callback_;
-  EventCallback message_callback_;
+  MessageCallback message_callback_;
   std::atomic<bool> starting_;
 };
 
