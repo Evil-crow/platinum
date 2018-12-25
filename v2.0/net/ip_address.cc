@@ -39,7 +39,7 @@ sockaddr_in IPAddress::ToSockaddrIn() const
   sockaddr_.sin_port = ::htons(port_);
   const char *str = ip_.c_str();
   if (::inet_pton(family_, str, &sockaddr_.sin_addr) < 1) {
-    LOG(ERROR) << "IPAddress::ToSockaddrIn -> ::inet_pton";
+    LOG(ERROR) << "IPAddress::ToSockaddrIn()";
     std::abort();
   }
 
