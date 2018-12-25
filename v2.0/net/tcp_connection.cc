@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <unistd.h>
+#include <sys/sendfile.h>
 
 #include "net/socket.h"
 #include "reactor/event_loop.h"
@@ -34,22 +35,72 @@ TCPConnection::~TCPConnection()
 
 void TCPConnection::ConnectionEstablished()
 {
-//  channel_->EnableET();
+  channel_->EnableET();
   channel_->EnableReading();
   channel_->EnableHangUp();
   channel_->EnableError();
   channel_->SetReadCallback  ([this]()  { TCPConnection::HandleRead(); });
+  channel_->SetWriteCallback ([this]()  { TCPConnection::HandleWrite(); });
   channel_->SetCloseCallback ([this]()  { TCPConnection::HandleClose(); });
   channel_->SetErrorCallback ([this]()  { TCPConnection::HandleError(); });
   loop_->AddChannel(channel_.get());
 }
 
-void TCPConnection::SendData(const void *data, size_t length)
+void TCPConnection::ShutDownConnection()
 {
-  channel_->EnableWriteing();
-  channel_->SetWriteCallback([this]() { TCPConnection::HandleWrite(); });
-  loop_->UpdateChannel(channel_.get());
-  write_queue_.TaskInQueue(socket_->fd(), data, length);
+  ShutdownInLoop();
+}
+
+void TCPConnection::ShutdownInLoop()
+{
+  loop_->RunInLoop([this]() { socket::ShutdownWrite(socket_->fd()); });
+}
+
+void TCPConnection::SendData(const char *data, size_t total) {
+  size_t completed_(0), remained_(total);
+  while (true) {
+    auto var = ::write(socket_->fd(), data, total);
+    if (var > 0) {
+      if (var == total) {
+        return ;
+      } else {
+        completed_ += var;
+        remained_ -= var;
+      }
+    } else {
+      if (errno == EAGAIN || errno == EWOULDBLOCK) {
+        channel_->EnableWriteing();
+        loop_->UpdateChannel(channel_.get());
+        write_queue_.TaskInQueue(socket_->fd(), data, completed_, remained_);
+      } else {
+        LOG(ERROR) << "TCPConnection::SendData()";
+      }
+    }
+  }
+}
+
+void TCPConnection::SendFile(int file_fd, size_t total)
+{
+  size_t completed_(0), remained_(total);
+  while (true) {
+    auto var = ::sendfile64(socket_->fd(), file_fd, nullptr, total);
+    if (var > 0) {
+      if (var == total) {
+        return ;
+      } else {
+        completed_ += var;
+        remained_ -= var;
+      }
+    } else {
+      if (errno == EAGAIN || errno == EWOULDBLOCK) {
+        channel_->EnableWriteing();
+        loop_->UpdateChannel(channel_.get());
+        write_queue_.TaskInQueue(socket_->fd(), file_fd, completed_, remained_);
+      } else {
+        LOG(ERROR) << "TCPConnection::SendData()";
+      }
+    }
+  }
 }
 
 void TCPConnection::HandleRead() {
@@ -60,7 +111,6 @@ void TCPConnection::HandleRead() {
 
 void TCPConnection::HandleWrite()
 {
-  std::cout << "Handle Write" << std::endl;
   if (write_queue_.DoTask()) {
     channel_->DisableWriting();
     loop_->UpdateChannel(channel_.get());
@@ -79,7 +129,7 @@ void TCPConnection::HandleError()
 
 void TCPConnection::ErrorCallback()
 {
-  LOG(ERROR) << "TCPConnection::ErrorCallback: Handle Event Error, Close Connection";
+  LOG(ERROR) << "TCPConnection::ErrorCallback()";
   HandleClose();
 }
 
@@ -97,3 +147,4 @@ void TCPConnection::SetCloseCallback(const CloseCallback &callback)
 {
   close_callback_ = callback;
 }
+
