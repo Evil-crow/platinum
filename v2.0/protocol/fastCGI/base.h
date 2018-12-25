@@ -11,6 +11,7 @@
 
 namespace fcgi {
 
+using FCGIData = unsigned char;
 /*
  * Variable names for FCGI_GET_VALUES / FCGI_GET_VALUES_RESULT records
  */
