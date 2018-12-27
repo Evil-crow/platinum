@@ -32,12 +32,13 @@ class ResponseParser {
   int parser_pos()        { return parser_pos_; }
   long long app_status()  { return app_status_; }
   State state()           { return static_cast<State>(state_); }
+  Status status()         { return static_cast<Status>(status_); }
   bool Complete()         { return complete_; }
 
  private:
   void ParserStdout(const_iter &iter, int &length, int ct_len, int pd_len);
   void ParserStderr(const_iter &iter, int &length, int ct_len, int pd_len);
-  void ParserEndRequest(const_iter &iter, int &length);
+  void ParserEndRequest(const_iter &iter);
 
   std::vector<FCGIData> transform_data_;
   std::vector<FCGIData> name_value_data_;
