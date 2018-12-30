@@ -10,7 +10,7 @@
 
 using namespace platinum;
 
-Socket::Socket() : sockfd_(socket::Socket())
+Socket::Socket(socket::Type type) : sockfd_(socket::Socket(type))
 {
   ;
 }
@@ -36,10 +36,9 @@ Socket::~Socket()
   socket::Close(sockfd_);
 }
 
-void Socket::Bind(const IPAddress &address)
+void Socket::Bind(const Address &address)
 {
-  sockaddr_in sockaddr = address.ToSockaddrIn();
-  socket::BindOrDie(sockfd_, socket::SockaddrCast(&sockaddr));
+  socket::BindOrDie(sockfd_, address.SockaddrPtr());
 }
 
 void Socket::Listen()

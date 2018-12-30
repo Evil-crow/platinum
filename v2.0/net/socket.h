@@ -13,8 +13,9 @@ namespace platinum {
 class IPAddress;
 class Socket {
  public:
-  Socket();
+  explicit Socket(socket::Type type);
   explicit Socket(int sockfd);
+
 //  Socket Resource Class not support Copy Constructor
   Socket(const Socket &) = default;
   Socket &operator=(const Socket &) = default;
@@ -22,7 +23,7 @@ class Socket {
   Socket& operator=(Socket &&) noexcept;
   ~Socket();
 
-  void Bind(const IPAddress &address);
+  void Bind(const Address &address);
   void Listen();
   int Accept(IPAddress &address);
 

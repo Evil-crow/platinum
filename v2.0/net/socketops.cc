@@ -14,9 +14,9 @@
 
 using namespace platinum;
 
-int socket::Socket()
+int socket::Socket(Type type)
 {
-  int fd = ::socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, IPPROTO_TCP);
+  int fd = ::socket(type, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, IPPROTO_TCP);
   if (fd < 0) {
     LOG(ERROR) << "socket::Socket()";
     std::abort();
@@ -90,11 +90,6 @@ sockaddr_in socket::GetPeerName(int sockfd)
   }
 
   return sockaddr;
-}
-
-sockaddr *socket::SockaddrCast(sockaddr_in *sockaddr_)
-{
-  return reinterpret_cast<struct sockaddr *>(sockaddr_);
 }
 
 bool socket::Close(int sockfd)
