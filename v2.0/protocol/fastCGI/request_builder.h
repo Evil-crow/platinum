@@ -14,6 +14,7 @@
 
 #include "component.h"
 
+namespace platinum {
 namespace fcgi {
 
 class BeginRequestRecord;
@@ -51,6 +52,7 @@ class RequestBuilder {
   std::map<std::shared_ptr<FCGIData>, int> fcgi_ins_;
 };
 
+}
 }
 
 #endif //PLATINUM_REQUEST_H

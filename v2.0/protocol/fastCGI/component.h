@@ -38,6 +38,7 @@
 #include <vector>
 #include "base.h"
 
+namespace platinum {
 namespace fcgi {
 
 class Header {
@@ -47,8 +48,8 @@ class Header {
   explicit Header(const_iter iter);
   Header(Type type, int request_id, int content_length, int pending_length);
 
-  Type type()          { return static_cast<Type>(type_); }
-  int request_id()     { return (request_idB1 << 8) + request_idB0; }
+  Type type() { return static_cast<Type>(type_); }
+  int request_id() { return (request_idB1 << 8) + request_idB0; }
   int content_length() { return (content_lengthB1 << 8) + content_lengthB0; }
   int padding_length() { return padding_length_; }
  private:
@@ -90,8 +91,8 @@ class EndRequestRocord {
         appStatusB0;
   }
 
-  State protocol_status() {
-    return static_cast<State>(protocolStatus);
+  Status protocol_status() {
+    return static_cast<Status>(protocolStatus);
   }
 
  private:
@@ -104,6 +105,7 @@ class EndRequestRocord {
   unsigned char reserved[3];
 };
 
+}
 }
 
 #endif //PLATINUM_COMPONENT_H

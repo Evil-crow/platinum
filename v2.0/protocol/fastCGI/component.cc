@@ -8,7 +8,7 @@
 
 #include "base.h"
 
-using namespace fcgi;
+using namespace platinum::fcgi;
 
 Header::Header(Type type,
                int request_id,

@@ -10,7 +10,7 @@
 #include <algorithm>
 #include <iostream>
 #include <memory>
-using namespace fcgi;
+using namespace platinum::fcgi;
 
 RequestBuilder::RequestBuilder(int request_id,
                int content_length,

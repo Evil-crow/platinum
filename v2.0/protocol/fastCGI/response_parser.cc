@@ -10,9 +10,9 @@
 #include <cstring>
 #include <string>
 
-using namespace fcgi;
+using namespace platinum::fcgi;
 
-fcgi::ResponseParser::ResponseParser()
+ResponseParser::ResponseParser()
     : request_id_(-1),
       parser_pos_(-1),
       transform_len_(0),
@@ -75,15 +75,22 @@ bool ResponseParser::feed(ResponseParser::const_iter iter, int length)
     auto ct_len = header.content_length();
     auto pd_len = header.padding_length();
     switch (header.type()) {
-      case Type::FCGI_STDOUT: ParserStdout(iter, length, ct_len, pd_len); break;
-      case Type::FCGI_STDERR: ParserStderr(iter, length, ct_len, pd_len); break;
-      case Type::FCGI_END_REQUEST: ParserEndRequest(iter); break;
+      case Type::FCGI_STDOUT: ParseStdout(iter, length, ct_len, pd_len); break;
+      case Type::FCGI_STDERR: ParseStderr(iter, length, ct_len, pd_len); break;
+      case Type::FCGI_END_REQUEST: ParseEndRequest(iter); break;
       default: break;
     }
   }
 }
 
-void ResponseParser::ParserStdout(const_iter &iter, int &length, int ct_len, int pd_len)
+/**
+ * @brief To parse the STDOUT part
+ * @param iter buffer's iterator (ref)
+ * @param length buffer's length (ref)
+ * @param ct_len the content length of FCGI_STDOUT
+ * @param pd_len the padding length of FCGI_STDOUT
+ */
+void ResponseParser::ParseStdout(const_iter &iter, int &length, int ct_len, int pd_len)
 {
   if (ct_len == 0 && pd_len == 0)
     return ;
@@ -129,7 +136,15 @@ void ResponseParser::ParserStdout(const_iter &iter, int &length, int ct_len, int
   }
 }
 
-void ResponseParser::ParserStderr(const_iter &iter, int &length, int ct_len, int pd_len)
+/**
+ * @beief To parse the STDERR part
+ * @param iter buffer's iterator (ref)
+ * @param length buffer's length (ref)
+ * @param ct_len the conten length of FCGI_STDERR
+ * @param pd_len the padding length of FCGI_STDERR
+ */
+
+void ResponseParser::ParseStderr(const_iter &iter, int &length, int ct_len, int pd_len)
 {
   if (ct_len == 0 && pd_len == 0)
     return ;
@@ -158,9 +173,13 @@ void ResponseParser::ParserStderr(const_iter &iter, int &length, int ct_len, int
   }
 }
 
-void ResponseParser::ParserEndRequest(const_iter &iter)
+/**
+ * @brief To parse the EndRequestRecord part
+ * @param iter Buffer's iterator
+ */
+void ResponseParser::ParseEndRequest(const_iter &iter)
 {
-  iter -= sizeof(Header);
+  iter -= sizeof(Header);                               // back to the Header's start to constrcut the EndRequestRecord
 
   EndRequestRocord end_request_record(iter);
 

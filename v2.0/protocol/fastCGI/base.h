@@ -9,6 +9,7 @@
 #ifndef PLATINUM_BASE_H
 #define PLATINUM_BASE_H
 
+namespace platinum {
 namespace fcgi {
 
 using FCGIData = unsigned char;
@@ -24,44 +25,43 @@ enum Base : int {
    * Number of bytes in a FCGI_Header.  Future versions of the protocol
    * will not reduce this number.
    */
-   FCGI_HEADER_LEN = 8,
+      FCGI_HEADER_LEN = 8,
 
   /*
    * Value for version component of FCGI_Header
    */
-  FCGI_VERSION_1 = 1,
+      FCGI_VERSION_1 = 1,
 
   /*
    * Value for requestId component of FCGI_Header
    */
-  FCGI_NULL_REQUEST_ID = 0,
+      FCGI_NULL_REQUEST_ID = 0,
 
   /*
    * Mask for flags component of FCGI_BeginRequestBody
    */
-  FCGI_KEEP_CONN = 1,
-
+      FCGI_KEEP_CONN = 1,
 
   /*
    * Send STDIN data max length each time
    */
-  FCGI_MAX_LENGTH = 1024,
+      FCGI_MAX_LENGTH = 1024,
 };
 
 enum Role : int {
   /*
    * Values for role component of FCGI_BeginRequestBody
    */
-  FCGI_RESPONDER = 1,
+      FCGI_RESPONDER = 1,
   FCGI_AUTHORIZER = 2,
   FCGI_FILTER = 3,
 };
 
-enum State : int {
+enum Status : int {
   /*
    * Values for protocolStatus component of FCGI_EndRequestBody
    */
-  FCGI_REQUEST_COMPLETE = 0,
+      FCGI_REQUEST_COMPLETE = 0,
   FCGI_CANT_MPX_CONN = 1,
   FCGI_OVERLOADED = 2,
   FCGI_UNKNOWN_ROLE = 3,
@@ -85,6 +85,7 @@ enum Type : int {
   FCGI_MAXTYPE = 11,
 };
 
+}
 }
 
 #endif //PLATINUM_BASE_H
