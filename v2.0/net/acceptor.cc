@@ -18,7 +18,7 @@ using namespace platinum;
 Acceptor::Acceptor(EventLoop *loop, const IPAddress &address)
     : loop_(loop),
       address_(address),
-      listenfd_(socket::Socket()),
+      listenfd_(socket::Socket(socket::Type::INET)),
       channel_(std::make_unique<Channel>(loop, listenfd_.fd())),
       listening_(false)
 {
