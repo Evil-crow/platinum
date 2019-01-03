@@ -6,21 +6,30 @@
 
 #include <iostream>
 #include "net/acceptor.h"
-#include "net/tcp_connection.h"
+#include "net/connector.h"
+#include "net/connection.h"
 #include "reactor/event_loop.h"
 #include "utility/logger.h"
 
 using namespace platinum;
 
-TCPServer::TCPServer(EventLoop *loop, IPAddress &address)
+thread_local TcpServer *t_tcp_server = nullptr;
+
+TcpServer::TcpServer(EventLoop *loop, IPAddress &address)
     : loop_(loop),
       acceptor_(std::make_unique<Acceptor>(loop, address)),
       starting_(false)
 {
-  ;
+  if (t_tcp_server) {
+    LOG(ERROR) << "TcpServer::Tcpserver() => one server per thread";
+    std::abort();
+  } else {
+    t_tcp_server = this;
+    LOG(INFO) << "TcpServer has been created";
+  }
 }
 
-void TCPServer::Start()
+void TcpServer::Start()
 {
   starting_.store(true);
   acceptor_->SetConnectionCallback(
@@ -31,7 +40,7 @@ void TCPServer::Start()
   loop_->Loop();
 }
 
-void TCPServer::OnConnectionCallback(int fd, const IPAddress &peer_address)
+void TcpServer::OnConnectionCallback(int fd, const IPAddress &peer_address)
 {
   loop_->AssertInLoopThread();
 
@@ -41,33 +50,72 @@ void TCPServer::OnConnectionCallback(int fd, const IPAddress &peer_address)
   std::string str(peer_address.ip() + ":" + std::to_string(peer_address.port()));
   LOG(INFO) << std::move(str);
 
-  auto connection_ptr = std::make_shared<TCPConnection>(
-      loop_, fd, peer_address, local_address
-  );
+  auto connection_ptr = std::make_shared<Connection>(loop_, fd);
   connection_ptr->SetMessageCallback(message_callback_);
   connection_ptr->SetConnectionCallback([this]() { connection_callback_(); });
   connection_ptr->SetCloseCallback([this](int fd){ EraseConnection(fd); });
   connection_ptr->ConnectionEstablished();
 
-  TCPConnectionMap_.emplace(fd, connection_ptr);
+  connections_.emplace(fd, connection_ptr);
 }
 
-void TCPServer::EraseConnection(int fd)
+void TcpServer::NewConnection(const Connector *connector)
 {
-  loop_->AssertInLoopThread();
-  if (TCPConnectionMap_.find(fd) != TCPConnectionMap_.end()) {
-    loop_->RemoveChannel(fd);
-    TCPConnectionMap_.erase(fd);
-  }
-  LOG(INFO) << "TCPServer::EraseConnection";
+  auto fd = connector->fd();
+  auto connection_ptr = connector->connection_ptr();
+  connection_ptr->SetMessageCallback(connector->message_callback());
+  connection_ptr->SetWriteCallback(connector->writeable_callback());
+  connection_ptr->SetCloseCallback([this](int fd) { EraseConnection(fd); });
+  connection_ptr->ConnectionEstablished();
+
+  connections_.insert({fd, connection_ptr});
 }
 
-void TCPServer::SetConnectionCallback(const EventCallback &callback)
+void TcpServer::EraseConnection(int fd) {
+  loop_->AssertInLoopThread();
+  if (connections_.find(fd) != connections_.end()) {
+    loop_->RemoveChannel(fd);
+    connections_.erase(fd);
+  } else {
+    LOG(INFO) << "TcpServer::EraseConnection()  => fd Invilid Error";
+    std::abort();
+  }
+}
+
+auto TcpServer::NewConnector(const IPAddress &address) -> std::shared_ptr<Connector>
+{
+  auto ptr = std::make_shared<Connector>(loop_, address);
+  return ptr;
+}
+
+auto TcpServer::NewConnector(const UnixAddress &address) -> std::shared_ptr<Connector>
+{
+  auto ptr = std::make_shared<Connector>(loop_, address);
+  return ptr;
+}
+
+void TcpServer::SetConnectionCallback(const EventCallback &callback)
 {
   connection_callback_ = callback;
 }
 
-void TCPServer::SetMessageCallback(const MessageCallback &callback)
+void TcpServer::SetMessageCallback(const MessageCallback &callback)
 {
   message_callback_ = callback;
+}
+
+TcpServer *platinum::GetCurrentServer()
+{
+  return t_tcp_server;
+}
+
+void TcpServer::ForceClose(int fd)
+{
+  if (connections_.find(fd) != connections_.end()) {
+    connections_.erase(fd);
+    LOG(INFO) << "TcpServer::ForceClose() => Force Close Connection";
+  } else {
+    LOG(ERROR) << "TcpServer::ForceClose() => Not This Connection";
+    std::abort();
+  }
 }

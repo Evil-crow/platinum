@@ -11,6 +11,7 @@
 #include <unordered_map>
 
 #include "net/acceptor.h"
+#include "net/connector.h"
 
 namespace platinum {
 
@@ -18,31 +19,37 @@ class Socket;
 class Buffer;
 class IPAddress;
 class EventLoop;
-class TCPConnection;
-class TCPServer {
+class Connection;
+class TcpServer {
  public:
   using EventCallback = std::function<void ()>;
-  using MessageCallback = std::function<bool (TCPConnection *, Buffer &)>;
+  using MessageCallback = std::function<bool (Connection *, Buffer &)>;
 
-  TCPServer(EventLoop *loop, IPAddress &address);
-  ~TCPServer() = default;
+  TcpServer(EventLoop *loop, IPAddress &address);
+  ~TcpServer() = default;
 
   void Start();                                                             // When set all thing, we can start the server;
   void SetConnectionCallback(const EventCallback &callback);                // I don't use it usually, It means resource initlization for users connection
   void SetMessageCallback(const MessageCallback &callback);                 // When message on, callback for user to perform logical business
-                                              // Erase the TCPConnection which will be removed
+  void NewConnection(const Connector *connector);
+  void ForceClose(int fd);
+  auto NewConnector(const IPAddress &address) -> std::shared_ptr<Connector>;
+  auto NewConnector(const UnixAddress &address) -> std::shared_ptr<Connector>;
+
 
  private:
-  void OnConnectionCallback(int fd, const IPAddress &address);             // private method for Acceptor::callback_; to construct TCPConnection
+  void OnConnectionCallback(int fd, const IPAddress &address);             // private method for Acceptor::callback_; to construct Connection
   void EraseConnection(int fd);
 
   EventLoop *loop_;
-  std::unique_ptr<Acceptor> acceptor_;                               // TCPServer holds Acceptor exclusivly
-  std::unordered_map<int, std::shared_ptr<TCPConnection>> TCPConnectionMap_;              // use unordered_map to improve search efficiency
+  std::unique_ptr<Acceptor> acceptor_;                                            // TcpServer holds Acceptor exclusivly
+  std::unordered_map<int, std::shared_ptr<Connection>> connections_;              // use unordered_map to improve search efficiency
   EventCallback connection_callback_;
   MessageCallback message_callback_;
   std::atomic<bool> starting_;
 };
+
+TcpServer *GetCurrentServer();
 
 }
 
