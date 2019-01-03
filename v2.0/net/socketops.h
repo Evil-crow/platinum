@@ -23,6 +23,7 @@ int Socket(Type type);
 bool BindOrDie(int sockfd, const struct sockaddr *addr);
 bool ListenOrDie(int sockfd, int backlog);
 int Accept(int sockfd, IPAddress &address);
+bool Connect(int sockfd, const struct sockaddr *addr);
 bool Close(int sockfd);
 bool ShutdownWrite(int sockfd);
 sockaddr_in GetSockName(int sockfd);

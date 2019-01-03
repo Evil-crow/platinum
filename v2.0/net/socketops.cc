@@ -45,6 +45,16 @@ bool socket::ListenOrDie(int sockfd, int backlog)
   return true;
 }
 
+bool socket::Connect(int sockfd, const struct sockaddr *addr)
+{
+  if (::connect(sockfd, addr, sizeof(sockaddr))) {
+    LOG(ERROR) << "scokaet::Connect() => Connect Error";
+    std::abort();
+  }
+
+  return true;
+}
+
 int socket::Accept(int sockfd, IPAddress &address)
 {
   sockaddr_in sockaddrin{};
