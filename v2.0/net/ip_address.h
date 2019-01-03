@@ -10,11 +10,15 @@
 #include <string>
 #include <utility>
 
+#include "net/address.hpp"
+
 namespace platinum {
 
-class IPAddress {
+class IPAddress : public Address {
  public:
-  IPAddress() = default;
+  IPAddress() : Address(AF_INET) { ; }
+  ~IPAddress() override = default;
+
   explicit IPAddress(in_port_t port);
   explicit IPAddress(sockaddr_in sockaddr);
   IPAddress(const IPAddress &&address) noexcept;
@@ -22,18 +26,25 @@ class IPAddress {
 
   IPAddress(const IPAddress &rhs) = default;
   IPAddress(in_port_t port, std::string ip)
-      : family_(AF_INET), port_(port), ip_(std::move(ip)) {}
+      : Address(AF_INET),
+        port_(port),
+        ip_(std::move(ip))
+  {
+     addr_ = ToSockaddrIn();
+  }
 
   void set_port(in_port_t port);
-  void set_ip(std::string str);
+  void set_ip(const std::string &str);
   const in_port_t &port() const;
   const std::string &ip() const;
-  sockaddr_in ToSockaddrIn() const;
+  const sockaddr *SockaddrPtr() const override;
 
  private:
-  sa_family_t family_{};
+  sockaddr_in ToSockaddrIn() const;
+
   in_port_t port_{};
   std::string ip_;
+  sockaddr_in addr_{};
 };
 
 }

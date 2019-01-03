@@ -15,35 +15,23 @@
 using namespace platinum;
 
 IPAddress::IPAddress(in_port_t port)
-      : family_(AF_INET), port_(port)
+      : Address(AF_INET),
+        port_(port)
 {
   in_addr temp{INADDR_ANY};
   auto str = ::inet_ntoa(temp);
   ip_ = std::string(str);
+  addr_ = ToSockaddrIn();
 }
 
 IPAddress::IPAddress(sockaddr_in sockaddr)
-      : family_(sockaddr.sin_family),
+      : Address(sockaddr.sin_family),
         port_(::ntohs(sockaddr.sin_port))
 {
     in_addr temp{sockaddr.sin_addr};
     auto str = ::inet_ntoa(temp);
     ip_ = std::string(str);
-}
-
-sockaddr_in IPAddress::ToSockaddrIn() const
-{
-  sockaddr_in sockaddr_{};
-
-  sockaddr_.sin_family = family_;
-  sockaddr_.sin_port = ::htons(port_);
-  const char *str = ip_.c_str();
-  if (::inet_pton(family_, str, &sockaddr_.sin_addr) < 1) {
-    LOG(ERROR) << "IPAddress::ToSockaddrIn()";
-    std::abort();
-  }
-
-  return sockaddr_;
+    addr_ = ToSockaddrIn();
 }
 
 const in_port_t &IPAddress::port() const
@@ -61,16 +49,17 @@ void IPAddress::set_port(in_port_t port)
   port_ = port;
 }
 
-void IPAddress::set_ip(std::string str)
+void IPAddress::set_ip(const std::string &str)
 {
-  ip_ = std::move(str);
+  ip_ = str;
 }
 
 IPAddress::IPAddress(const IPAddress &&address) noexcept
+    : Address(address.family_)
 {
-  family_ =address.family_;
   port_ = address.port_;
   ip_ = address.ip_;
+  addr_ = ToSockaddrIn();
 }
 
 
@@ -79,6 +68,27 @@ IPAddress& IPAddress::operator=(IPAddress &&address) noexcept
   family_ = address.family_;
   port_ = address.port_;
   ip_ = address.ip_;
+  addr_ = address.addr_;
 
   return *this;
+}
+
+sockaddr_in IPAddress::ToSockaddrIn() const
+{
+  sockaddr_in addr{};
+
+  addr.sin_family = family_;
+  addr.sin_port = ::htons(port_);
+  const char *str = ip_.c_str();
+  if (::inet_pton(family_, str, &addr.sin_addr) < 1) {
+    LOG(ERROR) << "IPAddress::ToSockaddrIn()";
+    std::abort();
+  }
+
+  return addr;
+}
+
+const sockaddr *IPAddress::SockaddrPtr() const
+{
+  return reinterpret_cast<const sockaddr *>(&addr_);
 }
