@@ -27,7 +27,7 @@ void LoggerOn::operator<<(const std::string &&vec)
   std::time_t t_ = std::time(nullptr);
   std::strftime(time, sizeof(time), "%Y/%m/%d %H:%M:%S ", std::localtime(&t_));
 
-  std::fstream of("../Platinum.log", std::ios::out | std::ios::app);
+  std::fstream of("../platinum.log", std::ios::out | std::ios::app);
   of << time << "[" << log_priority << "]: ";
   of << vec << std::endl;
 
