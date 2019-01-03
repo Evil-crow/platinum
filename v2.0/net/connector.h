@@ -23,26 +23,34 @@ class UnixAddress;
 class Connector {
  public:
   using MessageCallback = std::function<bool (Connection *, Buffer &)>;
+  using WriteableCallback = std::function<void()>;
 
   Connector(EventLoop *loop, const IPAddress &address);
   Connector(EventLoop *loop, const UnixAddress &address);
-  ~Acceptor() = default;
+  ~Connector() = default;
 
-  void HandleEvent();                                                          // deal with the readable event -> Get Connection
-  void StartConnection();
-  void SetReadCallback();
-
+  void StartNewConnection();
   void SendData(const char *data, size_t total);
   void SendFile(int file_fd, size_t total);
+  void ShutdownConnection();
 
   // copy TCPServer callback -> TCPConnection, can't move, we'll create much TCPConnection by TCPServer::*callback
   void SetMessageCallback(const MessageCallback &callback);
+  void SetWriteCallback(const WriteableCallback &callback);
+  const MessageCallback &message_callback() const;
+  const WriteableCallback &writeable_callback() const;
 
+  int fd() const { return fd_; }
+  auto connection_ptr() const -> std::shared_ptr<Connection>;
  private:
+  void HandleEvent();
+
+  int fd_;                                                                     // Not RAII Handle, only store the fd, resource managment to TCPConnection
   EventLoop *loop_;                                                            // use loop to control resource, like AddChannel()
-  int connfd_;                                                                 // Not RAII Handle, only store the fd, resource managment to TCPConnection
-  std::unique_ptr<Address> address_;                                                            // Address, Bind with this
+  std::unique_ptr<Address> address_;                                           // Address, Bind with this
   std::shared_ptr<Connection> connection_ptr_;
+  WriteableCallback write_callback_;
+  MessageCallback message_callback_;
 };
 
 }
