@@ -19,24 +19,19 @@ include_directories(${PROJECT_SOURCE_DIR})
 
 set(
         _PLATINUM_CONFIG
-        config/config.h
-        config/config.cc
+        config/config.h config/config.cc
 )
 
 set(
         _PLATINUM_LOGGER
-        utility/logger.h
-        utility/logger.cc
+        utility/logger.h utility/logger.cc
 )
 
 set(
         _PLATINUM_BUFFER
-        utility/buffer/buffer.h
-        utility/buffer/buffer.cc
-        utility/buffer/writequeue.h
-        utility/buffer/writequeue.cc
-        utility/buffer/task.h
-        utility/buffer/task.cc
+        utility/buffer/buffer.h utility/buffer/buffer.cc
+        utility/buffer/writequeue.h utility/buffer/writequeue.cc
+        utility/buffer/task.h utility/buffer/task.cc
 )
 
 set(
@@ -48,33 +43,45 @@ set(
 
 set(
         _PLATINUM_REACTOR
-        reactor/epoller.h
-        reactor/epoller.cc
-        reactor/event_loop.h
-        reactor/event_loop.cc
-        reactor/channel.h
-        reactor/channel.cc
+        reactor/epoller.h reactor/epoller.cc
+        reactor/event_loop.h reactor/event_loop.cc
+        reactor/channel.h reactor/channel.cc
 )
-
+set(
+        _PLATINUM_ADDRESS
+        net/address.hpp
+        net/ip_address.h net/ip_address.cc
+        net/unix_address.cc net/unix_address.h
+)
 set(
         _PLATINUM_SOCKET
-        net/ip_address.cc
-        net/ip_address.h
-        net/socket.h
-        net/socket.cc
-        net/socketops.h
-        net/socketops.cc
+        net/socket.h net/socket.cc
+        net/socketops.h net/socketops.cc
 )
 set(
         _PLATINUM_NET
         ${_PLATINUM_SOCKET}
-        net/acceptor.h
-        net/acceptor.cc
-        net/tcp_server.h
-        net/tcp_server.cc
-        net/tcp_connection.h
-        net/tcp_connection.cc
+        ${_PLATINUM_ADDRESS}
+        net/acceptor.h net/acceptor.cc
+        net/tcp_server.h net/tcp_server.cc
+        net/connection.h net/connection.cc
+        net/connector.cc net/connector.h
 )
+set(
+        _PLATINUM_HTTP
+        protocol/http/response_builder.cc protocol/http/response_builder.h protocol/http/request_parser.cc protocol/http/request_parser.h protocol/http/base.h)
+set(
+        _PLATINUM_FCGI
+        protocol/fastCGI/base.h
+        protocol/fastCGI/component.h protocol/fastCGI/component.cc
+        protocol/fastCGI/request_builder.h protocol/fastCGI/request_builder.cc
+        protocol/fastCGI/response_parser.h protocol/fastCGI/response_parser.cc
+)
+set(
+        _PLATINUM_PROTOCOL
+        ${_PLATINUM_FCGI}
+        ${_PLATINUM_HTTP}
+        protocol/parser.hpp)
 
 set(
         EXECUTE_FILE
@@ -83,6 +90,7 @@ set(
         ${_PLATINUM_UTILITY}
         ${_PLATINUM_NET}
         ${_PLATINUM_REACTOR}
+        ${_PLATINUM_PROTOCOL}
 )
 
 # add sub directory, these directory must have their own CMakeLists.txt
