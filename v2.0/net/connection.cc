@@ -31,6 +31,7 @@ Connection::~Connection()
 void Connection::ConnectionEstablished()
 {
   channel_->EnableET();
+  channel_->EnableWriteing();
   channel_->EnableReading();
   channel_->EnableHangUp();
   channel_->EnableError();
@@ -106,6 +107,9 @@ void Connection::HandleRead() {
 
 void Connection::HandleWrite()
 {
+  if (write_callback_) {
+    write_callback_();
+  }
   if (write_queue_.DoTask()) {
     channel_->DisableWriting();
     loop_->UpdateChannel(channel_.get());
@@ -141,4 +145,9 @@ void Connection::SetMessageCallback(const MessageCallback &callback)
 void Connection::SetCloseCallback(const CloseCallback &callback)
 {
   close_callback_ = callback;
+}
+
+void Connection::SetWriteCallback(const Connection::EventCallback &callback)
+{
+  write_callback_ = callback;
 }
