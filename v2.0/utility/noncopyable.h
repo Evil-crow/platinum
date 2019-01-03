@@ -13,7 +13,7 @@ class Noncopyable {
 
  protected:
   Noncopyable() = default;
-  virtual ~noncopyable() = default;
+  virtual ~Noncopyable() = default;
 };
 }
 
