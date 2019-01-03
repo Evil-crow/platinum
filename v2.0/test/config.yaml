@@ -16,6 +16,7 @@ log_enable: true
 index: index.html                        # The default index html (default: index.html
 www-root: /var/www-root                  # The default www-root directory (default: /var/www-root
 
+
 thread pool:
   enable: true                           # enable/disable thread poll. you can choose turn on it or not
   thread_num: 8                          # thread mount in the pool. If you turn off the pool, you should set this value to -1

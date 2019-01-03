@@ -25,6 +25,12 @@ set(
         _PLATINUM_UTILITY
         ${_PLATINUM_LOGGER}
         ../utility/noncopyable.h
+        ../utility/buffer/buffer.h
+        ../utility/buffer/buffer.cc
+        ../utility/buffer/writequeue.h
+        ../utility/buffer/writequeue.cc
+        ../utility/buffer/task.h
+        ../utility/buffer/task.cc
 )
 
 set(
@@ -45,6 +51,9 @@ set(
         ../net/socket.cc
         ../net/socketops.h
         ../net/socketops.cc
+        ../net/unix_address.h
+        ../net/unix_address.cc
+        ../net/address.hpp
 )
 set(
         _PLATINUM_NET
@@ -53,50 +62,91 @@ set(
         ../net/acceptor.cc
         ../net/tcp_server.h
         ../net/tcp_server.cc
-        ../net/tcp_connection.h
-        ../net/tcp_connection.cc
+        ../net/connection.h
+        ../net/connection.cc
+        ../net/connector.h
+        ../net/connector.cc
+)
+
+set(
+        _PLATINUM_FCGI
+        ../protocol/fastCGI/base.h
+        ../protocol/fastCGI/component.h
+        ../protocol/fastCGI/component.cc
+        ../protocol/fastCGI/request_builder.h
+        ../protocol/fastCGI/request_builder.cc
+        ../protocol/fastCGI/response_parser.h
+        ../protocol/fastCGI/response_parser.cc
+)
+set(
+        _PLATINUM_PROTOCOL
+        ${_PLATINUM_FCGI}
 )
 
 # test file
 
-add_executable(IPAddress_test IPAddress_test.cc
+add_executable(ipaddress ipaddress_test.cc
         ${_PLATINUM_REACTOR}
         ${_PLATINUM_CONFIG}
         ${_PLATINUM_UTILITY}
         ${_PLATINUM_SOCKET})
-target_link_libraries(IPAddress_test yaml-cpp)
+target_link_libraries(ipaddress yaml-cpp)
 
-add_executable(acceptor_test acceptor_test.cc
-        ${_PLATINUM_UTILITY}
-        ${_PLATINUM_CONFIG}
-        ${_PLATINUM_NET}
-        ${_PLATINUM_REACTOR})
-target_link_libraries(acceptor_test yaml-cpp)
-
-add_executable(reactor_socket reactor_socket.cc
+add_executable(reactor_socket reactor_socketapi_test.cc
         ${_PLATINUM_REACTOR}
         ${_PLATINUM_CONFIG}
         ${_PLATINUM_UTILITY}
         ${_PLATINUM_NET})
 target_link_libraries(reactor_socket yaml-cpp)
 
-add_executable(reactor_Socket reactor_Socket.cc
+add_executable(reactor_Socket reactor_socket_test.cc
         ${_PLATINUM_REACTOR}
         ${_PLATINUM_CONFIG}
         ${_PLATINUM_UTILITY}
         ${_PLATINUM_NET})
 target_link_libraries(reactor_Socket yaml-cpp)
 
-add_executable(reactor_Acceptor reactor_Acceptor.cc
+add_executable(acceptor acceptor_test.cc
         ${_PLATINUM_REACTOR}
         ${_PLATINUM_CONFIG}
         ${_PLATINUM_UTILITY}
         ${_PLATINUM_NET})
-target_link_libraries(reactor_Acceptor yaml-cpp)
+target_link_libraries(acceptor yaml-cpp)
 
-add_executable(tcp_server_connection tcp_server_connection.cc
+add_executable(server_connection tcpconnection_test.cc
         ${_PLATINUM_REACTOR}
         ${_PLATINUM_CONFIG}
         ${_PLATINUM_UTILITY}
         ${_PLATINUM_NET})
-target_link_libraries(tcp_server_connection yaml-cpp)
+target_link_libraries(server_connection yaml-cpp)
+
+add_executable(http_buffer http_buffer_test.cc
+        ${_PLATINUM_REACTOR}
+        ${_PLATINUM_CONFIG}
+        ${_PLATINUM_UTILITY}
+        ${_PLATINUM_NET})
+target_link_libraries(http_buffer yaml-cpp)
+target_link_libraries(http_buffer httpxx)
+
+add_executable(writequeue writequeue_test.cc
+        ${_PLATINUM_REACTOR}
+        ${_PLATINUM_CONFIG}
+        ${_PLATINUM_UTILITY}
+        ${_PLATINUM_NET})
+target_link_libraries(writequeue yaml-cpp)
+target_link_libraries(writequeue httpxx)
+
+add_executable(request_builder request_builder_test.cc
+        ${_PLATINUM_PROTOCOL})
+
+add_executable(response_parser response_parser_test.cc
+        ${_PLATINUM_PROTOCOL})
+
+add_executable(connector connector_test.cc
+        ${_PLATINUM_REACTOR}
+        ${_PLATINUJM_CONFIG}
+        ${_PLATINUM_UTILITY}
+        ${_PLATINUM_NET}
+        ${_PLATINUM_CONFIG})
+target_link_libraries(connector yaml-cpp)
+target_link_libraries(connector httpxx)

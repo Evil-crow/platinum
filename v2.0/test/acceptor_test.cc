@@ -1,28 +1,38 @@
 //
-// Created by Crow on 12/10/18.
+// Created by Crow on 12/11/18.
 //
 
-#define CATCH_CONFIG_MAIN
-
 #include <iostream>
-#include <catch2/catch.hpp>
+#include <cstdio>
+#include <memory>
+#include <arpa/inet.h>
 
-#include "reactor/event_loop.h"
+#include "net/socket.h"
+#include "net/ip_address.h"
 #include "net/acceptor.h"
+#include "reactor/event_loop.h"
+#include "reactor/channel.h"
+#include "reactor/epoller.h"
 
-void func(int fd, const platinum::IPAddress &addr)
+using namespace platinum;
+
+void func(int fd, const IPAddress &addr)
 {
   std::cout << "fd: " << fd << std::endl;
-  std::cout << "ip: " << addr.ip() << std::endl;
+  std::cout << "ip: " << addr.port() << std::endl;
   std::cout << "port: " << addr.port() << std::endl;
 }
 
-TEST_CASE("Acceptor", "[single-file]")
+int main(int argc, char *argv[])
 {
-  platinum::IPAddress addr(9877);
-  platinum::EventLoop loop;
-  platinum::Acceptor acceptor(&loop, addr);
-  acceptor.Listening();
+  // Using Class Acceptor
+  EventLoop loop;
+  IPAddress addr(9877);
+  Acceptor acceptor(&loop, addr);
   acceptor.SetConnectionCallback(func);
+  acceptor.Listening();
+
   loop.Loop();
+
+  return 0;
 }
