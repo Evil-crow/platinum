@@ -1,6 +1,10 @@
-//
-// Created by Crow on 12/10/18.
-//
+/**
+ * Created by Crow on 12/10/18.
+ * Copyright (c) 2018 Crow All rights reserved.
+ * @author Crow
+ * @brief  This file is used to describe Class Acceptor
+ */
+
 
 #include "net/acceptor.h"
 
@@ -58,7 +62,7 @@ void Acceptor::HandleEvent()
         LOG(INFO) << "Acceptor::HandleEvent";
         break;
       } else {
-        LOG(ERROR) << "Acceptor::HAndleEvent()";
+        LOG(ERROR) << "Acceptor::HAndleEvent() => Accept Error";
         std::abort();
       }
     }

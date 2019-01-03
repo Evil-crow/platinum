@@ -1,7 +1,8 @@
-/* 
+/**
  * Created by Crow on 12/22/18.
  * Copyright (c) 2018 Crow All rights reserved.
- * brief:  This file contains all the pre-defination varible
+ * @author Crow
+ * @brief  This file contains all the pre-defination varible
  *         FastCGI offical use #define,
  *         I suppose to use enum class (C++11) to description the variables
  */

@@ -1,6 +1,9 @@
-//
-// Created by Crow on 11/25/18.
-//
+/**
+ * Created by Crow on 11/25/18.
+ * Copyright (c) 2018 Crow All rights reserved.
+ * @author Crow
+ * @brief  This file is used to describe EventLoop,
+ */
 
 #ifndef PLATINUM_EVENTLOOP_H
 #define PLATINUM_EVENTLOOP_H

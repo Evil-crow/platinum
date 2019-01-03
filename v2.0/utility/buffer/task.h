@@ -1,6 +1,9 @@
-//
-// Created by Crow on 12/21/18.
-//
+/**
+ * Created by Crow on 12/17/18.
+ * Copyright (c) 2018 Crow All rights reserved.
+ * @author Crow
+ * @brief  This file is used to describe WriteQueue
+ */
 
 #ifndef PLATINUM_TASK_H
 #define PLATINUM_TASK_H

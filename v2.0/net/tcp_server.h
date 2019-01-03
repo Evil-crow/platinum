@@ -1,6 +1,9 @@
-//
-// Created by Crow on 12/11/18.
-//
+/**
+ * Created by Crow on 12/11/18.
+ * Copyright (c) 2018 Crow All rights reserved.
+ * @author Crow
+ * @brief  This file is used to describe Class TcpServer
+ */
 
 #ifndef PLATINUM_TCP_SERVER_H
 #define PLATINUM_TCP_SERVER_H

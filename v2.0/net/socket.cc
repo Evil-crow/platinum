@@ -1,6 +1,9 @@
-//
-// Created by Crow on 11/25/18.
-//
+/**
+ * Created by Crow on 11/25/18.
+ * Copyright (c) 2018 Crow All rights reserved.
+ * @author Crow
+ * @brief  This file is used to immplmente Class Socket
+ */
 
 #include "net/socket.h"
 
@@ -65,7 +68,7 @@ bool Socket::SetReusePort(bool on)
       &val, static_cast<socklen_t>(sizeof(val)));
 
   if (ret < 0 && on) {
-    LOG(ERROR) << "Socket::SetReusePort()";
+    LOG(ERROR) << "Socket::SetReusePort() => Set Opt Error";
     std::abort();
   }
 
@@ -80,7 +83,7 @@ bool Socket::SetKeepAlive(bool on)
       &val, static_cast<socklen_t>(sizeof(val)));
 
   if (ret < 0 && on) {
-    LOG(ERROR) << "Socket::SetKeepAlive()";
+    LOG(ERROR) << "Socket::SetKeepAlive() => Set Opt Error";
     std::abort();
   }
 
@@ -95,7 +98,7 @@ bool Socket::SetTcpNoDelay(bool on)
       &val, static_cast<socklen_t>(sizeof(val)));
 
   if (ret < 0 && val) {
-    LOG(ERROR) << "Socket::SetTcpNoDelay()";
+    LOG(ERROR) << "Socket::SetTcpNoDelay() => Set Opt Error";
     std::abort();
   }
 

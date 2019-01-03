@@ -1,6 +1,10 @@
-//
-// Created by Crow on 12/11/18.
-//
+/**
+ * Created by Crow on 12/11/18.
+ * Copyright (c) 2018 Crow All rights reserved.
+ * @author Crow
+ * @brief  This file is used to describe the Class TcpServer
+ * @update 1/3/19   Add Connector to TcpServer
+ */
 
 #include "tcp_server.h"
 
@@ -113,9 +117,9 @@ void TcpServer::ForceClose(int fd)
 {
   if (connections_.find(fd) != connections_.end()) {
     connections_.erase(fd);
-    LOG(INFO) << "TcpServer::ForceClose() => Force Close Connection";
+    LOG(INFO) << "TcpServer::ForceClose()";
   } else {
-    LOG(ERROR) << "TcpServer::ForceClose() => Not This Connection";
+    LOG(ERROR) << "TcpServer::ForceClose() => Invalid fd to Close";
     std::abort();
   }
 }

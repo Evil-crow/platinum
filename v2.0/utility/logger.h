@@ -1,6 +1,11 @@
-//
-// Created by Crow on 11/19/18.
-//
+/**
+ * Created by Crow on 11/19/18.
+ * Copyright (c) 2018 Crow All rights reserved.
+ * @author Crow
+ * @brief  This file is used to describe Logger
+ *        To log the information of server, use singleton
+ *        By LoggerOn + LoggerOff
+ */
 
 #ifndef PLATINUM_LOG_H
 #define PLATINUM_LOG_H

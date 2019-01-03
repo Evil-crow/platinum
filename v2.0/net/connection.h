@@ -1,6 +1,9 @@
-//
-// Created by Crow on 12/11/18.
-//
+/**
+ * Created by Crow on 12/11/18.
+ * Copyright (c) 2018 Crow All rights reserved.
+ * @author Crow
+ * @brief  This file is used to describe Class Connection
+ */
 
 #ifndef PLATINUM_TCP_CONNECTION_H
 #define PLATINUM_TCP_CONNECTION_H

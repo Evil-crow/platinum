@@ -1,6 +1,10 @@
-//
-// Created by Crow on 12/21/18.
-//
+/**
+ * Created by Crow on 11/21/18.
+ * Copyright (c) 2018 Crow All rights reserved.
+ * @author Crow
+ * @brief  This file is used to immplmente Task,
+ *
+ */
 
 #include "task.h"
 
@@ -40,7 +44,7 @@ bool WriteTask::operator()()
       if (errno == EAGAIN || errno == EWOULDBLOCK) {
         return false;
       } else {
-        LOG(ERROR) << "WriteTask::operator()";
+        LOG(ERROR) << "WriteTask::operator() => Write Error";
         std::abort();
       }
     }
@@ -67,7 +71,7 @@ bool SendTask::operator()()
       if (errno == EAGAIN || errno == EWOULDBLOCK) {
         return false;
       } else {
-        LOG(ERROR) << "SendTask::operator()";
+        LOG(ERROR) << "SendTask::operator() => SendFile Error";
         std::abort();
       }
     }

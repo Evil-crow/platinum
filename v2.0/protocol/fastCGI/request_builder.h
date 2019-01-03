@@ -1,7 +1,8 @@
-/* 
- * Created by Crow on 12/22/18.
+/**
+ * Created on 12/22/18.
  * Copyright (c) 2018 Crow All rights reserved.
- * brief: 
+ * @author Crow
+ * @brief Describe Class RequestBuilder
  */
 
 #ifndef PLATINUM_REQUEST_H

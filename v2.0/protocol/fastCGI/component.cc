@@ -1,7 +1,7 @@
-/* 
+/**
  * Created by Crow on 12/22/18.
  * Copyright (c) 2018 Crow All rights reserved.
- * brief: 
+ * @brief To immplmente FCGI protocol component
  */
 
 #include "component.h"

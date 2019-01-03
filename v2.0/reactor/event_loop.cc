@@ -1,5 +1,11 @@
-// Created by Crow on 11/25/18.
-//
+/**
+ * Created by Crow on 11/25/18.
+ * Copyright (c) 2018 Crow All rights reserved.
+ * @author Crow
+ * @brief  This file is used to immplmente EventLoop,
+ *        The core to immplmente Non-block IO Server,
+ *        To use Event-driven style server by EventLoop
+ */
 
 #include "reactor/event_loop.h"
 
@@ -26,7 +32,7 @@ EventLoop::EventLoop()
       thread_id_(std::this_thread::get_id())
 {
   if (t_event_loop) {
-    LOG(ERROR) << "EventLoop::EventLoop()";
+    LOG(ERROR) << "EventLoop::EventLoop() => EventLoop Is Existed";
     AbortInLoopThread();
   } else {
     t_event_loop = this;
@@ -73,7 +79,7 @@ void EventLoop::Quit()
 void EventLoop::AddChannel(Channel *channel)
 {
   if (!IsInLoopThread()) {
-    LOG(ERROR) << "EventLoop::AddChannel()";
+    LOG(ERROR) << "EventLoop::AddChannel() => Not In This Loop";
     std::abort();
   }
   epoller_->AddChannel(channel);
@@ -82,7 +88,7 @@ void EventLoop::AddChannel(Channel *channel)
 void EventLoop::UpdateChannel(Channel *channel)
 {
     if (!IsInLoopThread()) {
-        LOG(ERROR) << "EventLoop::UpdateChannel()";
+        LOG(ERROR) << "EventLoop::UpdateChannel() => Not In This Loop";
         std::abort();
     }
     epoller_->UpdateChannel(channel);
@@ -91,7 +97,7 @@ void EventLoop::UpdateChannel(Channel *channel)
 void EventLoop::RemoveChannel(int fd)
 {
   if (!IsInLoopThread()) {
-    LOG(ERROR) << "EventLoop::RemoveChannel()";
+    LOG(ERROR) << "EventLoop::RemoveChannel() => Not In This Loop";
     std::abort();
   }
   epoller_->RemoveChannel(fd);
@@ -125,7 +131,7 @@ bool EventLoop::IsInLoopThread()
 
 void EventLoop::AbortInLoopThread()
 {
-  LOG(ERROR) << "EventLoop::AbortInLoopThread()";
+  LOG(ERROR) << "EventLoop::AbortInLoopThread() => Abort ";
   std::abort();
 }
 

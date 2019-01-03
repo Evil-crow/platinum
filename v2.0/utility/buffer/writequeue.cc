@@ -1,6 +1,10 @@
-//
-// Created by Crow on 12/17/18.
-//
+/**
+ * Created by Crow on 12/17/18.
+ * Copyright (c) 2018 Crow All rights reserved.
+ * @author Crow
+ * @brief  This file is used to immplmente WriteQueue,
+ * @update Add Task later to use other write syscall
+ */
 
 #include "writequeue.h"
 

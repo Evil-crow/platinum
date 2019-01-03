@@ -1,14 +1,17 @@
-//
-// Created by Crow on 11/25/18.
-// Acceptor: This class will be used to control listen socket
-//        like TCPConnection to control the connect fd
-//
-// Tips: At first time, I prepare to use getpeername(2) to get the peer address
-//    But muduo use
-//            int accept(IPAddress &addr)
-//    to get the address, yeah, It can save a time syscall,
-//    Emmm, It can be so useful.
-//    This class test file in /test/acceptor_test.cc
+/**
+ * Created by Crow on 11/25/18.
+ * Copyright (c) 2018 Crow All rights reserved.
+ * @author Crow
+ * @brief  This class will be used to control listen socket
+ *        like TCPConnection to control the connect fd
+ *
+ *    Tips: At first time, I prepare to use getpeername(2) to get the peer address
+ *    But muduo use
+ *            int accept(IPAddress &addr)
+ *    to get the address, yeah, It can save a time syscall,
+ *    Emmm, It can be so useful.
+ *    This class test file in /test/acceptor_test.cc
+*/
 
 #ifndef PLATINUM_ACCEPTOR_H
 #define PLATINUM_ACCEPTOR_H

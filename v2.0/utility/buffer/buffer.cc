@@ -1,6 +1,9 @@
-//
-// Created by Crow on 12/17/18.
-//
+/**
+ * Created by Crow on 12/17/18.
+ * Copyright (c) 2018 Crow All rights reserved.
+ * @author Crow
+ * @brief  This file is used to immplmente Buffer,
+ */
 
 #include "buffer.h"
 
@@ -33,7 +36,7 @@ size_t Buffer::ReadFd(int fd)
         LOG(INFO) << "Buffer::ReadFd";
         break;
       } else {
-        LOG(ERROR) << "Buffer::ReadFd()";
+        3(ERROR) << "Buffer::ReadFd() => Read Error";
         std::abort();
       }
     } else {

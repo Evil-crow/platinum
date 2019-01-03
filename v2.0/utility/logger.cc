@@ -1,6 +1,11 @@
-//
-// Created by Crow on 11/19/18.
-//
+/**
+ * Created by Crow on 11/19/18.
+ * Copyright (c) 2018 Crow All rights reserved.
+ * @author Crow
+ * @brief  This file is used to immplmente Logger,
+ *         use static to immplmente Singleton (C++11)
+ *         do not use double-lock
+ */
 
 #include "logger.h"
 

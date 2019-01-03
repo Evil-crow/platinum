@@ -1,6 +1,9 @@
-//
-// Created by Crow on 11/13/18.
-//
+/**
+ * Created by Crow on 11/13/18.
+ * Copyright (c) 2018 Crow All rights reserved.
+ * @author Crow
+ * @brief  To load YAML Configuration by yaml-cpp
+ */
 
 #include "config.h"
 

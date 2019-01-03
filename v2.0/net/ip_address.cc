@@ -1,6 +1,10 @@
-//
-// Created by Crow on 11/22/18.
-//
+/**
+ * Created by Crow on 11/25/18.
+ * Copyright (c) 2018 Crow All rights reserved.
+ * @author Crow
+ * @brief  This file is used to describe the Derived Class IPAddress,
+ *       inherite from Class Address
+ */
 
 #include "net/ip_address.h"
 
@@ -81,7 +85,7 @@ sockaddr_in IPAddress::ToSockaddrIn() const
   addr.sin_port = ::htons(port_);
   const char *str = ip_.c_str();
   if (::inet_pton(family_, str, &addr.sin_addr) < 1) {
-    LOG(ERROR) << "IPAddress::ToSockaddrIn()";
+    LOG(ERROR) << "IPAddress::ToSockaddrIn() => Convert IP Error";
     std::abort();
   }
 

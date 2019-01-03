@@ -1,6 +1,10 @@
-//
-// Created by Crow on 11/21/18.
-//
+/**
+ * Created by Crow on 11/21/18.
+ * Copyright (c) 2018 Crow All rights reserved.
+ * @author Crow
+ * @brief  This file is used to describe socket APIs,
+ *         They're in namespace socket, not Class Socket
+ */
 
 #ifndef PLATINUM_SOCKETOPS_H
 #define PLATINUM_SOCKETOPS_H

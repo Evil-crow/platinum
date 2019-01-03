@@ -1,7 +1,8 @@
-/* 
- * Created by Crow on 12/26/18.
+/**
+ * Created on 12/26/18.
  * Copyright (c) 2018 Crow All rights reserved.
- * brief: 
+ * @author Crow
+ * @brief
  */
 
 #ifndef PLATINUM_RESPONSE_PARSER_H

@@ -1,6 +1,9 @@
-//
-// Created by Crow on 11/22/18.
-//
+/**
+ * Created by Crow on  11/25/18.
+ * Copyright (c) 2018 Crow All rights reserved.
+ * @author Crow
+ * @brief  This file is used to describe the Derived class IPAddress
+ */
 
 #ifndef PLATINUM_IP_ADDRESS_H
 #define PLATINUM_IP_ADDRESS_H

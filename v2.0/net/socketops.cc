@@ -1,6 +1,9 @@
-//
-// Created by Crow on 11/21/18.
-//
+/**
+ * Created by Crow on 11/21/18.
+ * Copyright (c) 2018 Crow All rights reserved.
+ * @author Crow
+ * @brief  This file is used to immplmente the basic socket APIs
+ */
 
 #include "net/socketops.h"
 
@@ -18,7 +21,7 @@ int socket::Socket(Type type)
 {
   int fd = ::socket(type, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, IPPROTO_TCP);
   if (fd < 0) {
-    LOG(ERROR) << "socket::Socket()";
+    LOG(ERROR) << "socket::Socket() => Socket Create Error";
     std::abort();
   }
 
@@ -28,7 +31,7 @@ int socket::Socket(Type type)
 bool socket::BindOrDie(int sockfd, const struct sockaddr *addr)
 {
   if (::bind(sockfd, addr, sizeof(struct sockaddr))) {
-    LOG(ERROR) << "socket::BindOrDie()";
+    LOG(ERROR) << "socket::BindOrDie() => Bind Error";
     std::abort();
   }
 
@@ -95,7 +98,7 @@ sockaddr_in socket::GetPeerName(int sockfd)
   sockaddr_in sockaddr{};
   socklen_t len = sizeof(sockaddr);
   if (::getsockname(sockfd, reinterpret_cast<struct sockaddr *>(&sockaddr), &len)) {
-    LOG(ERROR) << "socket::GetPeerName()";
+    LOG(ERROR) << "socket::GetPeerName() => Get Peer Name Error";
     std::abort();
   }
 
@@ -105,7 +108,7 @@ sockaddr_in socket::GetPeerName(int sockfd)
 bool socket::Close(int sockfd)
 {
   if (::close(sockfd)) {
-    LOG(ERROR) << "socket::Close()";
+    LOG(ERROR) << "socket::Close() => Close Error";
     std::abort();
   }
   return true;
@@ -114,7 +117,7 @@ bool socket::Close(int sockfd)
 bool socket::ShutdownWrite(int sockfd)
 {
   if (::shutdown(sockfd, SHUT_WR)) {
-    LOG(ERROR) << "socket::ShutdownWrite()";
+    LOG(ERROR) << "socket::ShutdownWrite() => Shutown Error";
     std::abort();
   }
 }

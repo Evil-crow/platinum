@@ -1,6 +1,12 @@
-//
-// Created by Crow on 12/11/18.
-//
+/**
+ * Created by Crow on 12/11/18.
+ * Copyright (c) 2018 Crow All rights reserved.
+ * @author Crow
+ * @brief  This file is used to describe the most important class Connection
+ *        This Class had been named TcpConnection
+ *        But, for FCGI, WS must be play a role as Client
+ *        So, convert TcpConnection to Connection
+ */
 
 #include "connection.h"
 
@@ -69,7 +75,7 @@ void Connection::SendData(const char *data, size_t total) {
         loop_->UpdateChannel(channel_.get());
         write_queue_.TaskInQueue(socket_->fd(), data, completed_, remained_);
       } else {
-        LOG(ERROR) << "Connection::SendData()";
+        LOG(ERROR) << "Connection::SendData() => Send Data Error";
       }
     }
   }
@@ -93,7 +99,7 @@ void Connection::SendFile(int file_fd, size_t total)
         loop_->UpdateChannel(channel_.get());
         write_queue_.TaskInQueue(socket_->fd(), file_fd, completed_, remained_);
       } else {
-        LOG(ERROR) << "Connection::SendData()";
+        LOG(ERROR) << "Connection::SendFile() => Send File Error";
       }
     }
   }
@@ -128,7 +134,7 @@ void Connection::HandleError()
 
 void Connection::ErrorCallback()
 {
-  LOG(ERROR) << "Connection::ErrorCallback()";
+  LOG(ERROR) << "Connection::ErrorCallback() => Error Occured";
   HandleClose();
 }
 

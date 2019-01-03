@@ -1,6 +1,11 @@
-//
-// Created by Crow on 11/25/18.
-//
+/**
+ * Created by Crow on 11/25/18.
+ * Copyright (c) 2018 Crow All rights reserved.
+ * @author Crow
+ * @brief  This file is used to immplmente EPoller,
+ *        all interface will be called by loop_
+ *        It means use EventLoop::[Add/Update/Remove]Channel() to operate
+ */
 
 #include "reactor/epoller.h"
 
@@ -35,7 +40,7 @@ void EPoller::EPoll(int timeout, std::vector<Channel*> &active_channels)
                                  MAXEPOLLEVENT(),
                                  timeout);
   if (event_nums < 0) {
-    LOG(ERROR) << "EPoller::EPoll()";
+    LOG(ERROR) << "EPoller::EPoll() => Epoll Error";
     std::abort();
   }
   FillActiveChannel(event_nums, active_channels);
@@ -67,7 +72,7 @@ void EPoller::AddChannel(Channel *channel)
   event.data.ptr = channel;
   event.events = channel->events();
   if (::epoll_ctl(epoll_fd_, EPOLL_CTL_ADD, channel->fd(), &event) < 0) {
-    LOG(ERROR) << "EPoller::AddChannel()";
+    LOG(ERROR) << "EPoller::AddChannel() => Add Channel Error";
     std::abort();
   }
 }
@@ -80,7 +85,7 @@ void EPoller::UpdateChannel(Channel *channel)
     event.data.ptr = channel;
     event.events = channel->events();
     if (::epoll_ctl(epoll_fd_, EPOLL_CTL_MOD, channel->fd(), &event) < 0) {
-        LOG(ERROR) << "EPoller::UpdateChannel()";
+        LOG(ERROR) << "EPoller::UpdateChannel() => Update Channel Error";
         std::abort();
     }
 }
@@ -90,7 +95,7 @@ void EPoller::RemoveChannel(int fd)
   loop_->AssertInLoopThread();
 
   if (::epoll_ctl(epoll_fd_, EPOLL_CTL_DEL, fd, nullptr) < 0) {
-    LOG(ERROR) << "EPoller::RemoveChannel()";
+    LOG(ERROR) << "EPoller::RemoveChannel() => Remove Channel Error";
     std::abort();
   }
 }

@@ -1,7 +1,10 @@
-/* 
- * Created by Crow on 12/22/18.
+/**
+ * Created on 12/22/18.
  * Copyright (c) 2018 Crow All rights reserved.
- * brief: 
+ * @author Crow
+ * @brief Only give the interface:
+ *       RequestBuilder::Build()
+ *       ReuestBuilder::getters
  */
 
 #include "request_builder.h"

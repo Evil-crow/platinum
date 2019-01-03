@@ -1,7 +1,8 @@
-/* 
- * Created by Crow on 12/22/18.
+/**
+ * Created on 12/22/18.
  * Copyright (c) 2018 Crow All rights reserved.
- * brief: This file defines the structure description in FastCGI protocol
+ * @author Crow
+ * @brief This file defines the structure description in FastCGI protocol
  *      such as: Header, BeginRequestRocord, EndRequestRecord
  *      BeginRequestRocord = Header + BeginRequestBody
  *      EndRequestRecord = Header + EndRequestBody

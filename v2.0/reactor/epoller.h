@@ -1,6 +1,12 @@
-//
-// Created by Crow on 11/25/18.
-//
+/**
+ * Created by Crow on 11/25/18.
+ * Copyright (c) 2018 Crow All rights reserved.
+ * @author Crow
+ * @brief  This file is used to describe EPoller,
+ *        Not like muduo::Poller/EPoller
+ *        platinum::EPoller use epoll-style interface, not poll-style
+ */
+
 
 #ifndef PLATINUM_EPOLLER_H
 #define PLATINUM_EPOLLER_H

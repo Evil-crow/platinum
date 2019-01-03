@@ -72,7 +72,7 @@ void Connector::HandleEvent()
       case EINPROGRESS:
         break;
       default:
-        LOG(INFO) << "Connector::HandleWrite() => Connect Error";
+        LOG(ERROR) << "Connector::HandleWrite() => Connect Error";
         platinum::GetCurrentServer()->ForceClose(fd_);
     }
   }
