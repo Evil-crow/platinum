@@ -46,6 +46,11 @@ void Socket::Listen()
   socket::ListenOrDie(sockfd_, SOMAXCONN);
 }
 
+void Socket::Connect(const Address &address)
+{
+  socket::Connect(sockfd_, address.SockaddrPtr());
+}
+
 int Socket::Accept(IPAddress &address)
 {
   int connfd = socket::Accept(sockfd_, address);
@@ -96,4 +101,6 @@ bool Socket::SetTcpNoDelay(bool on)
 
   return true;
 }
+
+
 

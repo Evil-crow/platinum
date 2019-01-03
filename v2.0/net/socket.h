@@ -25,6 +25,7 @@ class Socket {
 
   void Bind(const Address &address);
   void Listen();
+  void Connect(const Address &address);
   int Accept(IPAddress &address);
 
   bool SetReusePort(bool on);
