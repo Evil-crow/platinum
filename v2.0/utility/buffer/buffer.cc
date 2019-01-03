@@ -22,7 +22,7 @@ Buffer::Buffer()
 size_t Buffer::ReadFd(int fd)
 {
   ssize_t val(0);
-  char data[65535]{};
+  unsigned char data[65535]{};
 
   while (true) {
     val = ::read(fd, data, 65535);
@@ -30,10 +30,10 @@ size_t Buffer::ReadFd(int fd)
       break;
     } else if (val < 0) {
       if (errno == EAGAIN || errno == EWOULDBLOCK) {
-        LOG(INFO) << "Buffer::ReadFd OK";
+        LOG(INFO) << "Buffer::ReadFd";
         break;
       } else {
-        LOG(ERROR) << "Buffer::ReadFd ERROR!";
+        LOG(ERROR) << "Buffer::ReadFd()";
         std::abort();
       }
     } else {

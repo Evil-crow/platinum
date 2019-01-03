@@ -11,7 +11,7 @@ namespace platinum {
 
 class Buffer {
  public:
-  using const_iter = std::vector<char>::const_iterator;
+  using const_iter = std::vector<unsigned char>::const_iterator;
 
   Buffer();
   ~Buffer() = default;
@@ -28,7 +28,7 @@ class Buffer {
   size_t Writeable()       { return buffer_.capacity() - write_index_; }
   size_t FrontSpace()      { return read_index_ - 0; }
 
-  std::vector<char> buffer_;
+  std::vector<unsigned char> buffer_;
   size_t read_index_;
   size_t write_index_;
 };
