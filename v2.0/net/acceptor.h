@@ -29,7 +29,7 @@ class EventLoop;                  // forward declaration
 class Acceptor {
  public:
   using NewConnectionCallback = std::function<void(int, const IPAddress &)>;         // for connection callback
-  explicit Acceptor(EventLoop *loop, const IPAddress &address);
+  Acceptor(EventLoop *loop, const IPAddress &address);
   ~Acceptor() = default;
 
   void Listening();                                                            // start listening
