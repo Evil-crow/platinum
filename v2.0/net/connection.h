@@ -36,6 +36,7 @@ class Connection : public Noncopyable {
 
   // copy TCPServer callback -> TCPConnection, can't move, we'll create much TCPConnection by TCPServer::*callback
   void SetConnectionCallback(const EventCallback &callback);
+  void SetWriteCallback(const EventCallback &callback);
   void SetMessageCallback(const MessageCallback &callback);
   void SetCloseCallback(const CloseCallback &callback);
 
@@ -53,6 +54,7 @@ class Connection : public Noncopyable {
   std::unique_ptr<Channel> channel_;
   EventCallback connection_callback_;                  // register by user provide function -> OnConnection fucntion
   MessageCallback message_callback_;                   // register by user provide function -> OnMessage Function
+  EventCallback write_callback_;                       // register by Connector -> to check connection status, may be add timer
   CloseCallback close_callback_;                       // register as TCPServer::RemoveConnection
   Buffer read_buffer_;
   WriteQueue write_queue_;
