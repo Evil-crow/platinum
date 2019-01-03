@@ -8,6 +8,7 @@
 #include <thread>
 
 #include "utility/logger.h"
+#include "net/tcp_server.h"
 #include "reactor/epoller.h"
 #include "reactor/channel.h"
 
@@ -52,7 +53,7 @@ void EventLoop::Loop()
   while (!quit_.load()) {
     eventing_handling_.store(true);
     active_channels_.clear();
-    epoller_->EPoll(-1, active_channels_);
+    epoller_->EPoll(12, active_channels_);
     for (const auto &channel : active_channels_)
       channel->HandleEvent();
     DoPendingFunctors();

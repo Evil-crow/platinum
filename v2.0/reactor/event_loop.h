@@ -10,6 +10,7 @@
 #include <thread>
 #include <vector>
 #include <functional>
+#include <net/connection.h>
 
 namespace platinum {
 
@@ -57,6 +58,8 @@ class EventLoop {
   std::atomic<bool> calling_pending_functor_;                  // bool:      to record the state
   std::vector<Functor> pending_functors_;                      // vector:    store the functors, which other threads want to excute in IO thread
 };
+
+
 
 }
 
