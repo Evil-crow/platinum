@@ -120,4 +120,5 @@ bool socket::ShutdownWrite(int sockfd)
     LOG(ERROR) << "socket::ShutdownWrite() => Shutown Error";
     std::abort();
   }
+  return true;
 }
