@@ -54,7 +54,7 @@ void TcpServer::OnConnectionCallback(int fd, const IPAddress &peer_address)
   std::string str(peer_address.ip() + ":" + std::to_string(peer_address.port()));
   LOG(INFO) << std::move(str);
 
-  auto connection_ptr = std::make_shared<Connection>(loop_, fd);
+  auto connection_ptr = std::make_shared<Connection>(loop_, fd, ParserType::HTTP);
   connection_ptr->SetMessageCallback(message_callback_);
   connection_ptr->SetConnectionCallback([this]() { connection_callback_(); });
   connection_ptr->SetCloseCallback([this](int fd){ EraseConnection(fd); });
@@ -75,7 +75,8 @@ void TcpServer::NewConnection(const Connector *connector)
   connections_.insert({fd, connection_ptr});
 }
 
-void TcpServer::EraseConnection(int fd) {
+void TcpServer::EraseConnection(int fd)
+{
   loop_->AssertInLoopThread();
   if (connections_.find(fd) != connections_.end()) {
     loop_->RemoveChannel(fd);
@@ -86,15 +87,15 @@ void TcpServer::EraseConnection(int fd) {
   }
 }
 
-auto TcpServer::NewConnector(const IPAddress &address) -> std::shared_ptr<Connector>
+auto TcpServer::NewConnector(const IPAddress &address, ParserType type) -> std::shared_ptr<Connector>
 {
-  auto ptr = std::make_shared<Connector>(loop_, address);
+  auto ptr = std::make_shared<Connector>(loop_, address, type);
   return ptr;
 }
 
-auto TcpServer::NewConnector(const UnixAddress &address) -> std::shared_ptr<Connector>
+auto TcpServer::NewConnector(const UnixAddress &address, ParserType type) -> std::shared_ptr<Connector>
 {
-  auto ptr = std::make_shared<Connector>(loop_, address);
+  auto ptr = std::make_shared<Connector>(loop_, address, type);
   return ptr;
 }
 
