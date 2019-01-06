@@ -6,8 +6,8 @@
  *         mianly defines states for FSM
  */
 
-#ifndef PLATINUM_BASE_H
-#define PLATINUM_BASE_H
+#ifndef PLATINUM_HTTP_BASE_H
+#define PLATINUM_HTTP_BASE_H
 
 #include <vector>
 
@@ -64,4 +64,4 @@ enum HeaderState : int {
 }
 }
 
-#endif //PLATINUM_BASE_H
+#endif //PLATINUM_HTTP_BASE_H
