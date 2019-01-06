@@ -17,7 +17,7 @@ class Task {
 //  Task() = default;
   Task(int fd, off64_t completed, size_t total);
   virtual ~Task() = default;
-  virtual bool operator()(){};
+  virtual bool operator()() = 0;
 
  protected:
   int fd_{};
