@@ -14,7 +14,6 @@ using namespace platinum::fcgi;
 
 ResponseParser::ResponseParser()
     : request_id_(-1),
-      parser_pos_(-1),
       transform_len_(0),
       padding_len_(0),
       app_status_(-1),
@@ -33,8 +32,9 @@ ResponseParser::ResponseParser()
  * @return parse result
  */
 
-bool ResponseParser::feed(ResponseParser::const_iter iter, int length)
+long ResponseParser::feed(ResponseParser::const_iter iter, long length)
 {
+  auto len_temp(length);
   transform_data_.clear();
   // To ensure the last parsing result is complete
   if (transform_len_) {
@@ -46,7 +46,7 @@ bool ResponseParser::feed(ResponseParser::const_iter iter, int length)
   }
 
   if (length == 0) {
-    return true;
+    return (len_temp - length);
   } else if (padding_len_) {
     auto len = padding_len_ > length ? length : padding_len_;
     length -= len;
@@ -55,17 +55,11 @@ bool ResponseParser::feed(ResponseParser::const_iter iter, int length)
   }
 
   while (length) {    // the whole parsing process continus utils length < 0
-    if (state_ == State::COMPLETED) {
-      return true;
-    } else if (state_ == State::FAULT) {
-      return true;
-    }
-
-    if (length == 0) {
-      return true;
-    } else if (length < sizeof(Header)) {
-      parser_pos_ = length - transform_len_;                                        // transform_len_ mustn't consume buffer completely
-      return false;
+    if (state_ == State::COMPLETED
+        || state_ == State::FAULT
+        || length < sizeof(Header))
+    {
+      return (len_temp - length);
     }
 
     Header header(iter);                                                           // Construct a header
@@ -81,6 +75,8 @@ bool ResponseParser::feed(ResponseParser::const_iter iter, int length)
       default: break;
     }
   }
+
+  return len_temp - length;
 }
 
 /**
@@ -90,7 +86,7 @@ bool ResponseParser::feed(ResponseParser::const_iter iter, int length)
  * @param ct_len the content length of FCGI_STDOUT
  * @param pd_len the padding length of FCGI_STDOUT
  */
-void ResponseParser::ParseStdout(const_iter &iter, int &length, int ct_len, int pd_len)
+void ResponseParser::ParseStdout(const_iter &iter, long &length, long ct_len, long pd_len)
 {
   if (ct_len == 0 && pd_len == 0)
     return ;
@@ -144,7 +140,7 @@ void ResponseParser::ParseStdout(const_iter &iter, int &length, int ct_len, int 
  * @param pd_len the padding length of FCGI_STDERR
  */
 
-void ResponseParser::ParseStderr(const_iter &iter, int &length, int ct_len, int pd_len)
+void ResponseParser::ParseStderr(const_iter &iter, long &length, long ct_len, long pd_len)
 {
   if (ct_len == 0 && pd_len == 0)
     return ;
@@ -188,4 +184,19 @@ void ResponseParser::ParseEndRequest(const_iter &iter)
 
   complete_ = true;
   state_ = State::COMPLETED;
+}
+
+void ResponseParser::Reset()
+{
+  request_id_ = -1;
+  transform_len_ = 0;
+  padding_len_ = 0;
+  app_status_ = -1;
+  complete_ = false;
+  in_content_ = false;
+  state_ = State::UNCOMPLETED;
+  status_ = Status::FCGI_UNKNOWN_ROLE;
+
+  transform_data_.clear();
+  name_value_data_.clear();
 }
