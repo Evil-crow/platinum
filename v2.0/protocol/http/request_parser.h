@@ -23,9 +23,10 @@ class RequestParser : public platinum::Parser {
   RequestParser();
   ~RequestParser() override = default;
 
-  int feed(const_iter iter, int length);
+  long feed(const_iter iter, long length);
   bool Complete() const;
-  const std::string &status_line() const;
+  void Reset();
+  const std::string status_line() const;
   const std::string &method() const             { return method_; }
   const std::string &url() const                { return url_; }
   const int major_version() const               { return version_major_; }
@@ -49,9 +50,9 @@ class RequestParser : public platinum::Parser {
 
  private:
   bool HasBody();
-  bool ParseStatusLine(const_iter &iter, int &length);
-  bool ParseHeader(const_iter &iter, int &length);
-  bool ParseBody(const_iter &iter, int &length);
+  bool ParseStatusLine(const_iter &iter, long &length);
+  bool ParseHeader(const_iter &iter, long &length);
+  bool ParseBody(const_iter &iter, long &length);
 
   std::string method_;
   std::string url_;
