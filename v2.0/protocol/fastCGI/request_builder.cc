@@ -110,8 +110,7 @@ bool RequestBuilder::BuildEmptyParam()
       new FCGIData[Base::FCGI_HEADER_LEN],
       std::default_delete<fcgi::FCGIData []>());
   ::memcpy(param_ptr.get(), &header, Base::FCGI_HEADER_LEN);
-  fcgi_params_.insert({param_ptr, Base::FCGI_HEADER_LEN});
-
+  empty_fcgi_param_ = std::make_pair<std::shared_ptr<FCGIData>, int>(std::move(param_ptr), Base::FCGI_HEADER_LEN);
   return true;
 }
 
@@ -168,7 +167,7 @@ bool RequestBuilder::BuildEmptyStdin()
       new FCGIData[Base::FCGI_HEADER_LEN],
       std::default_delete<fcgi::FCGIData []>());
   ::memcpy(in_ptr.get(), &header, Base::FCGI_HEADER_LEN);
-  fcgi_ins_.insert({in_ptr, Base::FCGI_HEADER_LEN});
+  empty_fcgi_in_ = std::make_pair<std::shared_ptr<FCGIData>, int>(std::move(in_ptr), Base::FCGI_HEADER_LEN);
 
   return true;
 }
