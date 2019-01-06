@@ -21,7 +21,7 @@ class Buffer {
   ~Buffer() = default;
 
   size_t ReadFd(int fd);
-  void Reprepare();
+  void Reprepare(long size);
   const_iter BufferBegin() const;
   const_iter BufferEnd() const;
  private:

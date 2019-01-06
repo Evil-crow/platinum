@@ -36,7 +36,8 @@ size_t Buffer::ReadFd(int fd)
         LOG(INFO) << "Buffer::ReadFd";
         break;
       } else {
-        3(ERROR) << "Buffer::ReadFd() => Read Error";
+        LOG(ERROR) << "Buffer::ReadFd() => Read Error";
+        perror("read:");
         std::abort();
       }
     } else {
@@ -83,8 +84,11 @@ Buffer::const_iter Buffer::BufferEnd() const
   return buffer_.cbegin() + write_index_;
 }
 
-void Buffer::Reprepare()
+void Buffer::Reprepare(long size)
 {
-  read_index_ = 0;
-  write_index_ = 0;
+  read_index_ += size;
+  if (read_index_ == write_index_) {
+    read_index_ = 0;
+    write_index_ = 0;
+  }
 }
