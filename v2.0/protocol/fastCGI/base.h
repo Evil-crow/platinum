@@ -7,8 +7,8 @@
  *         I suppose to use enum class (C++11) to description the variables
  */
 
-#ifndef PLATINUM_BASE_H
-#define PLATINUM_BASE_H
+#ifndef PLATINUM_FCGI_BASE_H
+#define PLATINUM_FCGI_BASE_H
 
 namespace platinum {
 namespace fcgi {
@@ -53,7 +53,7 @@ enum Role : int {
   /*
    * Values for role component of FCGI_BeginRequestBody
    */
-      FCGI_RESPONDER = 1,
+  FCGI_RESPONDER = 1,
   FCGI_AUTHORIZER = 2,
   FCGI_FILTER = 3,
 };
@@ -62,7 +62,7 @@ enum Status : int {
   /*
    * Values for protocolStatus component of FCGI_EndRequestBody
    */
-      FCGI_REQUEST_COMPLETE = 0,
+  FCGI_REQUEST_COMPLETE = 0,
   FCGI_CANT_MPX_CONN = 1,
   FCGI_OVERLOADED = 2,
   FCGI_UNKNOWN_ROLE = 3,
@@ -89,4 +89,4 @@ enum Type : int {
 }
 }
 
-#endif //PLATINUM_BASE_H
+#endif //PLATINUM_FCGI_BASE_H
