@@ -17,16 +17,25 @@
 #include "net/socket.h"
 #include "reactor/event_loop.h"
 #include "reactor/channel.h"
+#include "protocol/http/request_parser.h"
+#include "protocol/fastCGI/response_parser.h"
 #include "utility/logger.h"
 
 using namespace platinum;
 
-Connection::Connection(EventLoop *loop, int fd)
+Connection::Connection(EventLoop *loop, int fd, ParserType type)
     : loop_(loop),
       socket_(std::make_unique<Socket>(fd)),           // use move constructor
-      channel_(std::make_unique<Channel>(loop, fd))
-{
-  ;
+      channel_(std::make_unique<Channel>(loop, fd)),
+      parser_(std::make_unique<http::RequestParser>()) {
+  switch (type) {
+    case ParserType::FCGI:
+      parser_ = std::make_unique<fcgi::ResponseParser>(); break;
+    case ParserType::HTTP:
+      parser_ = std::make_unique<http::RequestParser>(); break;
+    default:
+      parser_ = std::make_unique<http::RequestParser>(); break;
+  }
 }
 
 Connection::~Connection()
@@ -58,7 +67,18 @@ void Connection::ShutdownInLoop()
   loop_->RunInLoop([this]() { socket::ShutdownWrite(socket_->fd()); });
 }
 
-void Connection::SendData(const char *data, size_t total) {
+void Connection::ForceClose()
+{
+  ForceCloseInLoop();
+}
+
+void Connection::ForceCloseInLoop()
+{
+  loop_->RunInLoop([this]() { close_callback_(socket_->fd()); });
+}
+
+void Connection::SendData(const char *data, size_t total)
+{
   size_t completed_(0), remained_(total);
   while (true) {
     auto var = ::write(socket_->fd(), data, total);
@@ -107,8 +127,8 @@ void Connection::SendFile(int file_fd, size_t total)
 
 void Connection::HandleRead() {
   read_buffer_.ReadFd(socket_->fd());
-  if (message_callback_(this, read_buffer_))
-    read_buffer_.Reprepare();
+  auto len = message_callback_(this, read_buffer_, parser_);
+  read_buffer_.Reprepare(len);
 }
 
 void Connection::HandleWrite()
