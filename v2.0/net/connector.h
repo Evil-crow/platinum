@@ -11,6 +11,7 @@
 
 #include <memory>
 #include <functional>
+#include "protocol/parser.hpp"
 
 #include "net/socket.h"
 
@@ -22,11 +23,11 @@ class Connection;
 class UnixAddress;
 class Connector {
  public:
-  using MessageCallback = std::function<bool (Connection *, Buffer &)>;
+  using MessageCallback = std::function<long (Connection *, Buffer &, std::unique_ptr<platinum::Parser> &)>;
   using WriteableCallback = std::function<void()>;
 
-  Connector(EventLoop *loop, const IPAddress &address);
-  Connector(EventLoop *loop, const UnixAddress &address);
+  Connector(EventLoop *loop, const IPAddress &address, ParserType type);
+  Connector(EventLoop *loop, const UnixAddress &address, ParserType type);
   ~Connector() = default;
 
   void StartNewConnection();
