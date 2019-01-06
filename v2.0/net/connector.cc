@@ -17,20 +17,20 @@
 
 using namespace platinum;
 
-Connector::Connector(EventLoop *loop, const IPAddress &address)
+Connector::Connector(EventLoop *loop, const IPAddress &address, ParserType type)
     : loop_(loop),
       fd_(socket::Socket(socket::INET)),
       address_(std::make_unique<IPAddress>(address)),
-      connection_ptr_(std::make_shared<Connection>(loop_, fd_))
+      connection_ptr_(std::make_shared<Connection>(loop_, fd_, type))
 {
   ;
 }
 
-Connector::Connector(EventLoop *loop, const UnixAddress &address)
+Connector::Connector(EventLoop *loop, const UnixAddress &address, ParserType type)
     : loop_(loop),
       fd_(socket::Socket(socket::UNIX)),
       address_(std::make_unique<UnixAddress>(address)),
-      connection_ptr_(std::make_shared<Connection>(loop_, fd_))
+      connection_ptr_(std::make_shared<Connection>(loop_, fd_, type))
 {
   ;
 }
