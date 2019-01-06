@@ -8,7 +8,9 @@
 #ifndef PLATINUM_RESPONSE_PARSER_H
 #define PLATINUM_RESPONSE_PARSER_H
 
-#include "component.h"
+#include "base.h"
+#include "protocol/fastCGI/component.h"
+#include "protocol/parser.hpp"
 
 namespace platinum {
 namespace fcgi {
@@ -19,35 +21,34 @@ enum State : int {
   FAULT,
 };
 
-class ResponseParser {
+ class ResponseParser : public platinum::Parser {
  public:
   using const_iter = std::vector<FCGIData>::const_iterator;
   ResponseParser();
-  ~ResponseParser() = default;
+  ~ResponseParser() override = default;
 
-  bool feed(const_iter iter, int length);
+  long feed(const_iter iter, long length);
 
   auto transform_data() -> const std::vector<FCGIData> & {
     return transform_data_;
   }
   int request_id() { return request_id_; }
-  int parser_pos() { return parser_pos_; }
   long long app_status() { return app_status_; }
   State state() { return static_cast<State>(state_); }
   Status status() { return static_cast<Status>(status_); }
   bool Complete() { return complete_; }
+  void Reset();
 
  private:
-  void ParseStdout(const_iter &iter, int &length, int ct_len, int pd_len);
-  void ParseStderr(const_iter &iter, int &length, int ct_len, int pd_len);
+  void ParseStdout(const_iter &iter, long &length, long ct_len, long pd_len);
+  void ParseStderr(const_iter &iter, long &length, long ct_len, long pd_len);
   void ParseEndRequest(const_iter &iter);
 
   std::vector<FCGIData> transform_data_;
   std::vector<FCGIData> name_value_data_;
   int request_id_;
-  int parser_pos_;
-  int transform_len_;
-  int padding_len_;
+  long transform_len_;
+  long padding_len_;
   long long app_status_;
 
   bool complete_;
