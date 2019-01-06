@@ -34,6 +34,14 @@ class RequestBuilder {
   auto fcgi_in() -> const std::map<std::shared_ptr<FCGIData>, int> & {
     return fcgi_ins_;
   }
+  auto empty_fcgi_param() -> const std::pair<std::shared_ptr<FCGIData>, int> & {
+    return empty_fcgi_param_;
+  }
+  auto empty_fcgi_in() -> const std::pair<std::shared_ptr<FCGIData>, int> & {
+    return empty_fcgi_in_;
+  }
+
+
 
  private:
   void BuildParams();
@@ -51,6 +59,8 @@ class RequestBuilder {
 
   std::map<std::shared_ptr<FCGIData>, int> fcgi_params_;
   std::map<std::shared_ptr<FCGIData>, int> fcgi_ins_;
+  std::pair<std::shared_ptr<FCGIData>, int> empty_fcgi_param_;
+  std::pair<std::shared_ptr<FCGIData>, int> empty_fcgi_in_;
 };
 
 }
