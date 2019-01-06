@@ -11,14 +11,19 @@
 
 namespace platinum {
 
+enum ParserType : int {
+  HTTP,
+  FCGI,
+};
+
 class Parser {
  public:
   Parser(const Parser &) = delete;
   Parser &operator=(const Parser &) = delete;
+  virtual ~Parser() = default;
 
  protected:
   Parser() = default;
-  virtual ~Parser() = default;
 };
 
 }
