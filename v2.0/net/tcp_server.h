@@ -26,7 +26,7 @@ class Connection;
 class TcpServer {
  public:
   using EventCallback = std::function<void ()>;
-  using MessageCallback = std::function<bool (Connection *, Buffer &)>;
+  using MessageCallback = std::function<long (Connection *, Buffer &, std::unique_ptr<Parser> &)>;
 
   TcpServer(EventLoop *loop, IPAddress &address);
   ~TcpServer() = default;
@@ -36,8 +36,8 @@ class TcpServer {
   void SetMessageCallback(const MessageCallback &callback);                 // When message on, callback for user to perform logical business
   void NewConnection(const Connector *connector);
   void ForceClose(int fd);
-  auto NewConnector(const IPAddress &address) -> std::shared_ptr<Connector>;
-  auto NewConnector(const UnixAddress &address) -> std::shared_ptr<Connector>;
+  auto NewConnector(const IPAddress &address, ParserType type) -> std::shared_ptr<Connector>;
+  auto NewConnector(const UnixAddress &address, ParserType type) -> std::shared_ptr<Connector>;
 
 
  private:
