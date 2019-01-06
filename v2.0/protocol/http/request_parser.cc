@@ -8,6 +8,7 @@
 #include "request_parser.h"
 
 #include <cctype>
+#include <iostream>
 //#include "utility/logger.h"
 
 using namespace platinum::http;
@@ -28,7 +29,7 @@ RequestParser::RequestParser()
  * @return -1 means error, or return the length of an request we have parsed.
  */
 
-int RequestParser::feed(const_iter iter, int length)
+long RequestParser::feed(const_iter iter, long length)
 {
   auto len(length);
   if (http_state_ == HTTP_FAULT) {
@@ -44,6 +45,12 @@ int RequestParser::feed(const_iter iter, int length)
       } else {
         break;
       }
+      if (length) {
+        if (*iter == '\r') {
+          http_state_ = HTTP_CR;
+          goto CR;
+        }
+      }
 
     case HTTP_HEADERS:
       if (ParseHeader(iter, length)) {
@@ -51,7 +58,7 @@ int RequestParser::feed(const_iter iter, int length)
       } else {
         break;
       }
-
+CR:
     case HTTP_CR:
       if (length) {
         if (*iter == '\r') {
@@ -100,7 +107,7 @@ int RequestParser::feed(const_iter iter, int length)
  * @param length as above
  * @return unless an parse complete, we won't return false.
  */
-bool RequestParser::ParseStatusLine(const_iter &iter, int &length)
+bool RequestParser::ParseStatusLine(const_iter &iter, long &length)
 {
   switch (line_state_) {
     case LINE_METHOD:
@@ -324,7 +331,7 @@ exit:
   return false;
 }
 
-bool RequestParser::ParseHeader(const_iter &iter, int &length)
+bool RequestParser::ParseHeader(const_iter &iter, long &length)
 {
   while (length) {
     if (header_state_ == HEADER_COMPLETE) {
@@ -430,9 +437,10 @@ bool RequestParser::ParseHeader(const_iter &iter, int &length)
 exit:   return false;
     }
   }
+  return false;
 }
 
-bool RequestParser::ParseBody(const_iter &iter, int &length)
+bool RequestParser::ParseBody(const_iter &iter, long &length)
 {
   auto len = body_len_ > length ? length : body_len_;
   body_len_ -= len;
@@ -449,4 +457,37 @@ bool RequestParser::Complete() const
 bool RequestParser::HasBody()
 {
   return header("Content-Length") != std::string("");
+}
+
+const std::string RequestParser::status_line() const
+{
+  std::string status_line;
+
+  status_line += method_;
+  status_line += " ";
+  status_line += url_;
+  status_line += " ";
+  status_line += "HTTP/";
+  status_line += std::to_string(major_version());
+  status_line += ".";
+  status_line += std::to_string(minor_version());
+
+  return status_line;
+}
+
+void RequestParser::Reset()
+{
+  http_state_ = HTTP_STATUS_LINE;
+  line_state_ = LINE_METHOD;
+  header_state_ = HEADER_KEY;
+  complete_ = false;
+  method_.clear();
+  url_.clear();
+  key_.clear();
+  value_.clear();
+  version_major_ = 0;
+  version_minor_ = 0;
+  body_len_ = 0;
+  key_value_map_.clear();
+  body_.clear();
 }
