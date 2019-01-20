@@ -11,6 +11,7 @@
 #include <unistd.h>
 #include <sys/sendfile.h>
 #include <cerrno>
+#include <cstring>
 
 #include "utility/logger.h"
 using namespace platinum;
@@ -25,16 +26,16 @@ Task::Task(int fd, off64_t completed, size_t total)
 }
 
 WriteTask::WriteTask(int fd, const char *data, off64_t  completed, size_t total)
-    : Task(fd, completed, total),
-      data_(data)
+    : Task(fd, completed, total)
 {
-  ;
+  data_ = std::shared_ptr<char>(new char[total], std::default_delete<char []>());
+  ::memcpy(data_.get(), data, total);
 }
 
 bool WriteTask::operator()()
 {
   while (true) {
-    auto var = ::write(fd_, data_ + completed_, remained_);
+    auto var = ::write(fd_, data_.get() + completed_, remained_);
     if (var == remained_) {
       return true;
     } else if ( var >= 0 && var < remained_) {
@@ -44,6 +45,7 @@ bool WriteTask::operator()()
       if (errno == EAGAIN || errno == EWOULDBLOCK) {
         return false;
       } else {
+        perror("write:");
         LOG(ERROR) << "WriteTask::operator() => Write Error";
         std::abort();
       }
@@ -56,6 +58,14 @@ SendTask::SendTask(int outfd, int infd, off64_t completed, size_t total)
       infd_(infd)
 {
   ;
+}
+
+SendTask::~SendTask()
+{
+  if (::close(infd_)) {
+    LOG(ERROR) << "SendTask::~SendTask() => Close File Error";
+    std::abort();
+  }
 }
 
 bool SendTask::operator()()
