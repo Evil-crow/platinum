@@ -21,8 +21,8 @@ using namespace platinum;
 
 void WriteQueue::TaskInQueue(int fd, const char *data, off64_t completed, size_t total)
 {
-  queue_.push_front(std::make_shared<WriteTask>(fd, data, completed, total));
-//  queue_.push_front(std::shared_ptr<Task>(new WriteTask(fd, data, total)));
+  queue_.push_back(std::make_shared<WriteTask>(fd, data, completed, total));
+//  queue_.push_back(std::shared_ptr<Task>(new WriteTask(fd, data, completed, total)));
 }
 
 void WriteQueue::TasKInQueue(int fd, const std::string &data, off64_t completed)
@@ -32,8 +32,8 @@ void WriteQueue::TasKInQueue(int fd, const std::string &data, off64_t completed)
 
 void WriteQueue::TaskInQueue(int outfd, int infd, off64_t completed, size_t total)
 {
-  queue_.push_front(std::make_shared<SendTask>(outfd, infd, completed, total));
-//  queue_.push_front(std::shared_ptr<Task>(new SendTask(outfd, infd, total)));
+  queue_.push_back(std::make_shared<SendTask>(outfd, infd, completed, total));
+//  queue_.push_back(std::shared_ptr<Task>(new SendTask(outfd, infd, total)));
 }
 
 
@@ -45,9 +45,8 @@ void WriteQueue::TaskInQueue(int outfd, int infd, off64_t completed, size_t tota
  */
 bool WriteQueue::DoTask()
 {
-  while (!queue_.empty()) {             // if we complete all the task, we should get out.
-    auto var = queue_.front();
-    if (var->operator()()) {            // complete the task
+  while (!queue_.empty()) {                        // if we complete all the task, we should get out.
+    if (queue_.front()->operator()()) {            // complete the task, std::queue::front() => reference, this can change the state of the elements in the container.
       queue_.pop_front();
     } else {                            // non-complete the task, e.g. EAGAIN / EWOULDBLOCK
       break;
