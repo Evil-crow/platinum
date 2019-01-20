@@ -19,7 +19,7 @@ using namespace platinum;
 
 int socket::Socket(Type type)
 {
-  int fd = ::socket(type, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, IPPROTO_TCP);
+  int fd = ::socket(type, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, 0);
   if (fd < 0) {
     LOG(ERROR) << "socket::Socket() => Socket Create Error";
     std::abort();
