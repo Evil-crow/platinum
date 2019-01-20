@@ -9,6 +9,8 @@
 #define PLATINUM_TASK_H
 
 #include <cstdio>
+#include <memory>
+
 namespace platinum {
 
 class WriteQueue;
@@ -33,13 +35,13 @@ class WriteTask : public Task {
   bool operator()() final;
 
  private:
-  const char *data_;
+  std::shared_ptr<char> data_;
 };
 
 class SendTask : public Task {
  public:
   SendTask(int outfd, int infd, off64_t completed, size_t total);
-  ~SendTask() override = default;
+  ~SendTask() override;
   bool operator()() final;
 
  private:
