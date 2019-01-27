@@ -96,6 +96,7 @@ void Connection::SendData(const char *data, size_t total)
         write_queue_.TaskInQueue(socket_->fd(), data, completed_, remained_);
       } else {
         LOG(ERROR) << "Connection::SendData() => Send Data Error";
+        std::abort();
       }
     }
   }
