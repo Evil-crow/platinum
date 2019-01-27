@@ -65,6 +65,11 @@ void TcpServer::OnConnectionCallback(int fd, const IPAddress &peer_address)
 
 void TcpServer::NewConnection(const Connector *connector)
 {
+  t_tcp_server->NewConnectionImpl(connector);
+}
+
+void TcpServer::NewConnectionImpl(const Connector *connector)
+{
   auto fd = connector->fd();
   auto connection_ptr = connector->connection_ptr();
   connection_ptr->SetMessageCallback(connector->message_callback());
@@ -72,7 +77,7 @@ void TcpServer::NewConnection(const Connector *connector)
   connection_ptr->SetCloseCallback([this](int fd) { EraseConnection(fd); });
   connection_ptr->ConnectionEstablished();
 
-  connections_.insert({fd, connection_ptr});
+  connections_.emplace(fd, connection_ptr);
 }
 
 void TcpServer::EraseConnection(int fd)
@@ -89,11 +94,21 @@ void TcpServer::EraseConnection(int fd)
 
 auto TcpServer::NewConnector(const IPAddress &address, ParserType type) -> std::shared_ptr<Connector>
 {
+  return t_tcp_server->NewConnectorImpl(address, type);
+}
+
+auto TcpServer::NewConnectorImpl(const IPAddress &address, ParserType type) -> std::shared_ptr<Connector>
+{
   auto ptr = std::make_shared<Connector>(loop_, address, type);
   return ptr;
 }
 
 auto TcpServer::NewConnector(const UnixAddress &address, ParserType type) -> std::shared_ptr<Connector>
+{
+  return t_tcp_server->NewConnectorImpl(address, type);
+}
+
+auto TcpServer::NewConnectorImpl(const UnixAddress &address, ParserType type) -> std::shared_ptr<Connector>
 {
   auto ptr = std::make_shared<Connector>(loop_, address, type);
   return ptr;
@@ -109,12 +124,12 @@ void TcpServer::SetMessageCallback(const MessageCallback &callback)
   message_callback_ = callback;
 }
 
-TcpServer *platinum::GetCurrentServer()
+void TcpServer::ForceClose(int fd)
 {
-  return t_tcp_server;
+  t_tcp_server->ForceClose(fd);
 }
 
-void TcpServer::ForceClose(int fd)
+void TcpServer::ForceCloseImpl(int fd)
 {
   if (connections_.find(fd) != connections_.end()) {
     connections_.erase(fd);
