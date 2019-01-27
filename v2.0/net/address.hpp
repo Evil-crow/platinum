@@ -20,6 +20,7 @@ class Address {
   virtual ~Address() = default;
 
   virtual const sockaddr *SockaddrPtr() const = 0;
+  virtual const socklen_t SockaddrLen() const = 0;
  protected:
   sa_family_t family_;
 };
