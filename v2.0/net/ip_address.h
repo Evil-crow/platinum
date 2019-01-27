@@ -41,6 +41,7 @@ class IPAddress : public Address {
   const in_port_t &port() const;
   const std::string &ip() const;
   const sockaddr *SockaddrPtr() const override;
+  const socklen_t SockaddrLen() const override;
 
  private:
   sockaddr_in ToSockaddrIn() const;

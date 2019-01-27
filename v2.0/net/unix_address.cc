@@ -7,6 +7,7 @@
 
 #include "unix_address.h"
 #include <utility>
+
 using namespace platinum;
 
 UnixAddress::UnixAddress(std::string path)
@@ -32,6 +33,7 @@ sockaddr_un UnixAddress::ToSockaddrUn() const
   ::memset(&addr, 0, sizeof(sockaddr_un));
 
   auto len = path_.size() > 107 ? 107 : path_.size();
+  printf("len: %zd\n", len);
   addr.sun_family = family_;
   ::memcpy(&addr.sun_path, path_.c_str(), len);
 
@@ -41,4 +43,9 @@ sockaddr_un UnixAddress::ToSockaddrUn() const
 const sockaddr *UnixAddress::SockaddrPtr() const
 {
   return reinterpret_cast<const sockaddr *>(&addr_);
+}
+
+const socklen_t UnixAddress::SockaddrLen() const
+{
+  return sizeof(addr_);
 }

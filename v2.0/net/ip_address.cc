@@ -96,3 +96,8 @@ const sockaddr *IPAddress::SockaddrPtr() const
 {
   return reinterpret_cast<const sockaddr *>(&addr_);
 }
+
+const socklen_t IPAddress::SockaddrLen() const
+{
+  return sizeof(addr_);
+}
