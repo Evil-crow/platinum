@@ -44,7 +44,6 @@ void Connector::SendFile(int file_fd, size_t total)
 {
   connection_ptr_->SendFile(file_fd, total);
 }
-
 void Connector::ShutdownConnection()
 {
   connection_ptr_->ShutDownConnection();
@@ -52,8 +51,8 @@ void Connector::ShutdownConnection()
 
 void Connector::StartNewConnection()
 {
-  ::connect(fd_, address_->SockaddrPtr(), sizeof(sockaddr));
-  platinum::GetCurrentServer()->NewConnection(this);
+  ::connect(fd_, address_->SockaddrPtr(), address_->SockaddrLen());
+  platinum::TcpServer::NewConnection(this);
 }
 
 void Connector::HandleEvent()
@@ -73,7 +72,7 @@ void Connector::HandleEvent()
         break;
       default:
         LOG(ERROR) << "Connector::HandleWrite() => Connect Error";
-        platinum::GetCurrentServer()->ForceClose(fd_);
+        platinum::TcpServer::ForceClose(fd_);
     }
   }
   // TODO: Add selfconnect check out + reconnect mechanism
@@ -87,6 +86,7 @@ void Connector::SetMessageCallback(const Connector::MessageCallback &callback)
 void Connector::SetWriteCallback(const Connector::WriteableCallback &callback)
 {
   write_callback_ = [=](){
+    printf("OK\n");
     HandleEvent();
     callback();
   };
