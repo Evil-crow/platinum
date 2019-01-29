@@ -9,7 +9,8 @@
 
 #include <cctype>
 #include <iostream>
-//#include "utility/logger.h"
+
+#include "protocol/http/request.h"
 
 using namespace platinum::http;
 
@@ -81,7 +82,7 @@ CR:
           iter++;
 
           if (HasBody())
-            body_len_ = std::strtol(header("Content-Length").c_str(), nullptr, 10);
+            body_len_ = std::strtol(key_value_map_["Content-Length"].c_str(), nullptr, 10);
         } else {
           http_state_ = HTTP_FAULT;
           break;
@@ -456,24 +457,24 @@ bool RequestParser::Complete() const
 
 bool RequestParser::HasBody()
 {
-  return header("Content-Length") != std::string("");
+  return key_value_map_["Content-Length"] != std::string("");
 }
-
-const std::string RequestParser::status_line() const
-{
-  std::string status_line;
-
-  status_line += method_;
-  status_line += " ";
-  status_line += url_;
-  status_line += " ";
-  status_line += "HTTP/";
-  status_line += std::to_string(major_version());
-  status_line += ".";
-  status_line += std::to_string(minor_version());
-
-  return status_line;
-}
+//
+//const std::string RequestParser::status_line() const
+//{
+//  std::string status_line;
+//
+//  status_line += method_;
+//  status_line += " ";
+//  status_line += url_;
+//  status_line += " ";
+//  status_line += "HTTP/";
+//  status_line += std::to_string(major_version());
+//  status_line += ".";
+//  status_line += std::to_string(minor_version());
+//
+//  return status_line;
+//}
 
 void RequestParser::Reset()
 {
@@ -490,4 +491,9 @@ void RequestParser::Reset()
   body_len_ = 0;
   key_value_map_.clear();
   body_.clear();
+}
+
+const Request RequestParser::GetRequest()
+{
+  return Request(method_, url_, version_major_, version_minor_, body_len_, key_value_map_, body_);
 }

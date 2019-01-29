@@ -11,8 +11,9 @@
 #include <vector>
 #include <unordered_map>
 
-#include "protocol/http/base.h"
 #include "protocol/parser.hpp"
+#include "protocol/http/base.h"
+#include "protocol/http/request.h"
 
 namespace platinum {
 namespace http {
@@ -26,27 +27,29 @@ class RequestParser : public platinum::Parser {
   long feed(const_iter iter, long length);
   bool Complete() const;
   void Reset();
-  const std::string status_line() const;
-  const std::string &method() const             { return method_; }
-  const std::string &url() const                { return url_; }
-  const int major_version() const               { return version_major_; }
-  const int minor_version() const               { return version_minor_; }
 
-  auto headers() -> const std::unordered_map<std::string, std::string> & {
-    return key_value_map_;
-  }
+  const Request GetRequest();
+//  const std::string status_line() const;
+//  const std::string &method() const             { return method_; }
+//  const std::string &url() const                { return url_; }
+//  const int major_version() const               { return version_major_; }
+//  const int minor_version() const               { return version_minor_; }
 
-  const std::string header(const std::string &key) {
-    if (key_value_map_.find(key) != key_value_map_.end()) {
-      return key_value_map_[key];
-    } else {
-      return std::string("");
-    }
-  }
-
-  const std::vector<platinum::http::HttpData> &body() const {
-    return body_;
-  }
+//  auto headers() -> const std::unordered_map<std::string, std::string> & {
+//    return key_value_map_;
+//  }
+//
+//  const std::string header(const std::string &key) {
+//    if (key_value_map_.find(key) != key_value_map_.end()) {
+//      return key_value_map_[key];
+//    } else {
+//      return std::string("");
+//    }
+//  }
+//
+//  const std::vector<platinum::http::HttpData> &body() const {
+//    return body_;
+//  }
 
  private:
   bool HasBody();
