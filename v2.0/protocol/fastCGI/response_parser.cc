@@ -32,7 +32,7 @@ ResponseParser::ResponseParser()
  * @return parse result
  */
 
-long ResponseParser::feed(ResponseParser::const_iter iter, long length)
+long ResponseParser::Feed(ResponseParser::const_iter iter, long length)
 {
   auto len_temp(length);
   transform_data_.clear();

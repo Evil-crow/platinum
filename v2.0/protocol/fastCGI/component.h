@@ -33,8 +33,8 @@
  *      depends on whether you set the keep-alive in BeginRequestRecord
  */
 
-#ifndef PLATINUM_COMPONENT_H
-#define PLATINUM_COMPONENT_H
+#ifndef PLATINUM_FCGI_COMPONENT_H
+#define PLATINUM_FCGI_COMPONENT_H
 
 #include <vector>
 #include "base.h"
@@ -109,4 +109,4 @@ class EndRequestRocord {
 }
 }
 
-#endif //PLATINUM_COMPONENT_H
+#endif //PLATINUM_FCGI_COMPONENT_H

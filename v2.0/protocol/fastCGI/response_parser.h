@@ -2,11 +2,11 @@
  * Created on 12/26/18.
  * Copyright (c) 2018 Crow All rights reserved.
  * @author Crow
- * @brief
+ * @brief Class ResponseParser is used to parse FCGI Response
  */
 
-#ifndef PLATINUM_RESPONSE_PARSER_H
-#define PLATINUM_RESPONSE_PARSER_H
+#ifndef PLATINUM_FCGI_RESPONSE_PARSER_H
+#define PLATINUM_FCGI_RESPONSE_PARSER_H
 
 #include "base.h"
 #include "protocol/fastCGI/component.h"
@@ -27,7 +27,7 @@ enum State : int {
   ResponseParser();
   ~ResponseParser() override = default;
 
-  long feed(const_iter iter, long length);
+  long Feed(const_iter iter, long length);
 
   auto transform_data() -> const std::vector<FCGIData> & {
     return transform_data_;
@@ -60,4 +60,4 @@ enum State : int {
 }
 }
 
-#endif //PLATINUM_RESPONSE_PARSER_H
+#endif //PLATINUM_FCGI_RESPONSE_PARSER_H

@@ -5,8 +5,8 @@
  * @brief Describe Class RequestBuilder
  */
 
-#ifndef PLATINUM_REQUEST_H
-#define PLATINUM_REQUEST_H
+#ifndef PLATINUM_FCGI_REQUEST_BUILDER_H
+#define PLATINUM_FCGI_REQUEST_BUILDER_H
 
 #include <map>
 #include <memory>
@@ -66,4 +66,4 @@ class RequestBuilder {
 }
 }
 
-#endif //PLATINUM_REQUEST_H
+#endif //PLATINUM_FCGI_REQUEST_BUILDER_H
