@@ -99,8 +99,7 @@ auto TcpServer::NewConnector(const IPAddress &address, ParserType type) -> std::
 
 auto TcpServer::NewConnectorImpl(const IPAddress &address, ParserType type) -> std::shared_ptr<Connector>
 {
-  auto ptr = std::make_shared<Connector>(loop_, address, type);
-  return ptr;
+  return std::make_shared<Connector>(loop_, address, type);
 }
 
 auto TcpServer::NewConnector(const UnixAddress &address, ParserType type) -> std::shared_ptr<Connector>
@@ -110,8 +109,7 @@ auto TcpServer::NewConnector(const UnixAddress &address, ParserType type) -> std
 
 auto TcpServer::NewConnectorImpl(const UnixAddress &address, ParserType type) -> std::shared_ptr<Connector>
 {
-  auto ptr = std::make_shared<Connector>(loop_, address, type);
-  return ptr;
+  return std::make_shared<Connector>(loop_, address, type);
 }
 
 void TcpServer::SetConnectionCallback(const EventCallback &callback)
