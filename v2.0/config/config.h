@@ -20,7 +20,7 @@ namespace platinum {
 
 struct YAMLData {
   int epoll_events;
-  in_port_t server_port;
+  in_port_t port;
 
   bool log_enable;
 
@@ -41,7 +41,7 @@ class Config {
   Config operator=(const Config &) = delete;
 
   int epoll_event() const         { return data_.epoll_events; }
-  in_port_t server_port() const   { return data_.server_port; }
+  in_port_t port() const   { return data_.port; }
 
   bool IsLogOn() const            { return data_.log_enable; }
 

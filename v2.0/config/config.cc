@@ -89,7 +89,7 @@ YAMLData Config::GetData()
   auto method_seq = config["method"].as<std::vector<std::string>>();
   YAMLData data{};
 
-  data.server_port = server_config.port;
+  data.port = server_config.port;
   data.epoll_events = server_config.epoll_event;
 
   data.thread_pool_enable = thread_pool_config.thread_pool_enable;
