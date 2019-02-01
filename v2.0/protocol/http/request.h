@@ -6,8 +6,8 @@
  *         RequestParser is an parser, not a request
  */
 
-#ifndef PLATINUM_REQUEST_H
-#define PLATINUM_REQUEST_H
+#ifndef PLATINUM_HTTP_REQUEST_H
+#define PLATINUM_HTTP_REQUEST_H
 
 #include <vector>
 #include <unordered_map>
@@ -52,4 +52,4 @@ class Request {
 }
 }
 
-#endif //PLATINUM_REQUEST_H
+#endif //PLATINUM_HTTP_REQUEST_H
