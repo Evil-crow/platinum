@@ -5,10 +5,11 @@
  * @brief  This file is used to describe Class RequestParser
  */
 
-#ifndef PLATINUM_REQUEST_PARSER_H
-#define PLATINUM_REQUEST_PARSER_H
+#ifndef PLATINUM_HTTP_REQUEST_PARSER_H
+#define PLATINUM_HTTP_REQUEST_PARSER_H
 
 #include <vector>
+#include <memory>
 #include <unordered_map>
 
 #include "protocol/parser.hpp"
@@ -18,38 +19,18 @@
 namespace platinum {
 namespace http {
 
+class Request;
 class RequestParser : public platinum::Parser {
  public:
   using const_iter = std::vector<HttpData>::const_iterator;
   RequestParser();
   ~RequestParser() override = default;
 
-  long feed(const_iter iter, long length);
+  long Feed(const_iter iter, long length);
   bool Complete() const;
   void Reset();
 
-  const Request GetRequest();
-//  const std::string status_line() const;
-//  const std::string &method() const             { return method_; }
-//  const std::string &url() const                { return url_; }
-//  const int major_version() const               { return version_major_; }
-//  const int minor_version() const               { return version_minor_; }
-
-//  auto headers() -> const std::unordered_map<std::string, std::string> & {
-//    return key_value_map_;
-//  }
-//
-//  const std::string header(const std::string &key) {
-//    if (key_value_map_.find(key) != key_value_map_.end()) {
-//      return key_value_map_[key];
-//    } else {
-//      return std::string("");
-//    }
-//  }
-//
-//  const std::vector<platinum::http::HttpData> &body() const {
-//    return body_;
-//  }
+  const std::shared_ptr<Request> GetRequest();
 
  private:
   bool HasBody();
@@ -76,4 +57,4 @@ class RequestParser : public platinum::Parser {
 }
 }
 
-#endif //PLATINUM_REQUEST_PARSER_H
+#endif //PLATINUM_HTTP_REQUEST_PARSER_H

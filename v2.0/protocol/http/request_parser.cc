@@ -5,12 +5,15 @@
  * @brief  This file is Class RequestParser immplments
  */
 
-#include "request_parser.h"
+#include "protocol/http/request_parser.h"
 
 #include <cctype>
 #include <iostream>
+#include <memory>
 
 #include "protocol/http/request.h"
+
+//#include "protocol/http/request.h"
 
 using namespace platinum::http;
 
@@ -30,7 +33,7 @@ RequestParser::RequestParser()
  * @return -1 means error, or return the length of an request we have parsed.
  */
 
-long RequestParser::feed(const_iter iter, long length)
+long RequestParser::Feed(const_iter iter, long length)
 {
   auto len(length);
   if (http_state_ == HTTP_FAULT) {
@@ -459,22 +462,6 @@ bool RequestParser::HasBody()
 {
   return key_value_map_["Content-Length"] != std::string("");
 }
-//
-//const std::string RequestParser::status_line() const
-//{
-//  std::string status_line;
-//
-//  status_line += method_;
-//  status_line += " ";
-//  status_line += url_;
-//  status_line += " ";
-//  status_line += "HTTP/";
-//  status_line += std::to_string(major_version());
-//  status_line += ".";
-//  status_line += std::to_string(minor_version());
-//
-//  return status_line;
-//}
 
 void RequestParser::Reset()
 {
@@ -493,7 +480,7 @@ void RequestParser::Reset()
   body_.clear();
 }
 
-const Request RequestParser::GetRequest()
+const std::shared_ptr<Request> RequestParser::GetRequest()
 {
-  return Request(method_, url_, version_major_, version_minor_, body_len_, key_value_map_, body_);
+  return std::make_shared<Request>(method_, url_, version_major_, version_minor_, body_len_, key_value_map_, body_);
 }
