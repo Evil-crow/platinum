@@ -12,6 +12,9 @@
 
 #include <iostream>
 #include <unistd.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <sys/sendfile.h>
 
 #include "net/socket.h"
@@ -102,13 +105,24 @@ void Connection::SendData(const char *data, size_t total)
   }
 }
 
-void Connection::SendFile(int file_fd, size_t total)
+void Connection::SendFile(const std::string &pathname, size_t total)
 {
   size_t completed_(0), remained_(total);
+
+  int file_fd = ::open(pathname.c_str(), O_RDONLY, 0644);
+  if (file_fd < 0) {
+    LOG(ERROR) << "Connection::SendFile() => Open File Error";
+    std::abort();
+  }
+
   while (true) {
     auto var = ::sendfile64(socket_->fd(), file_fd, nullptr, total);
     if (var > 0) {
-      if (var == total) {
+      if (var == total) {                                                      // Close file after write OK, needn't empalce in write queue
+        if (::close(file_fd) < 0) {
+          LOG(ERROR) << "Connection::SendFile() => Close File Error";
+          std::abort();
+        }
         return ;
       } else {
         completed_ += var;
@@ -118,7 +132,7 @@ void Connection::SendFile(int file_fd, size_t total)
       if (errno == EAGAIN || errno == EWOULDBLOCK) {
         channel_->EnableWriteing();
         loop_->UpdateChannel(channel_.get());
-        write_queue_.TaskInQueue(socket_->fd(), file_fd, completed_, remained_);
+        write_queue_.TaskInQueue(socket_->fd(), pathname, completed_, remained_);
       } else {
         LOG(ERROR) << "Connection::SendFile() => Send File Error";
       }
