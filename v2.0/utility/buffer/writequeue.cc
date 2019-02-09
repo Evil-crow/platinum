@@ -9,7 +9,6 @@
 #include "writequeue.h"
 
 #include <memory>
-#include <iostream>
 
 #include "utility/buffer/task.h"
 
@@ -21,7 +20,7 @@ using namespace platinum;
 
 void WriteQueue::TaskInQueue(int fd, const char *data, off64_t completed, size_t total)
 {
-  queue_.push_back(std::make_shared<WriteTask>(fd, data, completed, total));
+  queue_.emplace_back(std::make_shared<WriteTask>(fd, data, completed, total));
 //  queue_.push_back(std::shared_ptr<Task>(new WriteTask(fd, data, completed, total)));
 }
 
@@ -30,9 +29,9 @@ void WriteQueue::TasKInQueue(int fd, const std::string &data, off64_t completed)
   TaskInQueue(fd, data.c_str(), completed, data.size());
 }
 
-void WriteQueue::TaskInQueue(int outfd, int infd, off64_t completed, size_t total)
+void WriteQueue::TaskInQueue(int outfd, const std::string &pathname, off64_t completed, size_t total)
 {
-  queue_.push_back(std::make_shared<SendTask>(outfd, infd, completed, total));
+  queue_.emplace_back(std::make_shared<SendTask>(outfd, pathname, completed, total));
 //  queue_.push_back(std::shared_ptr<Task>(new SendTask(outfd, infd, total)));
 }
 
