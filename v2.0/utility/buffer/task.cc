@@ -9,6 +9,9 @@
 #include "task.h"
 
 #include <unistd.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <sys/sendfile.h>
 #include <cerrno>
 #include <cstring>
@@ -53,11 +56,16 @@ bool WriteTask::operator()()
   }
 }
 
-SendTask::SendTask(int outfd, int infd, off64_t completed, size_t total)
-    : Task(outfd, completed, total),
-      infd_(infd)
+SendTask::SendTask(int outfd, std::string pathname, off64_t completed, size_t total)
+    : Task(outfd, completed, total)
 {
-  ;
+  int fd = ::open(pathname.c_str(), O_RDONLY, 0644) < 0;
+  if (fd) {
+    LOG(ERROR) << "SendTask::SendTask() => Open File Error";
+    std::abort();
+  }
+
+  infd_ = fd;
 }
 
 SendTask::~SendTask()

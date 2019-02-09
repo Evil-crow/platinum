@@ -16,7 +16,7 @@ namespace platinum {
 class WriteQueue;
 class Task {
  public:
-//  Task() = default;
+  Task() = default;
   Task(int fd, off64_t completed, size_t total);
   virtual ~Task() = default;
   virtual bool operator()() = 0;
@@ -40,7 +40,7 @@ class WriteTask : public Task {
 
 class SendTask : public Task {
  public:
-  SendTask(int outfd, int infd, off64_t completed, size_t total);
+  SendTask(int outfd, std::string pathname, off64_t completed, size_t total);
   ~SendTask() override;
   bool operator()() final;
 
