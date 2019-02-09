@@ -6,16 +6,24 @@
 #       You must set every necessary option !
 
 server:
-  port: 9887                             # server port (NECESSARY)
-  epoll_event: 30                       # epoll events (NECESSARY)
-
-#  WARNING! You must set you method or make it a empty sequence
-method: [GET, HEAD, POST, OPTION]        # default (you can only add which method you want in seq)
+  port: 9887                               # server port (NECESSARY)
+  epoll_event: 30                          # epoll events (NECESSARY)
+  method: [GET, HEAD, POST, OPTION]        # default (you can only add which method you want in seq)
 
 log_enable: false
-index: index.html                        # The default index html (default: index.html
-www-root: /var/www-root                  # The default www-root directory (default: /var/www-root
+
+resource:
+  static: [img, html, css, js, txt]        # support static resource suffix
+  dynamic: [php]                           # support dynamic resource suffix
+  forbidden: [/core, /config]              # forbidden resource index, include dir or file.
+  index: index.html                        # The default index html (default: index.html
+  www-root: /var/www-root                  # The default www-root directory (default: /var/www-root
+
+# WARNING! You must set only one connection mode, and set the other to be "NULL", or it will lead to an error.
+fcgi:
+  inet: 127.0.0.1:9000                     # INET address, ip:port
+  unix: NULL                               # Unix address.
 
 thread pool:
-  enable: true                           # enable/disable thread poll. you can choose turn on it or not
-  thread_num: 8                          # thread mount in the pool. If you turn off the pool, you should set this value to -1
+  enable: true                             # enable/disable thread poll. you can choose turn on it or not
+  thread_num: 8                            # thread mount in the pool. If you turn off the pool, you should set this value to -1

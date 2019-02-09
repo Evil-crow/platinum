@@ -15,6 +15,7 @@
 
 #include <set>
 #include <string>
+#include <vector>
 
 namespace platinum {
 
@@ -27,10 +28,17 @@ struct YAMLData {
   std::string www_root;
   std::string index;
 
+  std::string fcgi_inet_ip;
+  in_port_t fcgi_inet_port;
+  std::string fcgi_unixaddress;
+
   bool thread_pool_enable;
   int thread_num;
 
   std::set<std::string> method_list;
+  std::set<std::string> static_resource;
+  std::set<std::string> dynamic_resource;
+  std::set<std::string> forbidden_resource;
 };
 
 class Config {
@@ -41,7 +49,7 @@ class Config {
   Config operator=(const Config &) = delete;
 
   int epoll_event() const         { return data_.epoll_events; }
-  in_port_t port() const   { return data_.port; }
+  in_port_t port() const          { return data_.port; }
 
   bool IsLogOn() const            { return data_.log_enable; }
 
@@ -55,6 +63,11 @@ class Config {
   bool IsPostvaild() const        { return data_.method_list.count("HEAD") > 0; }
   bool IsHeadVaild() const        { return data_.method_list.count("HEAD") > 0; }
   bool IsOptionVaild() const      { return data_.method_list.count("OPTION") > 0; }
+
+  const std::set<std::string> &method_list() const          { return data_.method_list; }
+  const std::set<std::string> &static_resource() const      { return data_.static_resource; }
+  const std::set<std::string> &dynamic_resource() const     { return data_.dynamic_resource; }
+  const std::set<std::string> &forbidden_resource() const   { return data_.forbidden_resource; }
 
  private:
   explicit Config(YAMLData &&data) : data_(data) { ; }
