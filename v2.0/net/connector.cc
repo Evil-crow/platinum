@@ -40,9 +40,9 @@ void Connector::SendData(const char *data, size_t total)
   connection_ptr_->SendData(data, total);
 }
 
-void Connector::SendFile(int file_fd, size_t total)
+void Connector::SendFile(const std::string &pathname, size_t total)
 {
-  connection_ptr_->SendFile(file_fd, total);
+  connection_ptr_->SendFile(pathname, total);
 }
 void Connector::ShutdownConnection()
 {

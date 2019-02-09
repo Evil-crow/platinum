@@ -32,7 +32,7 @@ class Connector {
 
   void StartNewConnection();
   void SendData(const char *data, size_t total);
-  void SendFile(int file_fd, size_t total);
+  void SendFile(const std::string &pathname, size_t total);
   void ShutdownConnection();
 
   // copy TCPServer callback -> TCPConnection, can't move, we'll create much TCPConnection by TCPServer::*callback
