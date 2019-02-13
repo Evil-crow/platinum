@@ -5,8 +5,8 @@
  * @brief  This file is used to describe Class Connection
  */
 
-#ifndef PLATINUM_TCP_CONNECTION_H
-#define PLATINUM_TCP_CONNECTION_H
+#ifndef PLATINUM_NET_CONNECTION_H
+#define PLATINUM_NET_CONNECTION_H
 
 #include <memory>
 #include <functional>
@@ -69,4 +69,4 @@ class Connection : public Noncopyable {
 
 }
 
-#endif //PLATINUM_TCP_CONNECTION_H
+#endif //PLATINUM_NET_CONNECTION_H

@@ -6,8 +6,8 @@
  *         They're in namespace socket, not Class Socket
  */
 
-#ifndef PLATINUM_SOCKETOPS_H
-#define PLATINUM_SOCKETOPS_H
+#ifndef PLATINUM_NET_SOCKETOPS_H
+#define PLATINUM_NET_SOCKETOPS_H
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -39,4 +39,4 @@ sockaddr* SockaddrCast(sockaddr_in *sockaddr_);
 }
 
 
-#endif //PLATINUM_SOCKETOPS_H
+#endif //PLATINUM_NET_SOCKETOPS_H

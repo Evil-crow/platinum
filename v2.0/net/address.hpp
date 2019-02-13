@@ -6,8 +6,8 @@
  *         It can be extended to IPAddress / UnixAddress
  */
 
-#ifndef PLATINUM_ADDRESS_HPP
-#define PLATINUM_ADDRESS_HPP
+#ifndef PLATINUM_NET_ADDRESS_HPP
+#define PLATINUM_NET_ADDRESS_HPP
 
 #include <sys/socket.h>
 #include <sys/types.h>
@@ -27,4 +27,4 @@ class Address {
 
 }
 
-#endif //PLATINUM_ADDRESS_HPP
+#endif //PLATINUM_NET_ADDRESS_HPP

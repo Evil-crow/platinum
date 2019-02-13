@@ -5,8 +5,8 @@
  * @brief  This file is used to describe Class TcpServer
  */
 
-#ifndef PLATINUM_TCP_SERVER_H
-#define PLATINUM_TCP_SERVER_H
+#ifndef PLATINUM_NET_TCP_SERVER_H
+#define PLATINUM_NET_TCP_SERVER_H
 
 #include <memory>
 #include <atomic>
@@ -59,4 +59,4 @@ TcpServer *GetCurrentServer();
 
 }
 
-#endif //PLATINUM_TCP_SERVER_H
+#endif //PLATINUM_NET_TCP_SERVER_H

@@ -5,8 +5,8 @@
  * @brief  This file is used to describe the Derived class IPAddress
  */
 
-#ifndef PLATINUM_IP_ADDRESS_H
-#define PLATINUM_IP_ADDRESS_H
+#ifndef PLATINUM_NET_IP_ADDRESS_H
+#define PLATINUM_NET_IP_ADDRESS_H
 
 #include <sys/types.h>
 #include <arpa/inet.h>
@@ -53,4 +53,4 @@ class IPAddress : public Address {
 
 }
 
-#endif //PLATINUM_IP_ADDRESS_H
+#endif //PLATINUM_NET_IP_ADDRESS_H

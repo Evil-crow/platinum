@@ -5,8 +5,8 @@
  * @brief  This file is used to describe Socket
  */
 
-#ifndef PLATINUM_SOCKET_H
-#define PLATINUM_SOCKET_H
+#ifndef PLATINUM_NET_SOCKET_H
+#define PLATINUM_NET_SOCKET_H
 
 #include "ip_address.h"
 #include "socketops.h"
@@ -42,4 +42,4 @@ class Socket {
 
 }
 
-#endif //PLATINUM_SOCKET_H
+#endif //PLATINUM_NET_SOCKET_H

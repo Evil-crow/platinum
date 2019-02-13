@@ -13,8 +13,8 @@
  *    This class test file in /test/acceptor_test.cc
 */
 
-#ifndef PLATINUM_ACCEPTOR_H
-#define PLATINUM_ACCEPTOR_H
+#ifndef PLATINUM_NET_ACCEPTOR_H
+#define PLATINUM_NET_ACCEPTOR_H
 
 #include <atomic>
 #include <memory>
@@ -52,4 +52,4 @@ class Acceptor {
 
 }
 
-#endif //PLATINUM_ACCEPTOR_H
+#endif //PLATINUM_NET_ACCEPTOR_H

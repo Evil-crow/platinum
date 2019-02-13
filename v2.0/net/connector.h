@@ -6,8 +6,8 @@
  *         Which can use IPAddrss / UnixAddress to connect peer endpoint
  */
 
-#ifndef PLATINUM_CONNECTOR_H
-#define PLATINUM_CONNECTOR_H
+#ifndef PLATINUM_NET_CONNECTOR_H
+#define PLATINUM_NET_CONNECTOR_H
 
 #include <memory>
 #include <functional>
@@ -56,4 +56,4 @@ class Connector {
 
 }
 
-#endif //PLATINUM_CONNECTOR_H
+#endif //PLATINUM_NET_CONNECTOR_H

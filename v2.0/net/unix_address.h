@@ -5,8 +5,8 @@
  * @brief  This file is used to describe the Derived Class UnixAddress
  */
 
-#ifndef PLATINUM_UNIX_ADDRESS_H
-#define PLATINUM_UNIX_ADDRESS_H
+#ifndef PLATINUM_NET_UNIX_ADDRESS_H
+#define PLATINUM_NET_UNIX_ADDRESS_H
 
 #include <sys/un.h>
 #include <string>
@@ -38,4 +38,4 @@ class UnixAddress : public Address {
 
 }
 
-#endif //PLATINUM_UNIX_ADDRESS_H
+#endif //PLATINUM_NET_UNIX_ADDRESS_H
