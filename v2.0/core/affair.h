@@ -16,38 +16,47 @@
  *                    END
  */
 
-#ifndef PLATINUM_AFFAIR_H
-#define PLATINUM_AFFAIR_H
+#ifndef PLATINUM_CORE_AFFAIR_H
+#define PLATINUM_CORE_AFFAIR_H
 
 #include <map>
+#include <memory>
+
+#include "net/connection.h"
 #include "protocol/http/request_parser.h"
 
 namespace platinum {
 
+class Handler;
 class Affair {
  public:
-  explicit Affair(const platinum::http::Request &request);
+  Affair(platinum::Connection *connection, platinum::http::Request request) noexcept ;
   ~Affair() = default;
 
   void Process();
   void Serve();
 
+  auto Suffix() -> const std::string { return suffix_; }
+  auto Parameters() -> const std::map<std::string, std::string> { return parameters_; }
+
  private:
-  void set_request_suffix();
-  void set_request_parameters();
-  auto request_suffix() -> const std::string { return request_suffix_; }
-  auto request_parameters() -> const std::map<std::string, std::string> { return request_parameters_; }
+  void SetHandler();
+  void SetPathFile();
+  void SetSuffix();
+  void SetParameters();
 
   bool IsStaticResource();
   bool IsDynamicResource();
 
-
-  std::string request_suffix_;
-  std::map<std::string, std::string> request_parameters_;
+  std::string suffix_;
+  std::string path_;
+  std::string file_;
+  std::map<std::string, std::string> parameters_;
+  std::unique_ptr<Handler> handler_;
+  platinum::Connection *connection_;
   platinum::http::Request request_;
-  int status_code_;
 };
 
 }
 
-#endif //PLATINUM_AFFAIR_H
+#endif //PLATINUM_CORE_AFFAIR_H
