@@ -8,8 +8,8 @@
 *       And you ask it the configuration is OK
 */
 
-#ifndef PLATINUM_CONFIG_H
-#define PLATINUM_CONFIG_H
+#ifndef PLATINUM_CONFIG_CONFIG_H
+#define PLATINUM_CONFIG_CONFIG_H
 
 #include <netinet/in.h>
 
@@ -78,4 +78,4 @@ class Config {
 
 }
 
-#endif //PLATINUM_CONFIG_H
+#endif //PLATINUM_CONFIG_CONFIG_H

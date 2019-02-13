@@ -21,26 +21,23 @@ set(
         _PLATINUM_CONFIG
         config/config.h config/config.cc
 )
-
 set(
         _PLATINUM_LOGGER
         utility/logger.h utility/logger.cc
 )
-
 set(
         _PLATINUM_BUFFER
         utility/buffer/buffer.h utility/buffer/buffer.cc
         utility/buffer/writequeue.h utility/buffer/writequeue.cc
         utility/buffer/task.h utility/buffer/task.cc
 )
-
 set(
         _PLATINUM_UTILITY
         ${_PLATINUM_LOGGER}
         ${_PLATINUM_BUFFER}
+        utility/dir.h utility/dir.cc
         utility/noncopyable.h
 )
-
 set(
         _PLATINUM_REACTOR
         reactor/epoller.h reactor/epoller.cc
@@ -69,7 +66,12 @@ set(
 )
 set(
         _PLATINUM_HTTP
-        protocol/http/response_builder.cc protocol/http/response_builder.h protocol/http/request_parser.cc protocol/http/request_parser.h protocol/http/base.h)
+        protocol/http/base.h
+        protocol/http/request.h protocol/http/request.cc
+        protocol/http/request_parser.cc protocol/http/request_parser.h
+        protocol/http/response.h protocol/http/response.cc
+        protocol/http/response_builder.cc protocol/http/response_builder.h
+)
 set(
         _PLATINUM_FCGI
         protocol/fastCGI/base.h
@@ -81,11 +83,24 @@ set(
         _PLATINUM_PROTOCOL
         ${_PLATINUM_FCGI}
         ${_PLATINUM_HTTP}
-        protocol/parser.hpp)
-
+        protocol/parser.hpp
+)
+set(
+        _PLATINUM_HANDLER
+        core/handler/handler.hpp
+        core/handler/static_handler.h core/handler/static_handler.cc
+        core/handler/dynamic_handler.h core/handler/dynamic_handler.cc
+)
+set(
+        _PLATINUM_CORE
+        core/platinum.h core/platinum.cc
+        core/affair.h core/affair.cc
+        ${_PLATINUM_HANDLER}
+)
 set(
         EXECUTE_FILE
-        platinum.cc
+        main.cc
+        ${_PLATINUM_CORE}
         ${_PLATINUM_CONFIG}
         ${_PLATINUM_UTILITY}
         ${_PLATINUM_NET}
