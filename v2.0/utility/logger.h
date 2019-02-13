@@ -7,8 +7,8 @@
  *        By LoggerOn + LoggerOff
  */
 
-#ifndef PLATINUM_LOG_H
-#define PLATINUM_LOG_H
+#ifndef PLATINUM_UTILITY_LOG_H
+#define PLATINUM_UTILITY_LOG_H
 
 #include <string>
 #include <vector>
@@ -67,4 +67,4 @@ class LoggerOff : public Logger {
 
 }
 
-#endif //PLATINUM_LOG_H
+#endif //PLATINUM_UTILITY_LOG_H

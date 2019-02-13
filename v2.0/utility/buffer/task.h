@@ -5,8 +5,8 @@
  * @brief  This file is used to describe WriteQueue
  */
 
-#ifndef PLATINUM_TASK_H
-#define PLATINUM_TASK_H
+#ifndef PLATINUM_UTILITY_BUFFER_TASK_H
+#define PLATINUM_UTILITY_BUFFER_TASK_H
 
 #include <cstdio>
 #include <memory>
@@ -49,4 +49,4 @@ class SendTask : public Task {
 };
 
 }
-#endif //PLATINUM_TASK_H
+#endif //PLATINUM_UTILITY_BUFFER_TASK_H

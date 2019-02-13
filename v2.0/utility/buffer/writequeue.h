@@ -6,8 +6,8 @@
  * @update Add Task to fit the queue.
  */
 
-#ifndef PLATINUM_WRITEQUEUE_H
-#define PLATINUM_WRITEQUEUE_H
+#ifndef PLATINUM_UTILITY_BUFFER_WRITEQUEUE_H
+#define PLATINUM_UTILITY_BUFFER_WRITEQUEUE_H
 
 #include <deque>
 #include <memory>
@@ -29,4 +29,4 @@ class WriteQueue {
 
 }
 
-#endif //PLATINUM_WRITEQUEUE_H
+#endif //PLATINUM_UTILITY_BUFFER_WRITEQUEUE_H

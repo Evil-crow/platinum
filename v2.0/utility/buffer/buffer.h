@@ -6,8 +6,8 @@
  *      By index to contorl buffer.
  */
 
-#ifndef PLATINUM_BUFFER_H
-#define PLATINUM_BUFFER_H
+#ifndef PLATINUM_UTILITY_BUFFER_BUFFER_H
+#define PLATINUM_UTILITY_BUFFER_BUFFER_H
 
 #include <vector>
 
@@ -39,4 +39,4 @@ class Buffer {
 
 }
 
-#endif //PLATINUM_BUFFER_H
+#endif //PLATINUM_UTILITY_BUFFER_BUFFER_H

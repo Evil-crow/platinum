@@ -8,8 +8,8 @@
  */
 
 
-#ifndef PLATINUM_EPOLLER_H
-#define PLATINUM_EPOLLER_H
+#ifndef PLATINUM_REACTOR_EPOLLER_H
+#define PLATINUM_REACTOR_EPOLLER_H
 
 #include <sys/epoll.h>
 #include <memory>
@@ -40,4 +40,4 @@ class EPoller {
 
 }
 
-#endif //PLATINUM_EPOLLER_H
+#endif //PLATINUM_REACTOR_EPOLLER_H

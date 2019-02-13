@@ -4,6 +4,9 @@
  *      Copyconstructor, copy operator=, Moveconstructor, move operator=
 */
 
+#ifndef PLATINUM_UTILITY_NONCOPYABLE_H
+#define PLATINUM_UTILITY_NONCOPYABLE_H
+
 namespace platinum {
 
 class Noncopyable {
@@ -17,3 +20,4 @@ class Noncopyable {
 };
 }
 
+#endif // PLATINUM_UTILITY_NONCOPYABLE_H

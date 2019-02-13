@@ -5,8 +5,8 @@
  * @brief  This file is used to describe the Class Channel
  */
 
-#ifndef PLATINUM_TCP_CHANNEL_H
-#define PLATINUM_TCP_CHANNEL_H
+#ifndef PLATINUM_REACTOR_CHANNEL_H
+#define PLATINUM_REACTOR_CHANNEL_H
 
 #include <atomic>
 #include <functional>
@@ -57,4 +57,4 @@ class Channel {
 
 }
 
-#endif //PLATINUM_TCP_CHANNEL_H
+#endif //PLATINUM_REACTOR_CHANNEL_H

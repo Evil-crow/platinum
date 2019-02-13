@@ -5,15 +5,15 @@
  * @brief  This file is used to describe EventLoop,
  */
 
-#ifndef PLATINUM_EVENTLOOP_H
-#define PLATINUM_EVENTLOOP_H
+#ifndef PLATINUM_REACTOR_EVENTLOOP_H
+#define PLATINUM_REACTOR_EVENTLOOP_H
 
 #include <mutex>
 #include <atomic>
 #include <thread>
 #include <vector>
 #include <functional>
-#include <net/connection.h>
+//#include <net/connection.h>
 
 namespace platinum {
 
@@ -66,4 +66,4 @@ class EventLoop {
 
 }
 
-#endif //PLATINUM_EVENTLOOP_H
+#endif //PLATINUM_REACTOR_EVENTLOOP_H
