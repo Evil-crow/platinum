@@ -67,4 +67,3 @@ const std::string Request::status_line() const
 
   return status_line;
 }
-

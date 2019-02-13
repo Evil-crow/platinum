@@ -45,6 +45,7 @@ class Request {
   int version_major_;
   int version_minor_;
   long body_len_;
+  std::unordered_map<std::string, std::string> paramter_argument_map_;
   std::unordered_map<std::string, std::string> key_value_map_;
   std::vector<platinum::http::HttpData> body_;
 };
