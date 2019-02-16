@@ -22,12 +22,13 @@ class StaticHandler : public Handler {
                 const std::string &file,
                 const std::string &path) noexcept ;
   void Serve() override;
+  void SetResourceFile();
+  void SetBasicHeaders();
 
  private:
   bool IsValid();
   bool IsExist();
   bool NotForbidden();
-  void ServeResource();
 };
 
 }
