@@ -36,6 +36,7 @@ struct Resource {
   std::vector<std::string> dynamic_resource;
   std::vector<std::string> forbidden_resource;
   std::string www_root;
+  std::string default_root;
   std::string index;
 };
 
@@ -122,18 +123,20 @@ struct convert<Resource> {
     node["dynamic"] = rhs.dynamic_resource;
     node["forbidden"] = rhs.forbidden_resource;
     node["www-root"] = rhs.www_root;
+    node["defult-root"] = rhs.default_root;
     node["index"] = rhs.index;
 
     return node;
   }
 
   static bool decode(const Node &node, Resource &rhs) {
-    if (!node.IsMap() || node.size() != 5)
+    if (!node.IsMap() || node.size() != 6)
       return false;
     rhs.static_resource = node["static"].as<std::vector<std::string>>();
     rhs.dynamic_resource = node["dynamic"].as<std::vector<std::string>>();
     rhs.forbidden_resource = node["forbidden"].as<std::vector<std::string>>();
     rhs.www_root = node["www-root"].as<std::string>();
+    rhs.default_root = node["default-root"].as<std::string>();
     rhs.index = node["index"].as<std::string>();
 
     return true;
@@ -169,6 +172,7 @@ YAMLData Config::GetData()
   data.log_enable = config["log_enable"].as<bool>();
   data.index = resource_config.index;
   data.www_root = resource_config.www_root;
+  data.default_root = resource_config.default_root;
 
   data.method_list = std::set<std::string>(server_config.method_list.cbegin(), server_config.method_list.cend());
   data.static_resource = std::set<std::string>(resource_config.static_resource.cbegin(), resource_config.static_resource.cend());

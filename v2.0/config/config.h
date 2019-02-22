@@ -25,8 +25,9 @@ struct YAMLData {
 
   bool log_enable;
 
-  std::string www_root;
   std::string index;
+  std::string www_root;
+  std::string default_root;
 
   std::string fcgi_inet_ip;
   in_port_t fcgi_inet_port;
@@ -54,15 +55,11 @@ class Config {
   bool IsLogOn() const            { return data_.log_enable; }
 
   std::string www_root() const    { return data_.www_root; }
+  std::string default_root() const { return data_.default_root; }
   std::string index() const       { return data_.index; }
 
   bool IsThreadPoolOn() const     { return data_.thread_pool_enable; }
   int thread_num() const          { return data_.thread_num; }
-
-  bool IsGetVaild() const         { return data_.method_list.count("GET") > 0; }
-  bool IsPostvaild() const        { return data_.method_list.count("HEAD") > 0; }
-  bool IsHeadVaild() const        { return data_.method_list.count("HEAD") > 0; }
-  bool IsOptionVaild() const      { return data_.method_list.count("OPTION") > 0; }
 
   const std::set<std::string> &method_list() const          { return data_.method_list; }
   const std::set<std::string> &static_resource() const      { return data_.static_resource; }
