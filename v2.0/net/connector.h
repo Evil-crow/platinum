@@ -42,11 +42,15 @@ class Connector {
   const WriteableCallback &writeable_callback() const;
 
   int fd() const { return fd_; }
+  int forward_fd() const { return forward_fd_; }
+  void set_forward_fd(int fd) { forward_fd_ = fd; }
   auto connection_ptr() const -> std::shared_ptr<Connection>;
+
  private:
   void HandleEvent();
 
   int fd_;                                                                     // Not RAII Handle, only store the fd, resource managment to TCPConnection
+  int forward_fd_;
   EventLoop *loop_;                                                            // use loop to control resource, like AddChannel()
   std::unique_ptr<Address> address_;                                           // Address, Bind with this
   std::shared_ptr<Connection> connection_ptr_;

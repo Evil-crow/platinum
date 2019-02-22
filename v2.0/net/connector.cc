@@ -86,7 +86,6 @@ void Connector::SetMessageCallback(const Connector::MessageCallback &callback)
 void Connector::SetWriteCallback(const Connector::WriteableCallback &callback)
 {
   write_callback_ = [=](){
-    printf("OK\n");
     HandleEvent();
     callback();
   };

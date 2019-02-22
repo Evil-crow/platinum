@@ -39,14 +39,16 @@ class Connection : public Noncopyable {
   void SendData(const unsigned char *data, size_t total);
   void SendFile(const std::string &pathname, size_t total);
   void ForceClose();
-  EventLoop *GetLoop();
-  int GetFd();
 
   // copy TCPServer callback -> TCPConnection, can't move, we'll create much TCPConnection by TCPServer::*callback
   void SetConnectionCallback(const EventCallback &callback);
   void SetWriteCallback(const EventCallback &callback);
   void SetMessageCallback(const MessageCallback &callback);
-  void SetCloseCallback(const EventCallback &callback);
+  void SetCloseCallback(const CloseCallback &callback);
+
+  void set_forward_fd(int fd);
+  int forward_fd();
+  int socket_fd();
 
  private:
   void HandleRead();                                   // deal with readable event, doing by Channel::read_callback_
@@ -65,9 +67,10 @@ class Connection : public Noncopyable {
   EventCallback connection_callback_;                  // register by user provide function -> OnConnection fucntion
   MessageCallback message_callback_;                   // register by user provide function -> OnMessage Function
   EventCallback write_callback_;                       // register by Connector -> to check connection status, may be add timer
-  EventCallback close_callback_;                       // register as TCPServer::RemoveConnection
+  CloseCallback close_callback_;                       // register as TCPServer::RemoveConnection
   Buffer read_buffer_;
   WriteQueue write_queue_;
+  int forward_fd_;
 };
 
 }

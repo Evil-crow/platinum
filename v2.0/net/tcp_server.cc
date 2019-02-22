@@ -14,7 +14,6 @@
 #include "net/connector.h"
 #include "net/connection.h"
 #include "reactor/event_loop.h"
-#include "reactor/event_loop_pool.h"
 #include "utility/logger.h"
 
 using namespace platinum;
@@ -24,7 +23,6 @@ thread_local TcpServer *t_tcp_server = nullptr;
 TcpServer::TcpServer(EventLoop *loop, IPAddress &address)
     : loop_(loop),
       acceptor_(std::make_unique<Acceptor>(loop, address)),
-      pool_(std::make_unique<EventLoopPool>(loop)),
       starting_(false)
 {
   if (t_tcp_server) {
@@ -44,7 +42,6 @@ void TcpServer::Start()
         OnConnectionCallback(fd, addr);
       });
   acceptor_->Listening();
-  pool_->Start();
   loop_->Loop();
 }
 
@@ -55,15 +52,14 @@ void TcpServer::OnConnectionCallback(int fd, const IPAddress &peer_address)
   auto local_addr = socket::GetSockName(fd);
   IPAddress local_address(local_addr);
 
-  std::string str(peer_address.ip() + ":" + std::to_string(peer_address.port()));
-  LOG(INFO) << std::move(str);
+  std::string str(peer_address.ip() + ":" + std::to_string(peer_address.port()) + "::" + std::to_string(fd));
+  LOG(INFO) << str.c_str();
 
-  auto io_loop = pool_->GetNextLoop();
-  auto connection_ptr = std::make_shared<Connection>(io_loop, fd, ParserType::HTTP);
+  auto connection_ptr = std::make_shared<Connection>(loop_, fd, ParserType::HTTP);
   connection_ptr->SetMessageCallback(message_callback_);
   connection_ptr->SetConnectionCallback([this]() { connection_callback_(); });
-  connection_ptr->SetCloseCallback([connection_ptr, this](){ EraseConnection(connection_ptr); });
-  io_loop->RunInLoop([connection_ptr]() { connection_ptr->ConnectionEstablished(); });
+  connection_ptr->SetCloseCallback([this](int fd){ EraseConnection(fd); });
+  connection_ptr->ConnectionEstablished();
 
   connections_.emplace(fd, connection_ptr);
 }
@@ -79,26 +75,20 @@ void TcpServer::NewConnectionImpl(const Connector *connector)
   auto connection_ptr = connector->connection_ptr();
   connection_ptr->SetMessageCallback(connector->message_callback());
   connection_ptr->SetWriteCallback(connector->writeable_callback());
-  connection_ptr->SetCloseCallback([=]() { EraseConnection(connection_ptr); });
+  connection_ptr->SetCloseCallback([this](int fd) { EraseConnection(fd); });
+  connection_ptr->set_forward_fd(connector->forward_fd());
   connection_ptr->ConnectionEstablished();
 
   connections_.emplace(fd, connection_ptr);
 }
 
-void TcpServer::EraseConnection(const std::shared_ptr<Connection> &connection_ptr)
+void TcpServer::EraseConnection(int fd)
 {
-  loop_->RunInLoop([connection_ptr, this](){ EraseConnectionInLoop(connection_ptr); });
-}
-
-void TcpServer::EraseConnectionInLoop(const std::shared_ptr<Connection> &connection_ptr)
-{
-  auto fd = connection_ptr->GetFd();
-  auto io_loop = connection_ptr->GetLoop();
-
   loop_->AssertInLoopThread();
-  auto t = connections_.erase(fd);
-  assert(t == 1);
-  io_loop->RunInLoop([connection_ptr]() { connection_ptr->ConnectionDesctroyed(); });
+  auto ptr = connections_[fd];
+  auto n = connections_.erase(fd);
+  assert(n == 1);
+  loop_->QueueInLoop([=](){ ptr->Connection::ConnectionDesctroyed(); });
 }
 
 auto TcpServer::NewConnector(const IPAddress &address, ParserType type) -> std::shared_ptr<Connector>
@@ -138,7 +128,6 @@ void TcpServer::ForceClose(int fd)
 
 void TcpServer::ForceCloseImpl(int fd)
 {
-  fprintf(stderr, "use Force");
   if (connections_.find(fd) != connections_.end()) {
     connections_.erase(fd);
     LOG(INFO) << "TcpServer::ForceClose()";
@@ -148,8 +137,12 @@ void TcpServer::ForceCloseImpl(int fd)
   }
 }
 
-void TcpServer::SetThreadNum(int num)
+auto TcpServer::ForwawrdConnection(int fd) -> std::shared_ptr<Connection>
 {
-  pool_->SetThreadNum(num);
+  return t_tcp_server->ForwawrdConnectionImpl(fd);
 }
 
+auto TcpServer::ForwawrdConnectionImpl(int fd) -> std::shared_ptr<Connection>
+{
+  return connections_[fd];
+}

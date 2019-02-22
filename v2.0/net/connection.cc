@@ -60,6 +60,13 @@ void Connection::ConnectionEstablished()
   loop_->AddChannel(channel_.get());
 }
 
+void Connection::ConnectionDesctroyed()
+{
+  loop_->AssertInLoopThread();
+  channel_->DisableALL();
+  loop_->RemoveChannel(socket_->fd());
+}
+
 void Connection::ShutDownConnection()
 {
   ShutdownInLoop();
@@ -77,14 +84,7 @@ void Connection::ForceClose()
 
 void Connection::ForceCloseInLoop()
 {
-  loop_->RunInLoop([this]() { close_callback_(); });
-}
-
-void Connection::ConnectionDesctroyed()
-{
-  loop_->AssertInLoopThread();
-  channel_->DisableALL();
-  loop_->RemoveChannel(socket_->fd());
+  loop_->RunInLoop([this]() { close_callback_(socket_->fd()); });
 }
 
 void Connection::SendData(const unsigned char *data, size_t total)
@@ -105,6 +105,7 @@ void Connection::SendData(const unsigned char *data, size_t total)
         loop_->UpdateChannel(channel_.get());
         write_queue_.TaskInQueue(socket_->fd(), data, completed_, remained_);
       } else {
+        std::cout << socket_->fd() << std::endl;
         std::cout << "errno: " << errno << std::endl;
         perror("send");
         LOG(ERROR) << "Connection::SendData() => Send Data Error";
@@ -168,7 +169,7 @@ void Connection::HandleWrite()
 
 void Connection::HandleClose()
 {
-  loop_->RunInLoop([this]() { close_callback_(); });
+  loop_->RunInLoop([this]() { close_callback_(socket_->fd()); });
 }
 
 void Connection::HandleError()
@@ -192,7 +193,7 @@ void Connection::SetMessageCallback(const MessageCallback &callback)
   message_callback_ = callback;
 }
 
-void Connection::SetCloseCallback(const EventCallback &callback)
+void Connection::SetCloseCallback(const CloseCallback &callback)
 {
   close_callback_ = callback;
 }
@@ -202,12 +203,17 @@ void Connection::SetWriteCallback(const Connection::EventCallback &callback)
   write_callback_ = callback;
 }
 
-EventLoop *Connection::GetLoop()
+void Connection::set_forward_fd(int fd)
 {
-  return loop_;
+  forward_fd_ = fd;
 }
 
-int Connection::GetFd()
+int Connection::forward_fd()
+{
+  return forward_fd_;
+}
+
+int Connection::socket_fd()
 {
   return socket_->fd();
 }
