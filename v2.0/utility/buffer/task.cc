@@ -28,10 +28,10 @@ Task::Task(int fd, off64_t completed, size_t total)
   ;
 }
 
-WriteTask::WriteTask(int fd, const char *data, off64_t  completed, size_t total)
+WriteTask::WriteTask(int fd, const unsigned char *data, off64_t  completed, size_t total)
     : Task(fd, completed, total)
 {
-  data_ = std::shared_ptr<char>(new char[total], std::default_delete<char []>());
+  data_ = std::shared_ptr<unsigned char>(new unsigned char[total], std::default_delete<unsigned char []>());
   ::memcpy(data_.get(), data, total);
 }
 

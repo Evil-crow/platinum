@@ -18,7 +18,7 @@ namespace platinum {
 class Task;
 class WriteQueue {
  public:
-  void TaskInQueue(int fd, const char *data, off64_t completed, size_t total);
+  void TaskInQueue(int fd, const unsigned char *data, off64_t completed, size_t total);
   void TasKInQueue(int fd, const std::string &data, off64_t completed);
   void TaskInQueue(int outfd, const std::string &pathname, off64_t completed, size_t total);
   bool DoTask();

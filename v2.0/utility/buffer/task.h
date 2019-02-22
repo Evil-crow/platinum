@@ -30,12 +30,12 @@ class Task {
 
 class WriteTask : public Task {
  public:
-  WriteTask(int fd, const char *data, off64_t completed, size_t total);
+  WriteTask(int fd, const unsigned char *data, off64_t completed, size_t total);
   ~WriteTask() override = default;
   bool operator()() final;
 
  private:
-  std::shared_ptr<char> data_;
+  std::shared_ptr<unsigned char> data_;
 };
 
 class SendTask : public Task {

@@ -18,10 +18,9 @@ using namespace platinum;
 // so this won't cause race condition,
 // This means , we need't use lock to make it thread-safe
 
-void WriteQueue::TaskInQueue(int fd, const char *data, off64_t completed, size_t total)
+void WriteQueue::TaskInQueue(int fd, const unsigned char *data, off64_t completed, size_t total)
 {
   queue_.emplace_back(std::make_shared<WriteTask>(fd, data, completed, total));
-//  queue_.push_back(std::shared_ptr<Task>(new WriteTask(fd, data, completed, total)));
 }
 
 void WriteQueue::TasKInQueue(int fd, const std::string &data, off64_t completed)
@@ -32,7 +31,6 @@ void WriteQueue::TasKInQueue(int fd, const std::string &data, off64_t completed)
 void WriteQueue::TaskInQueue(int outfd, const std::string &pathname, off64_t completed, size_t total)
 {
   queue_.emplace_back(std::make_shared<SendTask>(outfd, pathname, completed, total));
-//  queue_.push_back(std::shared_ptr<Task>(new SendTask(outfd, infd, total)));
 }
 
 
