@@ -36,23 +36,20 @@ void StaticHandler::Serve()
   auto www_root = config.www_root();
   auto default_root = config.default_root();
 
-  if (file_.empty())
-    file_ = config.index();
-
   if (IsValid()) {
     if (IsExist()) {
       if (!Forbidden()) {
         builder_->SetStatusCode(200);
-        auto new_file = www_root + path_ + "/" + file_;
+        std::string new_file = www_root + path_ + "/" + file_;
         SetNewFile(new_file);
       } else {
         builder_->SetStatusCode(403);
-        auto new_file = default_root + "/403.html";
+        auto new_file = default_root + "/" + "403.html";
         SetNewFile(new_file);
       }
     } else {
       builder_->SetStatusCode(404);
-      auto new_file = default_root + "/404.html";
+      auto new_file = default_root + "/" + "404.html";
       SetNewFile(new_file);
     }
   } else {
@@ -76,14 +73,14 @@ void StaticHandler::Serve()
   }
   builder_->SetHeader("Content-Length", std::to_string(file_size_));
 
-  if (file_size_ < 500000) {
+  if (file_size_ < 5 * 1024) {
     ServerByWrite();
   } else {
     ServerBySendFile();
   }
 
   // 4. Deal with persistent connection, Close => Force close, Keep-Alive => wait
-  if (request_.header("Connection") == "kee-alive") {
+  if (request_.header("Connection") == "Keep-Alive") {
     ;                                           // keep-alive => nothing to do
   } else {
     connection_->ForceClose();

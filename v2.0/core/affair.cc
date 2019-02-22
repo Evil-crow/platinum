@@ -2,7 +2,7 @@
  * Created by Crow on 1/29/19.
  * Copyright (c) 2019 Crow All rights reserved.
  * @author Crow
- * @brief  
+ * @brief
  */
 
 #include "core/affair.h"
@@ -15,7 +15,7 @@
 
 #include "core/handler/handler.hpp"
 #include "core/handler/static_handler.h"
-#include "core/handler/dynamic_handler.h"
+#include "core/handler/fcgi_handler.h"
 #include "protocol/http/request_parser.h"
 #include "utility/logger.h"
 #include "config/config.h"
@@ -26,14 +26,10 @@ Affair::Affair(platinum::Connection *connection, platinum::http::Request request
     : connection_(connection),
       request_(std::move(request))
 {
-  Process();
-}
-
-void Affair::Process()
-{
   SetPathFile();
   SetSuffix();
   SetParameters();
+  SetHandler();
 }
 
 void Affair::SetPathFile()
@@ -44,6 +40,11 @@ void Affair::SetPathFile()
   size_t begin_pos = url.find_last_of('/');
   file_ = std::string(url, begin_pos + 1, end_pos);
   path_ = std::string(url, 0, begin_pos);
+
+  if (file_.empty()) {
+    const auto &config = Config::GetInstance();
+    file_ = config.index();
+  }
 }
 
 void Affair::SetSuffix()
@@ -89,16 +90,15 @@ void Affair::SetParameters()
 
 void Affair::Serve()
 {
-  SetHandler();
   handler_->Serve();
 }
 
 void Affair::SetHandler()
 {
-  if (IsStaticResource()) {
-    handler_ = std::make_unique<StaticHandler>(connection_, request_, parameters_, file_, path_);
-  } else if (IsDynamicResource()) {
-    ;
+  if (IsDynamicResource()) {
+    if (Suffix() == "php") {
+      handler_ = std::make_unique<FCGIHandler>(connection_, request_, parameters_, file_, path_);
+    }
   } else {
     handler_ = std::make_unique<StaticHandler>(connection_, request_, parameters_, file_, path_);
   }

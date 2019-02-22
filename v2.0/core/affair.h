@@ -36,7 +36,6 @@ class Affair {
   void Serve();
   
  private:
-  void Process();
   void SetHandler();
   void SetPathFile();
   void SetSuffix();
