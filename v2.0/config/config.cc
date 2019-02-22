@@ -17,7 +17,6 @@ using namespace platinum;
 
 struct Server {
   in_port_t port{};
-  int epoll_event{};
   std::vector<std::string> method_list;
 };
 
@@ -27,8 +26,9 @@ struct ThreadPool {
 };
 
 struct FCGI {
-  std::string ipaddress;
-  std::string unixaddress;
+  std::string listen_sock;
+  std::string addr;
+  std::string fcgi_root;
 };
 
 struct Resource {
@@ -47,17 +47,15 @@ struct convert<Server> {
   static Node encode(const Server &rhs) {
     YAML::Node node;
     node["port"] = rhs.port;
-    node["epoll_event"] = rhs.epoll_event;
     node["method"] = rhs.method_list;
 
     return node;
   }
 
   static bool decode(const Node &node, Server &rhs) {
-    if (!node.IsMap() || node.size() != 3)
+    if (!node.IsMap() || node.size() != 2)
       return false;
     rhs.port = node["port"].as<in_port_t>();
-    rhs.epoll_event = node["epoll_event"].as<int>();
     rhs.method_list = node["method"].as<std::vector<std::string>>();
 
     return true;
@@ -88,28 +86,19 @@ template <>
 struct convert<FCGI> {
   static Node encode(const FCGI &rhs) {
     YAML::Node node;
-    node["inet"] = rhs.ipaddress;
-    node["unix"] = rhs.unixaddress;
+    node["listen"] = rhs.listen_sock;
+    node["addr"] = rhs.addr;
+    node["fcgi-root"] = rhs.fcgi_root;
 
     return node;
   }
 
   static bool decode(const Node &node, FCGI &rhs) {
-    if (!node.IsMap() || node.size() != 2)
+    if (!node.IsMap() || node.size() != 3)
       return false;
-    if (node["inet"].Type() == NodeType::Null && node["unix"].Type() == NodeType::Null) {
-      rhs.ipaddress = "NULL";
-      rhs.unixaddress = "NULL";
-    } else if (node["inet"].Type() == NodeType::Null) {
-      rhs.ipaddress = "NULL";
-      rhs.unixaddress = node["unix"].as<std::string>();
-    } else if (node["unix"].Type() == NodeType::Null) {
-      rhs.ipaddress = node["inet"].as<std::string>();
-      rhs.unixaddress = "NULL";
-    } else {
-      rhs.ipaddress = node["inet"].as<std::string>();
-      rhs.unixaddress = node["unix"].as<std::string>();
-    }
+    rhs.listen_sock = node["listen"].as<std::string>();
+    rhs.addr = node["addr"].as<std::string>();
+    rhs.fcgi_root = node["fcgi-root"].as<std::string>();
 
     return true;
   }
@@ -164,7 +153,6 @@ YAMLData Config::GetData()
   YAMLData data{};
 
   data.port = server_config.port;
-  data.epoll_events = server_config.epoll_event;
 
   data.thread_pool_enable = thread_pool_config.thread_pool_enable;
   data.thread_num = thread_pool_config.thread_num;
@@ -173,6 +161,7 @@ YAMLData Config::GetData()
   data.index = resource_config.index;
   data.www_root = resource_config.www_root;
   data.default_root = resource_config.default_root;
+  data.fcgi_root = fcgi_config.fcgi_root;
 
   data.method_list = std::set<std::string>(server_config.method_list.cbegin(), server_config.method_list.cend());
   data.static_resource = std::set<std::string>(resource_config.static_resource.cbegin(), resource_config.static_resource.cend());
@@ -181,16 +170,17 @@ YAMLData Config::GetData()
 
 
   try {
-    if (fcgi_config.ipaddress == "NULL" &&
-        fcgi_config.unixaddress != "NULL") {
-      data.fcgi_unixaddress = fcgi_config.unixaddress;
-    } else if (fcgi_config.unixaddress == "NULL" &&
-        fcgi_config.ipaddress != "NULL") {
-      auto port_s = std::string(fcgi_config.ipaddress, fcgi_config.ipaddress.find(':') + 1);
-      data.fcgi_inet_ip = std::string(fcgi_config.ipaddress, 0, fcgi_config.ipaddress.find(':'));
-      data.fcgi_inet_port = static_cast<in_port_t>(std::strtol(port_s.c_str(), nullptr, 0));
+    if (fcgi_config.listen_sock == "unix") {
+      data.fcgi_unix_addr = fcgi_config.addr;
+      data.fcgi_listen_sock = "unix";
+    } else if (fcgi_config.listen_sock == "inet") {
+      auto addr = fcgi_config.addr;
+      auto port_s = std::string(addr, addr.find(':') + 1);
+      data.fcgi_inet_addr.first = std::string(addr, 0, addr.find(':'));
+      data.fcgi_inet_addr.second = static_cast<in_port_t>(std::strtol(port_s.c_str(), nullptr, 0));
+      data.fcgi_listen_sock = "inet";
     } else {
-      throw std::runtime_error("Using both or neither communication modes at the same time");
+      throw std::runtime_error("You must set unix/inet listen socket");
     }
   } catch (std::runtime_error &e) {
     std::fprintf(stderr, "%s", e.what());
