@@ -15,9 +15,11 @@
 
 #include "net/acceptor.h"
 #include "net/connector.h"
+#include "reactor/event_loop_pool.h"
 
 namespace platinum {
 
+class EventLoopPool;
 class Socket;
 class Buffer;
 class IPAddress;
@@ -34,6 +36,7 @@ class TcpServer {
   void Start();                                                             // When set all thing, we can start the server;
   void SetConnectionCallback(const EventCallback &callback);                // I don't use it usually, It means resource initlization for users connection
   void SetMessageCallback(const MessageCallback &callback);                 // When message on, callback for user to perform logical business
+  void SetThreadNum(int num);
   static void NewConnection(const Connector *connector);
   static auto NewConnector(const IPAddress &address, ParserType type) -> std::shared_ptr<Connector>;
   static auto NewConnector(const UnixAddress &address, ParserType type) -> std::shared_ptr<Connector>;
@@ -45,10 +48,12 @@ class TcpServer {
   void NewConnectionImpl(const Connector *connector);
   void ForceCloseImpl(int fd);
   void OnConnectionCallback(int fd, const IPAddress &address);             // private method for Acceptor::callback_; to construct Connection
-  void EraseConnection(int fd);
+  void EraseConnection(const std::shared_ptr<Connection> &connection_ptr);
+  void EraseConnectionInLoop(const std::shared_ptr<Connection> &connection_ptr);
 
   EventLoop *loop_;
   std::unique_ptr<Acceptor> acceptor_;                                            // TcpServer holds Acceptor exclusivly
+  std::unique_ptr<EventLoopPool> pool_;
   std::unordered_map<int, std::shared_ptr<Connection>> connections_;              // use unordered_map to improve search efficiency
   EventCallback connection_callback_;
   MessageCallback message_callback_;
