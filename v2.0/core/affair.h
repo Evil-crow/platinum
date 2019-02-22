@@ -33,18 +33,17 @@ class Affair {
   Affair(platinum::Connection *connection, platinum::http::Request request) noexcept ;
   ~Affair() = default;
 
-  void Process();
   void Serve();
-
-  auto Suffix() -> const std::string { return suffix_; }
-  auto Parameters() -> const std::map<std::string, std::string> { return parameters_; }
-
+  
  private:
+  void Process();
   void SetHandler();
   void SetPathFile();
   void SetSuffix();
   void SetParameters();
 
+  auto Suffix() -> const std::string { return suffix_; }
+  auto Parameters() -> const std::map<std::string, std::string> { return parameters_; }
   bool IsStaticResource();
   bool IsDynamicResource();
 
@@ -56,6 +55,10 @@ class Affair {
   platinum::Connection *connection_;
   platinum::http::Request request_;
 };
+
+long func(platinum::Connection *connection,
+          const platinum::Buffer &buf,
+          std::unique_ptr<platinum::Parser> &parser);
 
 }
 

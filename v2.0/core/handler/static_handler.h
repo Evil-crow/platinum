@@ -18,17 +18,24 @@ class StaticHandler : public Handler {
  public:
   StaticHandler(Connection *connection,
                 const http::Request &request,
-                const std::unordered_map<std::string, std::string> &parameters,
+                const std::map<std::string, std::string> &parameters,
                 const std::string &file,
                 const std::string &path) noexcept ;
   void Serve() override;
-  void SetResourceFile();
-  void SetBasicHeaders();
 
  private:
+  bool ServerByWrite();
+  bool ServerBySendFile();
+  void SetDateHeader();
+  void SetConnectionHeader();
+  void SetContentTypeHeader();
+  void SetServerHeader();
+  const char *MIMEType(const char *str);
   bool IsValid();
   bool IsExist();
-  bool NotForbidden();
+  bool Forbidden();
+
+  ssize_t file_size_;
 };
 
 }
