@@ -77,10 +77,17 @@ void Connection::ForceClose()
 
 void Connection::ForceCloseInLoop()
 {
-  loop_->RunInLoop([this]() { close_callback_(socket_->fd()); });
+  loop_->RunInLoop([this]() { close_callback_(); });
 }
 
-void Connection::SendData(const char *data, size_t total)
+void Connection::ConnectionDesctroyed()
+{
+  loop_->AssertInLoopThread();
+  channel_->DisableALL();
+  loop_->RemoveChannel(socket_->fd());
+}
+
+void Connection::SendData(const unsigned char *data, size_t total)
 {
   size_t completed_(0), remained_(total);
   while (true) {
@@ -98,6 +105,8 @@ void Connection::SendData(const char *data, size_t total)
         loop_->UpdateChannel(channel_.get());
         write_queue_.TaskInQueue(socket_->fd(), data, completed_, remained_);
       } else {
+        std::cout << "errno: " << errno << std::endl;
+        perror("send");
         LOG(ERROR) << "Connection::SendData() => Send Data Error";
         std::abort();
       }
@@ -159,7 +168,7 @@ void Connection::HandleWrite()
 
 void Connection::HandleClose()
 {
-  loop_->RunInLoop([this]() { close_callback_(socket_->fd()); });
+  loop_->RunInLoop([this]() { close_callback_(); });
 }
 
 void Connection::HandleError()
@@ -183,7 +192,7 @@ void Connection::SetMessageCallback(const MessageCallback &callback)
   message_callback_ = callback;
 }
 
-void Connection::SetCloseCallback(const CloseCallback &callback)
+void Connection::SetCloseCallback(const EventCallback &callback)
 {
   close_callback_ = callback;
 }
@@ -191,4 +200,14 @@ void Connection::SetCloseCallback(const CloseCallback &callback)
 void Connection::SetWriteCallback(const Connection::EventCallback &callback)
 {
   write_callback_ = callback;
+}
+
+EventLoop *Connection::GetLoop()
+{
+  return loop_;
+}
+
+int Connection::GetFd()
+{
+  return socket_->fd();
 }

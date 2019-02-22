@@ -35,7 +35,7 @@ Connector::Connector(EventLoop *loop, const UnixAddress &address, ParserType typ
   ;
 }
 
-void Connector::SendData(const char *data, size_t total)
+void Connector::SendData(const unsigned char *data, size_t total)
 {
   connection_ptr_->SendData(data, total);
 }

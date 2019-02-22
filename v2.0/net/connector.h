@@ -31,7 +31,7 @@ class Connector {
   ~Connector() = default;
 
   void StartNewConnection();
-  void SendData(const char *data, size_t total);
+  void SendData(const unsigned char *data, size_t total);
   void SendFile(const std::string &pathname, size_t total);
   void ShutdownConnection();
 
