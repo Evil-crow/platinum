@@ -480,7 +480,7 @@ void RequestParser::Reset()
   body_.clear();
 }
 
-const std::shared_ptr<Request> RequestParser::GetRequest()
+const Request RequestParser::GetRequest()
 {
-  return std::make_shared<Request>(method_, url_, version_major_, version_minor_, body_len_, key_value_map_, body_);
+  return Request(method_, url_, version_major_, version_minor_, body_len_, key_value_map_, body_);
 }

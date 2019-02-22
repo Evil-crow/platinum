@@ -30,7 +30,7 @@ class RequestParser : public platinum::Parser {
   bool Complete() const;
   void Reset();
 
-  const std::shared_ptr<Request> GetRequest();
+  const Request GetRequest();
 
  private:
   bool HasBody();

@@ -37,9 +37,10 @@ auto Response::Build() -> std::vector<unsigned char>
   auto CRLF = SetCRLF();
 
   std::copy(status_line_.cbegin(), status_line_.cend(), std::back_inserter(data));
-  for (const auto &i : headers_) {
-    key_value_line += i.first + ": " + i.second + CRLF;
+  for (const auto &header : headers_) {
+    key_value_line += header.first + ": " + header.second + CRLF;
     std::copy(key_value_line.cbegin(), key_value_line.cend(), std::back_inserter(data));
+    key_value_line.clear();
   }
   std::copy(CRLF.cbegin(), CRLF.cend(), std::back_inserter(data));
 

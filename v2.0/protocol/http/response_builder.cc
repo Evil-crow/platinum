@@ -11,7 +11,7 @@ using namespace platinum::http;
 
 ResponseBuilder::ResponseBuilder()
 {
-  ;
+  status_code_ = "200";
 }
 
 const Response ResponseBuilder::GetResponse()
