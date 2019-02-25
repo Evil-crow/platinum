@@ -1,0 +1,3 @@
+/home/Crow/Git/platinum/v1.0/build/CMakeFiles/rebuild_cache.dir
+/home/Crow/Git/platinum/v1.0/build/CMakeFiles/PlatinumServer.dir
+/home/Crow/Git/platinum/v1.0/build/CMakeFiles/edit_cache.dir

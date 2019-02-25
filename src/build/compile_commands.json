@@ -1,0 +1,662 @@
+[
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum  -g -g   -std=gnu++14 -o CMakeFiles/platinum.dir/platinum.cc.o -c /home/Crow/CLionProjects/platinum/platinum.cc",
+  "file": "/home/Crow/CLionProjects/platinum/platinum.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum  -g -g   -std=gnu++14 -o CMakeFiles/platinum.dir/config/config.cc.o -c /home/Crow/CLionProjects/platinum/config/config.cc",
+  "file": "/home/Crow/CLionProjects/platinum/config/config.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum  -g -g   -std=gnu++14 -o CMakeFiles/platinum.dir/utility/logger.cc.o -c /home/Crow/CLionProjects/platinum/utility/logger.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/logger.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum  -g -g   -std=gnu++14 -o CMakeFiles/platinum.dir/utility/buffer/buffer.cc.o -c /home/Crow/CLionProjects/platinum/utility/buffer/buffer.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/buffer/buffer.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum  -g -g   -std=gnu++14 -o CMakeFiles/platinum.dir/utility/buffer/writequeue.cc.o -c /home/Crow/CLionProjects/platinum/utility/buffer/writequeue.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/buffer/writequeue.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum  -g -g   -std=gnu++14 -o CMakeFiles/platinum.dir/utility/buffer/task.cc.o -c /home/Crow/CLionProjects/platinum/utility/buffer/task.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/buffer/task.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum  -g -g   -std=gnu++14 -o CMakeFiles/platinum.dir/net/ip_address.cc.o -c /home/Crow/CLionProjects/platinum/net/ip_address.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/ip_address.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum  -g -g   -std=gnu++14 -o CMakeFiles/platinum.dir/net/socket.cc.o -c /home/Crow/CLionProjects/platinum/net/socket.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/socket.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum  -g -g   -std=gnu++14 -o CMakeFiles/platinum.dir/net/socketops.cc.o -c /home/Crow/CLionProjects/platinum/net/socketops.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/socketops.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum  -g -g   -std=gnu++14 -o CMakeFiles/platinum.dir/net/acceptor.cc.o -c /home/Crow/CLionProjects/platinum/net/acceptor.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/acceptor.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum  -g -g   -std=gnu++14 -o CMakeFiles/platinum.dir/net/tcp_server.cc.o -c /home/Crow/CLionProjects/platinum/net/tcp_server.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/tcp_server.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum  -g -g   -std=gnu++14 -o CMakeFiles/platinum.dir/net/tcp_connection.cc.o -c /home/Crow/CLionProjects/platinum/net/tcp_connection.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/tcp_connection.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum  -g -g   -std=gnu++14 -o CMakeFiles/platinum.dir/reactor/epoller.cc.o -c /home/Crow/CLionProjects/platinum/reactor/epoller.cc",
+  "file": "/home/Crow/CLionProjects/platinum/reactor/epoller.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum  -g -g   -std=gnu++14 -o CMakeFiles/platinum.dir/reactor/event_loop.cc.o -c /home/Crow/CLionProjects/platinum/reactor/event_loop.cc",
+  "file": "/home/Crow/CLionProjects/platinum/reactor/event_loop.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum  -g -g   -std=gnu++14 -o CMakeFiles/platinum.dir/reactor/channel.cc.o -c /home/Crow/CLionProjects/platinum/reactor/channel.cc",
+  "file": "/home/Crow/CLionProjects/platinum/reactor/channel.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_writequeue.dir/tcp_writequeue.cc.o -c /home/Crow/CLionProjects/platinum/test/tcp_writequeue.cc",
+  "file": "/home/Crow/CLionProjects/platinum/test/tcp_writequeue.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_writequeue.dir/__/reactor/epoller.cc.o -c /home/Crow/CLionProjects/platinum/reactor/epoller.cc",
+  "file": "/home/Crow/CLionProjects/platinum/reactor/epoller.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_writequeue.dir/__/reactor/event_loop.cc.o -c /home/Crow/CLionProjects/platinum/reactor/event_loop.cc",
+  "file": "/home/Crow/CLionProjects/platinum/reactor/event_loop.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_writequeue.dir/__/reactor/channel.cc.o -c /home/Crow/CLionProjects/platinum/reactor/channel.cc",
+  "file": "/home/Crow/CLionProjects/platinum/reactor/channel.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_writequeue.dir/__/config/config.cc.o -c /home/Crow/CLionProjects/platinum/config/config.cc",
+  "file": "/home/Crow/CLionProjects/platinum/config/config.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_writequeue.dir/__/utility/logger.cc.o -c /home/Crow/CLionProjects/platinum/utility/logger.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/logger.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_writequeue.dir/__/utility/buffer/buffer.cc.o -c /home/Crow/CLionProjects/platinum/utility/buffer/buffer.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/buffer/buffer.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_writequeue.dir/__/utility/buffer/writequeue.cc.o -c /home/Crow/CLionProjects/platinum/utility/buffer/writequeue.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/buffer/writequeue.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_writequeue.dir/__/utility/buffer/task.cc.o -c /home/Crow/CLionProjects/platinum/utility/buffer/task.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/buffer/task.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_writequeue.dir/__/net/ip_address.cc.o -c /home/Crow/CLionProjects/platinum/net/ip_address.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/ip_address.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_writequeue.dir/__/net/socket.cc.o -c /home/Crow/CLionProjects/platinum/net/socket.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/socket.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_writequeue.dir/__/net/socketops.cc.o -c /home/Crow/CLionProjects/platinum/net/socketops.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/socketops.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_writequeue.dir/__/net/acceptor.cc.o -c /home/Crow/CLionProjects/platinum/net/acceptor.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/acceptor.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_writequeue.dir/__/net/tcp_server.cc.o -c /home/Crow/CLionProjects/platinum/net/tcp_server.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/tcp_server.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_writequeue.dir/__/net/tcp_connection.cc.o -c /home/Crow/CLionProjects/platinum/net/tcp_connection.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/tcp_connection.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_http_buffer.dir/tcp_http_buffer.cc.o -c /home/Crow/CLionProjects/platinum/test/tcp_http_buffer.cc",
+  "file": "/home/Crow/CLionProjects/platinum/test/tcp_http_buffer.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_http_buffer.dir/__/reactor/epoller.cc.o -c /home/Crow/CLionProjects/platinum/reactor/epoller.cc",
+  "file": "/home/Crow/CLionProjects/platinum/reactor/epoller.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_http_buffer.dir/__/reactor/event_loop.cc.o -c /home/Crow/CLionProjects/platinum/reactor/event_loop.cc",
+  "file": "/home/Crow/CLionProjects/platinum/reactor/event_loop.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_http_buffer.dir/__/reactor/channel.cc.o -c /home/Crow/CLionProjects/platinum/reactor/channel.cc",
+  "file": "/home/Crow/CLionProjects/platinum/reactor/channel.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_http_buffer.dir/__/config/config.cc.o -c /home/Crow/CLionProjects/platinum/config/config.cc",
+  "file": "/home/Crow/CLionProjects/platinum/config/config.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_http_buffer.dir/__/utility/logger.cc.o -c /home/Crow/CLionProjects/platinum/utility/logger.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/logger.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_http_buffer.dir/__/utility/buffer/buffer.cc.o -c /home/Crow/CLionProjects/platinum/utility/buffer/buffer.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/buffer/buffer.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_http_buffer.dir/__/utility/buffer/writequeue.cc.o -c /home/Crow/CLionProjects/platinum/utility/buffer/writequeue.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/buffer/writequeue.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_http_buffer.dir/__/utility/buffer/task.cc.o -c /home/Crow/CLionProjects/platinum/utility/buffer/task.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/buffer/task.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_http_buffer.dir/__/net/ip_address.cc.o -c /home/Crow/CLionProjects/platinum/net/ip_address.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/ip_address.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_http_buffer.dir/__/net/socket.cc.o -c /home/Crow/CLionProjects/platinum/net/socket.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/socket.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_http_buffer.dir/__/net/socketops.cc.o -c /home/Crow/CLionProjects/platinum/net/socketops.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/socketops.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_http_buffer.dir/__/net/acceptor.cc.o -c /home/Crow/CLionProjects/platinum/net/acceptor.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/acceptor.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_http_buffer.dir/__/net/tcp_server.cc.o -c /home/Crow/CLionProjects/platinum/net/tcp_server.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/tcp_server.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_http_buffer.dir/__/net/tcp_connection.cc.o -c /home/Crow/CLionProjects/platinum/net/tcp_connection.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/tcp_connection.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/acceptor_test.dir/acceptor_test.cc.o -c /home/Crow/CLionProjects/platinum/test/acceptor_test.cc",
+  "file": "/home/Crow/CLionProjects/platinum/test/acceptor_test.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/acceptor_test.dir/__/utility/logger.cc.o -c /home/Crow/CLionProjects/platinum/utility/logger.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/logger.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/acceptor_test.dir/__/utility/buffer/buffer.cc.o -c /home/Crow/CLionProjects/platinum/utility/buffer/buffer.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/buffer/buffer.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/acceptor_test.dir/__/utility/buffer/writequeue.cc.o -c /home/Crow/CLionProjects/platinum/utility/buffer/writequeue.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/buffer/writequeue.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/acceptor_test.dir/__/utility/buffer/task.cc.o -c /home/Crow/CLionProjects/platinum/utility/buffer/task.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/buffer/task.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/acceptor_test.dir/__/config/config.cc.o -c /home/Crow/CLionProjects/platinum/config/config.cc",
+  "file": "/home/Crow/CLionProjects/platinum/config/config.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/acceptor_test.dir/__/net/ip_address.cc.o -c /home/Crow/CLionProjects/platinum/net/ip_address.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/ip_address.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/acceptor_test.dir/__/net/socket.cc.o -c /home/Crow/CLionProjects/platinum/net/socket.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/socket.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/acceptor_test.dir/__/net/socketops.cc.o -c /home/Crow/CLionProjects/platinum/net/socketops.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/socketops.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/acceptor_test.dir/__/net/acceptor.cc.o -c /home/Crow/CLionProjects/platinum/net/acceptor.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/acceptor.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/acceptor_test.dir/__/net/tcp_server.cc.o -c /home/Crow/CLionProjects/platinum/net/tcp_server.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/tcp_server.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/acceptor_test.dir/__/net/tcp_connection.cc.o -c /home/Crow/CLionProjects/platinum/net/tcp_connection.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/tcp_connection.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/acceptor_test.dir/__/reactor/epoller.cc.o -c /home/Crow/CLionProjects/platinum/reactor/epoller.cc",
+  "file": "/home/Crow/CLionProjects/platinum/reactor/epoller.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/acceptor_test.dir/__/reactor/event_loop.cc.o -c /home/Crow/CLionProjects/platinum/reactor/event_loop.cc",
+  "file": "/home/Crow/CLionProjects/platinum/reactor/event_loop.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/acceptor_test.dir/__/reactor/channel.cc.o -c /home/Crow/CLionProjects/platinum/reactor/channel.cc",
+  "file": "/home/Crow/CLionProjects/platinum/reactor/channel.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/IPAddress_test.dir/IPAddress_test.cc.o -c /home/Crow/CLionProjects/platinum/test/IPAddress_test.cc",
+  "file": "/home/Crow/CLionProjects/platinum/test/IPAddress_test.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/IPAddress_test.dir/__/reactor/epoller.cc.o -c /home/Crow/CLionProjects/platinum/reactor/epoller.cc",
+  "file": "/home/Crow/CLionProjects/platinum/reactor/epoller.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/IPAddress_test.dir/__/reactor/event_loop.cc.o -c /home/Crow/CLionProjects/platinum/reactor/event_loop.cc",
+  "file": "/home/Crow/CLionProjects/platinum/reactor/event_loop.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/IPAddress_test.dir/__/reactor/channel.cc.o -c /home/Crow/CLionProjects/platinum/reactor/channel.cc",
+  "file": "/home/Crow/CLionProjects/platinum/reactor/channel.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/IPAddress_test.dir/__/config/config.cc.o -c /home/Crow/CLionProjects/platinum/config/config.cc",
+  "file": "/home/Crow/CLionProjects/platinum/config/config.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/IPAddress_test.dir/__/utility/logger.cc.o -c /home/Crow/CLionProjects/platinum/utility/logger.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/logger.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/IPAddress_test.dir/__/utility/buffer/buffer.cc.o -c /home/Crow/CLionProjects/platinum/utility/buffer/buffer.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/buffer/buffer.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/IPAddress_test.dir/__/utility/buffer/writequeue.cc.o -c /home/Crow/CLionProjects/platinum/utility/buffer/writequeue.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/buffer/writequeue.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/IPAddress_test.dir/__/utility/buffer/task.cc.o -c /home/Crow/CLionProjects/platinum/utility/buffer/task.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/buffer/task.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/IPAddress_test.dir/__/net/ip_address.cc.o -c /home/Crow/CLionProjects/platinum/net/ip_address.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/ip_address.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/IPAddress_test.dir/__/net/socket.cc.o -c /home/Crow/CLionProjects/platinum/net/socket.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/socket.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/IPAddress_test.dir/__/net/socketops.cc.o -c /home/Crow/CLionProjects/platinum/net/socketops.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/socketops.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_socket.dir/reactor_socket.cc.o -c /home/Crow/CLionProjects/platinum/test/reactor_socket.cc",
+  "file": "/home/Crow/CLionProjects/platinum/test/reactor_socket.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_socket.dir/__/reactor/epoller.cc.o -c /home/Crow/CLionProjects/platinum/reactor/epoller.cc",
+  "file": "/home/Crow/CLionProjects/platinum/reactor/epoller.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_socket.dir/__/reactor/event_loop.cc.o -c /home/Crow/CLionProjects/platinum/reactor/event_loop.cc",
+  "file": "/home/Crow/CLionProjects/platinum/reactor/event_loop.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_socket.dir/__/reactor/channel.cc.o -c /home/Crow/CLionProjects/platinum/reactor/channel.cc",
+  "file": "/home/Crow/CLionProjects/platinum/reactor/channel.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_socket.dir/__/config/config.cc.o -c /home/Crow/CLionProjects/platinum/config/config.cc",
+  "file": "/home/Crow/CLionProjects/platinum/config/config.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_socket.dir/__/utility/logger.cc.o -c /home/Crow/CLionProjects/platinum/utility/logger.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/logger.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_socket.dir/__/utility/buffer/buffer.cc.o -c /home/Crow/CLionProjects/platinum/utility/buffer/buffer.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/buffer/buffer.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_socket.dir/__/utility/buffer/writequeue.cc.o -c /home/Crow/CLionProjects/platinum/utility/buffer/writequeue.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/buffer/writequeue.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_socket.dir/__/utility/buffer/task.cc.o -c /home/Crow/CLionProjects/platinum/utility/buffer/task.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/buffer/task.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_socket.dir/__/net/ip_address.cc.o -c /home/Crow/CLionProjects/platinum/net/ip_address.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/ip_address.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_socket.dir/__/net/socket.cc.o -c /home/Crow/CLionProjects/platinum/net/socket.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/socket.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_socket.dir/__/net/socketops.cc.o -c /home/Crow/CLionProjects/platinum/net/socketops.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/socketops.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_socket.dir/__/net/acceptor.cc.o -c /home/Crow/CLionProjects/platinum/net/acceptor.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/acceptor.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_socket.dir/__/net/tcp_server.cc.o -c /home/Crow/CLionProjects/platinum/net/tcp_server.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/tcp_server.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_socket.dir/__/net/tcp_connection.cc.o -c /home/Crow/CLionProjects/platinum/net/tcp_connection.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/tcp_connection.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_Socket.dir/reactor_Socket.cc.o -c /home/Crow/CLionProjects/platinum/test/reactor_Socket.cc",
+  "file": "/home/Crow/CLionProjects/platinum/test/reactor_Socket.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_Socket.dir/__/reactor/epoller.cc.o -c /home/Crow/CLionProjects/platinum/reactor/epoller.cc",
+  "file": "/home/Crow/CLionProjects/platinum/reactor/epoller.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_Socket.dir/__/reactor/event_loop.cc.o -c /home/Crow/CLionProjects/platinum/reactor/event_loop.cc",
+  "file": "/home/Crow/CLionProjects/platinum/reactor/event_loop.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_Socket.dir/__/reactor/channel.cc.o -c /home/Crow/CLionProjects/platinum/reactor/channel.cc",
+  "file": "/home/Crow/CLionProjects/platinum/reactor/channel.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_Socket.dir/__/config/config.cc.o -c /home/Crow/CLionProjects/platinum/config/config.cc",
+  "file": "/home/Crow/CLionProjects/platinum/config/config.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_Socket.dir/__/utility/logger.cc.o -c /home/Crow/CLionProjects/platinum/utility/logger.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/logger.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_Socket.dir/__/utility/buffer/buffer.cc.o -c /home/Crow/CLionProjects/platinum/utility/buffer/buffer.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/buffer/buffer.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_Socket.dir/__/utility/buffer/writequeue.cc.o -c /home/Crow/CLionProjects/platinum/utility/buffer/writequeue.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/buffer/writequeue.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_Socket.dir/__/utility/buffer/task.cc.o -c /home/Crow/CLionProjects/platinum/utility/buffer/task.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/buffer/task.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_Socket.dir/__/net/ip_address.cc.o -c /home/Crow/CLionProjects/platinum/net/ip_address.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/ip_address.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_Socket.dir/__/net/socket.cc.o -c /home/Crow/CLionProjects/platinum/net/socket.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/socket.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_Socket.dir/__/net/socketops.cc.o -c /home/Crow/CLionProjects/platinum/net/socketops.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/socketops.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_Socket.dir/__/net/acceptor.cc.o -c /home/Crow/CLionProjects/platinum/net/acceptor.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/acceptor.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_Socket.dir/__/net/tcp_server.cc.o -c /home/Crow/CLionProjects/platinum/net/tcp_server.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/tcp_server.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_Socket.dir/__/net/tcp_connection.cc.o -c /home/Crow/CLionProjects/platinum/net/tcp_connection.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/tcp_connection.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_Acceptor.dir/reactor_Acceptor.cc.o -c /home/Crow/CLionProjects/platinum/test/reactor_Acceptor.cc",
+  "file": "/home/Crow/CLionProjects/platinum/test/reactor_Acceptor.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_Acceptor.dir/__/reactor/epoller.cc.o -c /home/Crow/CLionProjects/platinum/reactor/epoller.cc",
+  "file": "/home/Crow/CLionProjects/platinum/reactor/epoller.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_Acceptor.dir/__/reactor/event_loop.cc.o -c /home/Crow/CLionProjects/platinum/reactor/event_loop.cc",
+  "file": "/home/Crow/CLionProjects/platinum/reactor/event_loop.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_Acceptor.dir/__/reactor/channel.cc.o -c /home/Crow/CLionProjects/platinum/reactor/channel.cc",
+  "file": "/home/Crow/CLionProjects/platinum/reactor/channel.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_Acceptor.dir/__/config/config.cc.o -c /home/Crow/CLionProjects/platinum/config/config.cc",
+  "file": "/home/Crow/CLionProjects/platinum/config/config.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_Acceptor.dir/__/utility/logger.cc.o -c /home/Crow/CLionProjects/platinum/utility/logger.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/logger.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_Acceptor.dir/__/utility/buffer/buffer.cc.o -c /home/Crow/CLionProjects/platinum/utility/buffer/buffer.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/buffer/buffer.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_Acceptor.dir/__/utility/buffer/writequeue.cc.o -c /home/Crow/CLionProjects/platinum/utility/buffer/writequeue.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/buffer/writequeue.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_Acceptor.dir/__/utility/buffer/task.cc.o -c /home/Crow/CLionProjects/platinum/utility/buffer/task.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/buffer/task.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_Acceptor.dir/__/net/ip_address.cc.o -c /home/Crow/CLionProjects/platinum/net/ip_address.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/ip_address.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_Acceptor.dir/__/net/socket.cc.o -c /home/Crow/CLionProjects/platinum/net/socket.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/socket.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_Acceptor.dir/__/net/socketops.cc.o -c /home/Crow/CLionProjects/platinum/net/socketops.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/socketops.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_Acceptor.dir/__/net/acceptor.cc.o -c /home/Crow/CLionProjects/platinum/net/acceptor.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/acceptor.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_Acceptor.dir/__/net/tcp_server.cc.o -c /home/Crow/CLionProjects/platinum/net/tcp_server.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/tcp_server.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/reactor_Acceptor.dir/__/net/tcp_connection.cc.o -c /home/Crow/CLionProjects/platinum/net/tcp_connection.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/tcp_connection.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_server_connection.dir/tcp_server_connection.cc.o -c /home/Crow/CLionProjects/platinum/test/tcp_server_connection.cc",
+  "file": "/home/Crow/CLionProjects/platinum/test/tcp_server_connection.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_server_connection.dir/__/reactor/epoller.cc.o -c /home/Crow/CLionProjects/platinum/reactor/epoller.cc",
+  "file": "/home/Crow/CLionProjects/platinum/reactor/epoller.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_server_connection.dir/__/reactor/event_loop.cc.o -c /home/Crow/CLionProjects/platinum/reactor/event_loop.cc",
+  "file": "/home/Crow/CLionProjects/platinum/reactor/event_loop.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_server_connection.dir/__/reactor/channel.cc.o -c /home/Crow/CLionProjects/platinum/reactor/channel.cc",
+  "file": "/home/Crow/CLionProjects/platinum/reactor/channel.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_server_connection.dir/__/config/config.cc.o -c /home/Crow/CLionProjects/platinum/config/config.cc",
+  "file": "/home/Crow/CLionProjects/platinum/config/config.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_server_connection.dir/__/utility/logger.cc.o -c /home/Crow/CLionProjects/platinum/utility/logger.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/logger.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_server_connection.dir/__/utility/buffer/buffer.cc.o -c /home/Crow/CLionProjects/platinum/utility/buffer/buffer.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/buffer/buffer.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_server_connection.dir/__/utility/buffer/writequeue.cc.o -c /home/Crow/CLionProjects/platinum/utility/buffer/writequeue.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/buffer/writequeue.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_server_connection.dir/__/utility/buffer/task.cc.o -c /home/Crow/CLionProjects/platinum/utility/buffer/task.cc",
+  "file": "/home/Crow/CLionProjects/platinum/utility/buffer/task.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_server_connection.dir/__/net/ip_address.cc.o -c /home/Crow/CLionProjects/platinum/net/ip_address.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/ip_address.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_server_connection.dir/__/net/socket.cc.o -c /home/Crow/CLionProjects/platinum/net/socket.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/socket.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_server_connection.dir/__/net/socketops.cc.o -c /home/Crow/CLionProjects/platinum/net/socketops.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/socketops.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_server_connection.dir/__/net/acceptor.cc.o -c /home/Crow/CLionProjects/platinum/net/acceptor.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/acceptor.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_server_connection.dir/__/net/tcp_server.cc.o -c /home/Crow/CLionProjects/platinum/net/tcp_server.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/tcp_server.cc"
+},
+{
+  "directory": "/home/Crow/CLionProjects/platinum/build/test",
+  "command": "/bin/g++   -I/home/Crow/CLionProjects/platinum/test/..  -g -g   -std=gnu++14 -o CMakeFiles/tcp_server_connection.dir/__/net/tcp_connection.cc.o -c /home/Crow/CLionProjects/platinum/net/tcp_connection.cc",
+  "file": "/home/Crow/CLionProjects/platinum/net/tcp_connection.cc"
+}
+]

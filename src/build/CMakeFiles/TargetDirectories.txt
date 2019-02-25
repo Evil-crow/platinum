@@ -1,0 +1,13 @@
+/home/Crow/CLionProjects/platinum/build/CMakeFiles/rebuild_cache.dir
+/home/Crow/CLionProjects/platinum/build/CMakeFiles/platinum.dir
+/home/Crow/CLionProjects/platinum/build/CMakeFiles/edit_cache.dir
+/home/Crow/CLionProjects/platinum/build/test/CMakeFiles/edit_cache.dir
+/home/Crow/CLionProjects/platinum/build/test/CMakeFiles/tcp_writequeue.dir
+/home/Crow/CLionProjects/platinum/build/test/CMakeFiles/tcp_http_buffer.dir
+/home/Crow/CLionProjects/platinum/build/test/CMakeFiles/acceptor_test.dir
+/home/Crow/CLionProjects/platinum/build/test/CMakeFiles/IPAddress_test.dir
+/home/Crow/CLionProjects/platinum/build/test/CMakeFiles/reactor_socket.dir
+/home/Crow/CLionProjects/platinum/build/test/CMakeFiles/reactor_Socket.dir
+/home/Crow/CLionProjects/platinum/build/test/CMakeFiles/rebuild_cache.dir
+/home/Crow/CLionProjects/platinum/build/test/CMakeFiles/reactor_Acceptor.dir
+/home/Crow/CLionProjects/platinum/build/test/CMakeFiles/tcp_server_connection.dir
