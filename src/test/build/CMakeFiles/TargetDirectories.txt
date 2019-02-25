@@ -1,3 +1,0 @@
-/home/Crow/CLionProjects/platinum/test/build/CMakeFiles/rebuild_cache.dir
-/home/Crow/CLionProjects/platinum/test/build/CMakeFiles/fcgi_request.dir
-/home/Crow/CLionProjects/platinum/test/build/CMakeFiles/edit_cache.dir

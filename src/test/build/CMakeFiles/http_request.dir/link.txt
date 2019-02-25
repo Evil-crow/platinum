@@ -1,1 +1,0 @@
-g++  -g   CMakeFiles/http_request.dir/request_parser_http.cc.o CMakeFiles/http_request.dir/home/Crow/CLionProjects/platinum/protocol/http/request_parser.cc.o CMakeFiles/http_request.dir/home/Crow/CLionProjects/platinum/protocol/http/request.cc.o  -o ../bin/http_request 
