@@ -1,13 +1,13 @@
-![](http://www.qiniu.evilcrow.site/1223.png)
+![](https://raw.githubusercontent.com/Evil-crow/platinum/master/img/logo.png)
 
 ## Table of content
 
 * [Overview](#Overview)
-* [Key Features](#Key Features)
+* [Features](#Features)
 * [Performance](#Performance)
 * [Installation](#Installation)
 * [Config](#Config)
-* [Special Thanks](#Special Thanks)
+* [Thanks](#Thanks)
 * [Licence](#License)
 * [Links](#Links)
 
@@ -15,7 +15,7 @@
 
 本项目是使用C++编写的基于事件驱动模型的Web Server. 目前支持静态GET请求以及FastCGI请求. 以及部分HTTP/1.1特性.
 
-## KeyFeatures
+## Features
 
 - 基于事件驱动模型
 - Reactor风格
@@ -28,12 +28,36 @@
 
 ## Performance
 
-性能测试使用Web压力测试工具WebBench
+使用工具: Webbench ver1.5
 
-测试结果:
+性能图表:
 
+![Apache VS Platinum](https://raw.githubusercontent.com/Evil-crow/platinum/master/img/apache_platinum.JPG)
+
+![Platinum](https://raw.githubusercontent.com/Evil-crow/platinum/master/img/platinum.JPG)
+
+![Apache 1 client](https://raw.githubusercontent.com/Evil-crow/platinum/master/img/apache_1client.png)
+
+![Platinum 1 client](https://raw.githubusercontent.com/Evil-crow/platinum/master/img/platinum__1client.png)
+
+![Apache 10 Client](https://raw.githubusercontent.com/Evil-crow/platinum/master/img/apache_10client.png)
+
+![Platinum 10 Client](https://raw.githubusercontent.com/Evil-crow/platinum/master/img/platinum__10client.png)
+
+![Apache 3000 Client](https://raw.githubusercontent.com/Evil-crow/platinum/master/img/apche_3000client.png)
+
+![Platinum 3000 Client](https://raw.githubusercontent.com/Evil-crow/platinum/master/img/platinum__3000client.png)
+
+具体测试数据见相关文件 [Here](https://github.com/Evil-crow/platinum/tree/master/img)
 
 ## Installation
+
+- cmake >= 3.0
+- yaml-cpp >= 5.7
+- REUSEPORT (Kernel > 2.6.23)
+
+请在满足以上条件之后进行测试运行.
+
 ```bash
 $ git clone ...
 $ cd platinum
@@ -52,7 +76,7 @@ platinum 通过指定的配置文件`/etc/platinum.yaml`进行配置.使用YAML�
 	- port:         # 端口号
 	- thread:       # 线程数目
 	- method:       # 支持的方法,e.g. [GET, POST]
-- log_enable:       # 日志记录 true/false
+- log_enable:		# 日志记录 true/false
 - resource:
 	- static:       # 支持的静态请求文件 e.g. [html, js, css]
 	- dynamic:      # 支持的动态请求文件类型 e.g. [php]
@@ -66,7 +90,7 @@ platinum 通过指定的配置文件`/etc/platinum.yaml`进行配置.使用YAML�
 	- fcgi-root:    # FCGI文件配置目录
 ```
 
-下面是一份简易的配置例子
+下面是一份简易的配置样例
 ```bash
 // platinum.yaml Example
 server:
@@ -91,7 +115,7 @@ fcgi:
 
 ```
 
-## Special Thanks
+## Thanks
 
 特别感谢:
 - [muduo](https://github.com/chenshuo/muduo): 网络层深度参考muduo进行设计
