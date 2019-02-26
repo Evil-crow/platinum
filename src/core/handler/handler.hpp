@@ -11,9 +11,8 @@
 #include <map>
 #include <memory>
 
-#include "net/connection.h"
-#include "protocol/http/request.h"
-#include "protocol/http/response_builder.h"
+#include "include/net.hpp"
+#include "include/http.hpp"
 
 namespace platinum {
 
@@ -22,20 +21,17 @@ class Handler {
   explicit Handler() = delete;
   Handler(platinum::Connection *connection,
           http::Request request,
-          std::map<std::string, std::string> parameters,
+          std::string query_string,
           std::string file,
           std::string path) noexcept
       : connection_(connection),
         request_(std::move(request)),
-        parameters_(std::move(parameters)),
-        builder_(std::make_unique<http::ResponseBuilder>()),
+        query_string_(std::move(query_string)),
         file_(std::move(file)),
         path_(std::move(path))
   { ; }
 
   ~Handler() = default;
-
-  void SetStatusCode(int status_code) { builder_->SetStatusCode(status_code); }
   virtual void Serve(){};
 
  protected:
@@ -43,8 +39,7 @@ class Handler {
 
   platinum::Connection *connection_;
   platinum::http::Request request_;
-  std::map<std::string, std::string> parameters_;
-  std::unique_ptr<http::ResponseBuilder> builder_;
+  std::string query_string_;
   std::string path_;
   std::string file_;
 };
