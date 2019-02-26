@@ -33,7 +33,11 @@ enum State : int {
   long Feed(const_iter iter, long length);
 
   auto transform_data() -> const std::vector<FCGIData> & { return transform_data_; }
-  auto key_value() -> const std::map<std::string, std::string> & { return name_value_data_; }
+  auto key_value() -> const std::map<std::string, std::string> {
+    std::map<std::string, std::string> temp;
+    temp.swap(name_value_data_);
+    return temp;
+  }
   int request_id() { return request_id_; }
   long long app_status() { return app_status_; }
   bool End()      { return end_; }

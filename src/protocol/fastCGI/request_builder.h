@@ -27,19 +27,11 @@ class RequestBuilder {
                  const std::map<std::string, std::string> &params);
 
   bool Build();
-  auto begin_requset() -> const BeginRequestRecord & { return begin_request_; }
-  auto fcgi_params() -> const std::map<std::shared_ptr<FCGIData>, int> & {
-    return fcgi_params_;
-  }
-  auto fcgi_in() -> const std::map<std::shared_ptr<FCGIData>, int> & {
-    return fcgi_ins_;
-  }
-  auto empty_fcgi_param() -> const std::pair<std::shared_ptr<FCGIData>, int> & {
-    return empty_fcgi_param_;
-  }
-  auto empty_fcgi_in() -> const std::pair<std::shared_ptr<FCGIData>, int> & {
-    return empty_fcgi_in_;
-  }
+  auto begin_requset() const -> const BeginRequestRecord &                             { return begin_request_; }
+  auto fcgi_params() const -> const std::map<std::shared_ptr<FCGIData>, int> &         { return fcgi_params_; }
+  auto fcgi_in() const -> const std::map<std::shared_ptr<FCGIData>, int> &             { return fcgi_ins_; }
+  auto empty_fcgi_param() const -> const std::pair<std::shared_ptr<FCGIData>, int> &   { return empty_fcgi_param_; }
+  auto empty_fcgi_in() const -> const std::pair<std::shared_ptr<FCGIData>, int> &      { return empty_fcgi_in_; }
 
  private:
   void BuildParams();
