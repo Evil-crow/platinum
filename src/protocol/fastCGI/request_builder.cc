@@ -27,8 +27,8 @@ RequestBuilder::RequestBuilder(size_t request_id,
                     request_id_,
                     8,
                     (content_length_ % 8)
-                           ? 0
-                           : (8 - (content_length_ % 8))),
+                           ? (8 - (content_length_ % 8))
+                           : 0),
       in_(in.cbegin(), in.cend()),
       params_(params)
 {

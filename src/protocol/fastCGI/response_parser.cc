@@ -18,6 +18,7 @@ ResponseParser::ResponseParser()
       transform_len_(0),
       padding_len_(0),
       app_status_(-1),
+      end_(false),
       complete_(false),
       in_content_(false),
       state_(State::UNCOMPLETED),
@@ -189,7 +190,7 @@ void ResponseParser::ParseStderr(const_iter &iter, long &length, long ct_len, lo
 void ResponseParser::ParseEndRequest(const_iter &iter)
 {
   iter -= sizeof(Header);                               // back to the Header's start to constrcut the EndRequestRecord
-
+  end_ = true;
   EndRequestRocord end_request_record(iter);
 
   app_status_ = end_request_record.app_status();

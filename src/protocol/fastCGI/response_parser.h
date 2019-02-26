@@ -33,12 +33,11 @@ enum State : int {
   long Feed(const_iter iter, long length);
 
   auto transform_data() -> const std::vector<FCGIData> & { return transform_data_; }
-  auto key_value_() -> const std::map<std::string, std::string> & { return name_value_data_; }
+  auto key_value() -> const std::map<std::string, std::string> & { return name_value_data_; }
   int request_id() { return request_id_; }
   long long app_status() { return app_status_; }
-  State state() { return static_cast<State>(state_); }
-  Status status() { return static_cast<Status>(status_); }
-  bool Complete() { return complete_; }
+  bool End()      { return end_; }
+  bool Complete() { return state_ == State::COMPLETED; }
   void Reset();
 
  private:
@@ -53,6 +52,7 @@ enum State : int {
   long padding_len_;
   long long app_status_;
 
+  bool end_;
   bool complete_;
   bool in_content_;
   State state_;
