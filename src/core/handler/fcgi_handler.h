@@ -9,8 +9,9 @@
 #ifndef PLATINUM_HANDLER_FCGI_HANDLER_H
 #define PLATINUM_HANDLER_FCGI_HANDLER_H
 
-#include "core/handler/handler.hpp"
 #include <utility>
+#include "core/handler/handler.hpp"
+#include "include/fcgi.hpp"
 
 namespace platinum {
 
@@ -18,19 +19,25 @@ class FCGIHandler : public Handler {
  public:
   FCGIHandler(Connection *connection,
               const http::Request &request,
-              const std::map<std::string, std::string> &parameters,
+              const std::string &query_string,
               const std::string &file,
-              const std::string &path) noexcept ;
+              const std::string &path) noexcept;
 
   void Serve() override;
 
  private:
-  void SetDateHeader();
-  void SetConnectionHeader();
-  void SetServerHeader();
+  fcgi::RequestBuilder BuildFCGIRequest();
+  void StartFCGIConnection(const fcgi::RequestBuilder &builder);
 };
 
-long FCGIOnMessage(Connection *conn, Buffer &buffer, std::unique_ptr<platinum::Parser> & parser);
+namespace handler {
+
+long FCGIOnMessage(Connection *conn, Buffer &buffer, std::unique_ptr<platinum::Parser> &parser);
+const http::Response BuildResponse(const std::map<std::string, std::string> &kv);
+void TransferData(std::shared_ptr<Connection> conn, const std::vector<unsigned char> &dt);
+
+}
+
 }
 
 #endif //PLATINUM_HANDLER_FCGI_HANDLER_H
