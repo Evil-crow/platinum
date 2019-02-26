@@ -51,7 +51,7 @@ void Connector::ShutdownConnection()
 
 void Connector::StartNewConnection()
 {
-  ::connect(fd_, address_->SockaddrPtr(), address_->SockaddrLen());
+  ::connect(fd_, address_->sockaddr_ptr(), address_->sockaddr_len());
   platinum::TcpServer::NewConnection(this);
 }
 
@@ -72,18 +72,17 @@ void Connector::HandleEvent()
         break;
       default:
         LOG(ERROR) << "Connector::HandleWrite() => Connect Error";
-        platinum::TcpServer::ForceClose(fd_);
     }
   }
   // TODO: Add selfconnect check out + reconnect mechanism
 }
 
-void Connector::SetMessageCallback(const Connector::MessageCallback &callback)
+void Connector::set_message_callback(const Connector::MessageCallback &callback)
 {
   message_callback_ = callback;
 }
 
-void Connector::SetWriteCallback(const Connector::WriteableCallback &callback)
+void Connector::set_write_callback(const Connector::WriteableCallback &callback)
 {
   write_callback_ = [=](){
     HandleEvent();

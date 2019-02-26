@@ -19,8 +19,8 @@ class Address {
   explicit Address(sa_family_t family) : family_(family) { ; }
   virtual ~Address() = default;
 
-  virtual const sockaddr *SockaddrPtr() const = 0;
-  virtual const socklen_t SockaddrLen() const = 0;
+  virtual const sockaddr *sockaddr_ptr() const = 0;
+  virtual const socklen_t sockaddr_len() const = 0;
  protected:
   sa_family_t family_;
 };

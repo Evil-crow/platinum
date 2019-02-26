@@ -37,7 +37,7 @@ class Acceptor {
 
   void Listening();                                                            // start listening
   void HandleEvent();                                                          // deal with the readable event -> Get Connection
-  void SetConnectionCallback(const NewConnectionCallback &callback);           // To Set callback event when on connection
+  void set_connection_callback(const NewConnectionCallback &callback);           // To Set callback event when on connection
 
  private:
   bool IsListening();

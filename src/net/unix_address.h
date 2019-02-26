@@ -26,8 +26,8 @@ class UnixAddress : public Address {
   void set_path(std::string &path);
   const std::string &path() const;
 
-  const sockaddr *SockaddrPtr() const override;
-  const socklen_t SockaddrLen() const override;
+  const sockaddr *sockaddr_ptr() const override;
+  const socklen_t sockaddr_len() const override;
 
  private:
   sockaddr_un ToSockaddrUn() const;

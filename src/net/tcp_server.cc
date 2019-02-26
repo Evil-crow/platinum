@@ -9,7 +9,7 @@
 #include "tcp_server.h"
 
 #include <cassert>
-#include <iostream>
+
 #include "net/acceptor.h"
 #include "net/connector.h"
 #include "net/connection.h"
@@ -37,7 +37,7 @@ TcpServer::TcpServer(EventLoop *loop, IPAddress &address)
 void TcpServer::Start()
 {
   starting_.store(true);
-  acceptor_->SetConnectionCallback(
+  acceptor_->set_connection_callback(
       [this](int fd, const IPAddress& addr) {
         OnConnectionCallback(fd, addr);
       });
@@ -56,9 +56,9 @@ void TcpServer::OnConnectionCallback(int fd, const IPAddress &peer_address)
   LOG(INFO) << str.c_str();
 
   auto connection_ptr = std::make_shared<Connection>(loop_, fd, ParserType::HTTP);
-  connection_ptr->SetMessageCallback(message_callback_);
-  connection_ptr->SetConnectionCallback([this]() { connection_callback_(); });
-  connection_ptr->SetCloseCallback([this](int fd){ EraseConnection(fd); });
+  connection_ptr->set_message_callback(message_callback_);
+  connection_ptr->set_connection_callback([this]() { connection_callback_(); });
+  connection_ptr->set_close_callback([this](int fd){ EraseConnection(fd); });
   connection_ptr->ConnectionEstablished();
 
   connections_.emplace(fd, connection_ptr);
@@ -73,9 +73,9 @@ void TcpServer::NewConnectionImpl(const Connector *connector)
 {
   auto fd = connector->fd();
   auto connection_ptr = connector->connection_ptr();
-  connection_ptr->SetMessageCallback(connector->message_callback());
-  connection_ptr->SetWriteCallback(connector->writeable_callback());
-  connection_ptr->SetCloseCallback([this](int fd) { EraseConnection(fd); });
+  connection_ptr->set_message_callback(connector->message_callback());
+  connection_ptr->set_write_callback(connector->writeable_callback());
+  connection_ptr->set_close_callback([this](int fd) { EraseConnection(fd); });
   connection_ptr->set_forward_fd(connector->forward_fd());
   connection_ptr->ConnectionEstablished();
 
@@ -88,7 +88,7 @@ void TcpServer::EraseConnection(int fd)
   auto ptr = connections_[fd];
   auto n = connections_.erase(fd);
   assert(n == 1);
-  loop_->QueueInLoop([=](){ ptr->Connection::ConnectionDesctroyed(); });
+  loop_->RemoveChannel(fd);
 }
 
 auto TcpServer::NewConnector(const IPAddress &address, ParserType type) -> std::shared_ptr<Connector>

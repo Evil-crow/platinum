@@ -40,8 +40,8 @@ class IPAddress : public Address {
   void set_ip(const std::string &str);
   const in_port_t &port() const;
   const std::string &ip() const;
-  const sockaddr *SockaddrPtr() const override;
-  const socklen_t SockaddrLen() const override;
+  const sockaddr *sockaddr_ptr() const override;
+  const socklen_t sockaddr_len() const override;
 
  private:
   sockaddr_in ToSockaddrIn() const;

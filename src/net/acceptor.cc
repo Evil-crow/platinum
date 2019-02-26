@@ -40,7 +40,7 @@ void Acceptor::Listening()
   // Set Channel insterested events
   channel_->EnableET();
   channel_->EnableReading();
-  channel_->SetReadCallback([this]() { Acceptor::HandleEvent(); });
+  channel_->set_read_callback([this]() { Acceptor::HandleEvent(); });
   loop_->AddChannel(channel_.get());                           // Add Channel to EPoller
 }
 
@@ -74,7 +74,7 @@ bool Acceptor::IsListening()
   return listening_.load();
 }
 
-void Acceptor::SetConnectionCallback(const NewConnectionCallback &callback)
+void Acceptor::set_connection_callback(const NewConnectionCallback &callback)
 {
   if (!IsListening())
     callback_ = callback;

@@ -41,10 +41,10 @@ class Connection : public Noncopyable {
   void ForceClose();
 
   // copy TCPServer callback -> TCPConnection, can't move, we'll create much TCPConnection by TCPServer::*callback
-  void SetConnectionCallback(const EventCallback &callback);
-  void SetWriteCallback(const EventCallback &callback);
-  void SetMessageCallback(const MessageCallback &callback);
-  void SetCloseCallback(const CloseCallback &callback);
+  void set_connection_callback(const EventCallback &callback);
+  void set_write_callback(const EventCallback &callback);
+  void set_message_callback(const MessageCallback &callback);
+  void set_close_callback(const CloseCallback &callback);
 
   void set_forward_fd(int fd);
   int forward_fd();

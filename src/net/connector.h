@@ -36,8 +36,8 @@ class Connector {
   void ShutdownConnection();
 
   // copy TCPServer callback -> TCPConnection, can't move, we'll create much TCPConnection by TCPServer::*callback
-  void SetMessageCallback(const MessageCallback &callback);
-  void SetWriteCallback(const WriteableCallback &callback);
+  void set_message_callback(const MessageCallback &callback);
+  void set_write_callback(const WriteableCallback &callback);
   const MessageCallback &message_callback() const;
   const WriteableCallback &writeable_callback() const;
 

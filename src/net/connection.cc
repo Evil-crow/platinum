@@ -53,10 +53,10 @@ void Connection::ConnectionEstablished()
   channel_->EnableReading();
   channel_->EnableHangUp();
   channel_->EnableError();
-  channel_->SetReadCallback  ([this]()  { Connection::HandleRead(); });
-  channel_->SetWriteCallback ([this]()  { Connection::HandleWrite(); });
-  channel_->SetCloseCallback ([this]()  { Connection::HandleClose(); });
-  channel_->SetErrorCallback ([this]()  { Connection::HandleError(); });
+  channel_->set_read_callback  ([this]() { HandleRead(); });
+  channel_->set_write_callback ([this]() { HandleWrite(); });
+  channel_->set_close_callback ([this]() { HandleClose(); });
+  channel_->set_error_callback ([this]() { HandleError(); });
   loop_->AddChannel(channel_.get());
 }
 
@@ -105,9 +105,6 @@ void Connection::SendData(const unsigned char *data, size_t total)
         loop_->UpdateChannel(channel_.get());
         write_queue_.TaskInQueue(socket_->fd(), data, completed_, remained_);
       } else {
-        std::cout << socket_->fd() << std::endl;
-        std::cout << "errno: " << errno << std::endl;
-        perror("send");
         LOG(ERROR) << "Connection::SendData() => Send Data Error";
         std::abort();
       }
@@ -183,22 +180,22 @@ void Connection::ErrorCallback()
   HandleClose();
 }
 
-void Connection::SetConnectionCallback(const EventCallback &callback)
+void Connection::set_connection_callback(const EventCallback &callback)
 {
   connection_callback_ = callback;
 }
 
-void Connection::SetMessageCallback(const MessageCallback &callback)
+void Connection::set_message_callback(const MessageCallback &callback)
 {
   message_callback_ = callback;
 }
 
-void Connection::SetCloseCallback(const CloseCallback &callback)
+void Connection::set_close_callback(const platinum::Connection::CloseCallback &callback)
 {
   close_callback_ = callback;
 }
 
-void Connection::SetWriteCallback(const Connection::EventCallback &callback)
+void Connection::set_write_callback(const Connection::EventCallback &callback)
 {
   write_callback_ = callback;
 }

@@ -92,12 +92,12 @@ sockaddr_in IPAddress::ToSockaddrIn() const
   return addr;
 }
 
-const sockaddr *IPAddress::SockaddrPtr() const
+const sockaddr *IPAddress::sockaddr_ptr() const
 {
   return reinterpret_cast<const sockaddr *>(&addr_);
 }
 
-const socklen_t IPAddress::SockaddrLen() const
+const socklen_t IPAddress::sockaddr_len() const
 {
   return sizeof(addr_);
 }

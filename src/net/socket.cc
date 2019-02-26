@@ -41,7 +41,7 @@ Socket::~Socket()
 
 void Socket::Bind(const Address &address)
 {
-  socket::BindOrDie(sockfd_, address.SockaddrPtr());
+  socket::BindOrDie(sockfd_, address.sockaddr_ptr());
 }
 
 void Socket::Listen()
@@ -51,7 +51,7 @@ void Socket::Listen()
 
 void Socket::Connect(const Address &address)
 {
-  socket::Connect(sockfd_, address.SockaddrPtr());
+  socket::Connect(sockfd_, address.sockaddr_ptr());
 }
 
 int Socket::Accept(IPAddress &address)

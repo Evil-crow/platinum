@@ -40,12 +40,12 @@ sockaddr_un UnixAddress::ToSockaddrUn() const
   return addr;
 }
 
-const sockaddr *UnixAddress::SockaddrPtr() const
+const sockaddr *UnixAddress::sockaddr_ptr() const
 {
   return reinterpret_cast<const sockaddr *>(&addr_);
 }
 
-const socklen_t UnixAddress::SockaddrLen() const
+const socklen_t UnixAddress::sockaddr_len() const
 {
   return sizeof(addr_);
 }
