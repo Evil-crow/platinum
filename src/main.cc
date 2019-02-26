@@ -1,13 +1,17 @@
-#include <iostream>
-#include <csignal>
+/**
+ * Created by Crow on 11/23/18.
+ * Copyright (c) 2018 Crow All rights reserved.
+ * @author Crow
+ * @brief
+ */
 
-#include "core/platinum.h"
+#include "core/server.h"
 
 int main(int argc, char *argv[])
 {
-  platinum::Platinum server(1);
-  server.Start();
-  server.exec();
+  platinum::Server pt;
+  pt.Start();
+  pt.Exec();
 
   return 0;
 }
