@@ -10,6 +10,7 @@ set(CMAKE_CXX_FLAGS -g)
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
+set(CMAKE_INSTALL_PREFIX /usr/local)
 
 add_subdirectory(test)
 #set include directories, can avoid UNIX style ".." and "." replace compiler option "-I"
@@ -98,9 +99,17 @@ set(
 )
 set(
         _PLATINUM_CORE
-        core/platinum.h core/platinum.cc
+        core/server.h core/server.cc
         core/affair.h core/affair.cc
         ${_PLATINUM_HANDLER}
+)
+set(
+        _PLATINUM_INCLUDE
+        include/net.hpp
+        include/config.hpp
+        include/fcgi.hpp
+        include/http.hpp
+        include/utility.hpp
 )
 set(
         EXECUTE_FILE
@@ -111,6 +120,7 @@ set(
         ${_PLATINUM_NET}
         ${_PLATINUM_REACTOR}
         ${_PLATINUM_PROTOCOL}
+        ${_PLATINUM_INCLUDE}
 )
 
 # add sub directory, these directory must have their own CMakeLists.txt
@@ -121,3 +131,7 @@ add_executable(platinum ${EXECUTE_FILE})
 # set link libraries
 target_link_libraries(platinum yaml-cpp)
 target_link_libraries(platinum pthread)
+
+# install to desc
+install(PROGRAMS bin/platinum DESTINATION bin)
+install(FILES platinum.yaml DESTINATION /etc)
