@@ -20,10 +20,11 @@ using namespace platinum;
 
 StaticHandler::StaticHandler(Connection *connection,
                              const http::Request &request,
-                             const std::map<std::string, std::string> &parameters,
+                             const std::string &query_string,
                              const std::string &file,
                              const std::string &path) noexcept
-    : Handler(connection, request, parameters, file, path),
+    : Handler(connection, request, query_string, file, path),
+      builder_(std::make_unique<http::ResponseBuilder>()),
       file_size_(-1)
 {
   ;
@@ -498,6 +499,7 @@ const char *StaticHandler::MIMEType(const char *str)
   TYPE (".ipa", "application/vnd.iphone");
   TYPE (".apk", "application/vnd.android.package-archive");
   TYPE (".xap", "application/x-silverlight-app");
+  return "text/plain";
 }
 
 bool StaticHandler::IsValid()

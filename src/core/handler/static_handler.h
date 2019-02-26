@@ -10,7 +10,7 @@
 
 #include "core/handler/handler.hpp"
 
-#include "net/connection.h"
+#include "include/net.hpp"
 
 namespace platinum {
 
@@ -18,7 +18,7 @@ class StaticHandler : public Handler {
  public:
   StaticHandler(Connection *connection,
                 const http::Request &request,
-                const std::map<std::string, std::string> &parameters,
+                const std::string &query_string,
                 const std::string &file,
                 const std::string &path) noexcept ;
   void Serve() override;
@@ -35,6 +35,7 @@ class StaticHandler : public Handler {
   bool IsExist();
   bool Forbidden();
 
+  std::unique_ptr<http::ResponseBuilder> builder_;
   ssize_t file_size_;
 };
 
