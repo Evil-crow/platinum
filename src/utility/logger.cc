@@ -32,7 +32,7 @@ void LoggerOn::operator<<(const std::string &&str)
   std::time_t t_ = std::time(nullptr);
   std::strftime(time, sizeof(time), "%Y/%m/%d %H:%M:%S ", std::localtime(&t_));
 
-  std::fstream of("../platinum.log", std::ios::out | std::ios::app);
+  std::fstream of("/var/log/platinum/platinum.log", std::ios::out | std::ios::app);
   of << time << "[" << log_priority << "]: ";
   of << str << std::endl;
 

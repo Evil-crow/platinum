@@ -50,7 +50,7 @@ void EPoller::FillActiveChannel(int event_nums, std::vector<Channel*> &active_ch
 {
   for (size_t i = 0; i < event_nums; ++i) {
     auto channel = reinterpret_cast<Channel *>(events_[i].data.ptr);
-    channel->SetEvents(events_[i].events);                                // Set the return event to Channel::revents;
+    channel->set_events(events_[i].events);                                // Set the return event to Channel::revents;
     active_channel.push_back(channel);                                    // push the Channel into vector to EventLoop;
   }
 }
@@ -96,6 +96,7 @@ void EPoller::RemoveChannel(int fd)
 
   if (::epoll_ctl(epoll_fd_, EPOLL_CTL_DEL, fd, nullptr) < 0) {
     LOG(ERROR) << "EPoller::RemoveChannel() => Remove Channel Error";
+    perror("epoll_ctl");
     std::abort();
   }
 }

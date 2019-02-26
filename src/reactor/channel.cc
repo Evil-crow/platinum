@@ -42,6 +42,11 @@ void Channel::HandleEvent()
     if (error_callback_)
       error_callback_();
   }
+  // handle RST, especially FCGI end
+  else if(revents_ & EPOLLHUP) {
+    if (close_callback_)
+      close_callback_();
+  }
   // handle hangup event
   else if (revents_ & EPOLLRDHUP) {                  // EPOLLRDHUP => EPOLLIN | EPOLLHUP
     if (close_callback_)
@@ -60,7 +65,7 @@ void Channel::HandleEvent()
   event_handling_.store(false);
 }
 
-void Channel::SetEvents(unsigned int events) { revents_ = events; }
+void Channel::set_events(unsigned int events) { revents_ = events; }
 
 void Channel::EnableReading()       { events_ |= EPOLLIN; }
 

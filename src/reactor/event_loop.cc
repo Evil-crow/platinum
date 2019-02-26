@@ -41,7 +41,7 @@ EventLoop::EventLoop()
 
   wakeup_channel_->EnableReading();
   epoller_->AddChannel(wakeup_channel_.get());
-  wakeup_channel_->SetReadCallback([this]() { HandleWakeUp(); });
+  wakeup_channel_->set_read_callback([this]() { HandleWakeUp(); });
 }
 
 EventLoop::~EventLoop()
@@ -59,7 +59,7 @@ void EventLoop::Loop()
   while (!quit_.load()) {
     eventing_handling_.store(true);
     active_channels_.clear();
-    epoller_->EPoll(-1, active_channels_);
+    epoller_->EPoll(100, active_channels_);
     for (const auto &channel : active_channels_)
       channel->HandleEvent();
     DoPendingFunctors();

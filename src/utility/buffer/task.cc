@@ -48,7 +48,6 @@ bool WriteTask::operator()()
       if (errno == EAGAIN || errno == EWOULDBLOCK) {
         return false;
       } else {
-        perror("write:");
         LOG(ERROR) << "WriteTask::operator() => Write Error";
         std::abort();
       }

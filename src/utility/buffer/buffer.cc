@@ -37,7 +37,6 @@ size_t Buffer::ReadFd(int fd)
         break;
       } else {
         LOG(ERROR) << "Buffer::ReadFd() => Read Error";
-        perror("read");
         std::abort();
       }
     } else {
