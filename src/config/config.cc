@@ -17,12 +17,8 @@ using namespace platinum;
 
 struct Server {
   in_port_t port{};
-  std::vector<std::string> method_list;
-};
-
-struct ThreadPool {
-  bool thread_pool_enable{};
   int thread_num{};
+  std::vector<std::string> method_list;
 };
 
 struct FCGI {
@@ -47,36 +43,18 @@ struct convert<Server> {
   static Node encode(const Server &rhs) {
     YAML::Node node;
     node["port"] = rhs.port;
+    node["thread"] = rhs.thread_num;
     node["method"] = rhs.method_list;
 
     return node;
   }
 
   static bool decode(const Node &node, Server &rhs) {
-    if (!node.IsMap() || node.size() != 2)
+    if (!node.IsMap() || node.size() != 3)
       return false;
     rhs.port = node["port"].as<in_port_t>();
+    rhs.thread_num = node["thread"].as<int>();
     rhs.method_list = node["method"].as<std::vector<std::string>>();
-
-    return true;
-  }
-};
-
-template <>
-struct convert<ThreadPool> {
-  static Node encode(const ThreadPool &rhs) {
-    YAML::Node node;
-    node["enable"] = rhs.thread_pool_enable;
-    node["thread_num"] = rhs.thread_num;
-
-    return node;
-  }
-
-  static bool decode(const Node &node, ThreadPool &rhs) {
-    if (!node.IsMap() || node.size() != 2)
-      return false;
-    rhs.thread_pool_enable = node["enable"].as<bool>();
-    rhs.thread_num = node["thread_num"].as<int>();
 
     return true;
   }
@@ -142,20 +120,17 @@ Config &Config::GetInstance()
 
 YAMLData Config::GetData()
 {
-  auto config = YAML::LoadFile("../config.yaml");
+  auto config = YAML::LoadFile("/etc/platinum.yaml");
   assert(config["server"]);
 
   auto fcgi_config = config["fcgi"].as<FCGI>();
   auto server_config = config["server"].as<Server>();
   auto resource_config = config["resource"].as<Resource>();
-  auto thread_pool_config = config["thread pool"].as<ThreadPool>();
 
   YAMLData data{};
 
   data.port = server_config.port;
-
-  data.thread_pool_enable = thread_pool_config.thread_pool_enable;
-  data.thread_num = thread_pool_config.thread_num;
+  data.thread_num = server_config.thread_num;
 
   data.log_enable = config["log_enable"].as<bool>();
   data.index = resource_config.index;

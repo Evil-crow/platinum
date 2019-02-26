@@ -12,7 +12,6 @@
 #define PLATINUM_CONFIG_CONFIG_H
 
 #include <netinet/in.h>
-
 #include <cstring>
 #include <set>
 #include <string>
@@ -23,6 +22,7 @@ namespace platinum {
 
 struct YAMLData {
   in_port_t port;
+  int thread_num;
 
   bool log_enable;
 
@@ -34,9 +34,6 @@ struct YAMLData {
   std::string fcgi_listen_sock;
   std::pair<std::string, in_port_t> fcgi_inet_addr;
   std::string fcgi_unix_addr;
-
-  bool thread_pool_enable;
-  int thread_num;
 
   std::set<std::string> method_list;
   std::set<std::string> static_resource;
@@ -52,6 +49,7 @@ class Config {
   Config operator=(const Config &) = delete;
 
   in_port_t port() const          { return data_.port; }
+  int thread_num() const          { return data_.thread_num; }
 
   bool IsLogOn() const            { return data_.log_enable; }
 
@@ -64,11 +62,8 @@ class Config {
   std::string fcgi_inet_ip() const { return data_.fcgi_inet_addr.first; }
   in_port_t fcgi_inet_port() const { return data_.fcgi_inet_addr.second; }
 
-
-  bool IsThreadPoolOn() const     { return data_.thread_pool_enable; }
   bool IsInetAddr() const         { return data_.fcgi_listen_sock == "inet"; }
   bool IsUnixAddr() const         { return data_.fcgi_listen_sock == "unix"; }
-  int thread_num() const          { return data_.thread_num; }
 
   const std::set<std::string> &method_list() const          { return data_.method_list; }
   const std::set<std::string> &static_resource() const      { return data_.static_resource; }
