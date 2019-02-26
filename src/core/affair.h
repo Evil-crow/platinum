@@ -22,8 +22,8 @@
 #include <map>
 #include <memory>
 
-#include "net/connection.h"
-#include "protocol/http/request_parser.h"
+#include "include/net.hpp"
+#include "include/http.hpp"
 
 namespace platinum {
 
@@ -36,20 +36,19 @@ class Affair {
   void Serve();
   
  private:
-  void SetHandler();
-  void SetPathFile();
-  void SetSuffix();
-  void SetParameters();
+  void set_handler();
+  void set_path_file();
+  void set_suffix();
+  void set_query_stirng();
 
-  auto Suffix() -> const std::string { return suffix_; }
-  auto Parameters() -> const std::map<std::string, std::string> { return parameters_; }
-  bool IsStaticResource();
+  auto suffix() -> const std::string { return suffix_; }
+  auto query_string() -> const std::string { return query_string_; }
   bool IsDynamicResource();
 
   std::string suffix_;
   std::string path_;
   std::string file_;
-  std::map<std::string, std::string> parameters_;
+  std::string query_string_;
   std::unique_ptr<Handler> handler_;
   platinum::Connection *connection_;
   platinum::http::Request request_;
