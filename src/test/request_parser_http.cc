@@ -29,25 +29,25 @@ int main()
 
   platinum::http::RequestParser parser;
 
-  parser.feed(request1.cbegin(), request1.size());
+  parser.Feed(request1.cbegin(), request1.size());
   if (parser.Complete())
     std::cout << "1 OK\n";
-  parser.feed(request2.cbegin(), request2.size());
+  parser.Feed(request2.cbegin(), request2.size());
   if (parser.Complete())
     std::cout << "2 OK\n";
-  parser.feed(request3.cbegin(), request3.size());
+  parser.Feed(request3.cbegin(), request3.size());
   if (parser.Complete())
     std::cout << "3 OK\n";
-  parser.feed(request4.cbegin(), request4.size());
+  parser.Feed(request4.cbegin(), request4.size());
   if (parser.Complete())
     std::cout << "4 OK\n";
-  parser.feed(request5.cbegin(), request5.size());
+  parser.Feed(request5.cbegin(), request5.size());
   if (parser.Complete())
     std::cout << "5 OK\n";
-  parser.feed(request6.cbegin(), request6.size());
+  parser.Feed(request6.cbegin(), request6.size());
   if (parser.Complete())
     std::cout << "6 OK\n";
-  parser.feed(request7.cbegin(), request7.size());
+  parser.Feed(request7.cbegin(), request7.size());
   if (parser.Complete())
     std::cout << "7 OK\n";
 

@@ -29,12 +29,10 @@ long FCGIOnMessage(platinum::Connection *conn, platinum::Buffer &buffer, std::un
   if (parser_->Complete()) {
     auto id = parser_->request_id();
     auto app_status = parser_->app_status();
-    auto status = parser_->status();
     std::cout << "id: " << id << std::endl;
     std::cout << "app: " << app_status << std::endl;
-    std::cout << "status: " << status << std::endl;
     parser_->Reset();
-    conn->ShutDownConnection();                             // FCGI controled by WebServer.
+//    conn->ShutDownConnection();                             // FCGI controled by WebServer.
   }
 
   return len;

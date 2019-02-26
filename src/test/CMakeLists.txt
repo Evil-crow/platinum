@@ -151,14 +151,14 @@ add_executable(response_parser response_parser_test.cc
 add_executable(http_request request_parser_http.cc
         ${_PLATINUM_HTTP})
 
-add_executable(fcgi_request response_parse_fcgi.cc
-        ${_PLATINUM_REACTOR}
-        ${_PLATINUJM_CONFIG}
-        ${_PLATINUM_UTILITY}
-        ${_PLATINUM_NET}
-        ${_PLATINUM_CONFIG}
-        ${_PLATINUM_PROTOCOL})
-target_link_libraries(fcgi_request yaml-cpp)
+#add_executable(fcgi_request response_parse_fcgi.cc
+#        ${_PLATINUM_REACTOR}
+#        ${_PLATINUJM_CONFIG}
+#        ${_PLATINUM_UTILITY}
+#        ${_PLATINUM_NET}
+#        ${_PLATINUM_CONFIG}
+#        ${_PLATINUM_PROTOCOL})
+#target_link_libraries(fcgi_request yaml-cpp)
 
 add_executable(http_response_builder http_response_builder.cc
         ${_PLATINUM_PROTOCOL})

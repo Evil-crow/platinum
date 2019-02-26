@@ -1,0 +1,30 @@
+# This is Platinum's config.
+# you can set you own config in this config YAML file
+# what you should remember is that:
+#       Don't leave the configuration item to be blank !
+#       If you don't want to set this item, No, you can't!
+#       You must set every necessary option !
+
+server:
+  port: 9887                               # server port (NECESSARY)
+  method: [GET, HEAD, POST]                # default (you can only add which method you want in seq)
+
+log_enable: false
+
+resource:
+  static: [img, html, css, js, txt]        # support static resource suffix
+  dynamic: [php]                           # support dynamic resource suffix
+  forbidden: [/core, /config]              # forbidden resource index, include dir or file.
+  index: index.html                        # The default index html (default: index.html
+  www-root: /var/www/html                  # The default www-root directory (default: /var/www-root
+  default-root: /var/www-root/default      # The default status html directory, eg: 404.html, 403.html
+
+# WARNING! You must set only one connection mode, and set the other to be "NULL", or it will lead to an error.
+fcgi:
+  listen: inet
+  addr: 127.0.0.1:9000                     # INET address, ip:port
+  fcgi-root: /home/Crow                    # The default FCGI file directory eg: xxx.php
+
+thread pool:
+  enable: true                             # enable/disable thread poll. you can choose turn on it or not
+  thread_num: 8                            # thread mount in the pool. If you turn off the pool, you should set this value to -1
