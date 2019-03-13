@@ -4,12 +4,12 @@
 
 * [Overview](#Overview)
 * [Features](#Features)
+* [Links](#Links)
 * [Performance](#Performance)
 * [Installation](#Installation)
 * [Config](#Config)
 * [Thanks](#Thanks)
 * [Licence](#License)
-* [Links](#Links)
 
 ## Overview
 
@@ -23,14 +23,47 @@
 - Linux Kernel 2.6+新特性(`eventfd(2)`, `REUSEPORT`)
 - 可配置的消息解析器(`HttpParser`, `FcgiParser`)
 - 基于状态机的HTTP协议解析器
-- 基于时间轮的定时器
+- 基于二叉平衡树的定时器
 - YAML配置文件
+
+## Links
+
+[使用的新特性]()
+[platinum中的Key Facilities]()
+[存在的问题和TODO]()
 
 ## Performance
 
-使用工具: Webbench ver1.5
+使用工具: Webbench 1.5, 及siege 4.0.4
 
-性能图表:
+|Project|Port|
+|--|--|--|
+|Platinum|9887|
+|Apache|8010|
+
+`ulimit -n => 1024`
+
+siege测试数据如下:
+
+|参数|Platinum|Apache|
+|---|--------|------|
+|测试次数|10000|10000|
+|成功占比|100.0%|100.0%|
+|测试耗时/secs|1.61|3.42|
+|测试传输数据量/MB|0.10|0.10|
+|平均响应时间/secs|0.09|0.10|
+|每秒事务处理量/ trans/sec|6211.18|2923.98|
+|吞吐率/ MB/sec|0.06|0.03|
+|并发量|539.98|288.84|
+|成功传输次数|10000|10000|
+|失败传输次数|0|0|
+|最长响应时间|1.31|3.11|
+|最短响应时间|0.00|0.00|
+
+![platinum](https://raw.githubusercontent.com/Evil-crow/platinum/master/img/siege_platinum.png)
+![apache](https://raw.githubusercontent.com/Evil-crow/platinum/master/img/siege_apache.png)
+
+Webbench性能图表:
 
 ![Apache VS Platinum](https://raw.githubusercontent.com/Evil-crow/platinum/master/img/apache_platinum.JPG)
 
@@ -125,5 +158,3 @@ fcgi:
 ## License
 
 本项目遵循MIT开源协议,[详细内容>>](https://github.com/Evil-crow/platinum/blob/master/LICENSE)
-
-## Links
