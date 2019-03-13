@@ -28,9 +28,9 @@
 
 ## Links
 
-[使用的新特性]()
-[platinum中的Key Facilities]()
-[存在的问题和TODO]()
+- [使用的新特性](https://github.com/Evil-crow/platinum/blob/a8903150826ca63d5e76f69a86bab8328461f7db/doc/cpp_new_fetaures.md)
+- [platinum中的Key Facilities](https://github.com/Evil-crow/platinum/blob/a8903150826ca63d5e76f69a86bab8328461f7db/doc/key_facilities.md)
+- [存在的问题和TODO](https://github.com/Evil-crow/platinum/blob/a8903150826ca63d5e76f69a86bab8328461f7db/doc/holes_todo.md)
 
 ## Performance
 
@@ -43,7 +43,7 @@
 
 `ulimit -n => 1024`
 
-siege测试数据如下:
+### siege测试数据
 
 |参数|Platinum|Apache|
 |---|--------|------|
@@ -63,7 +63,7 @@ siege测试数据如下:
 ![platinum](https://raw.githubusercontent.com/Evil-crow/platinum/master/img/siege_platinum.png)
 ![apache](https://raw.githubusercontent.com/Evil-crow/platinum/master/img/siege_apache.png)
 
-Webbench性能图表:
+### Webbench性能测试:
 
 ![Apache VS Platinum](https://raw.githubusercontent.com/Evil-crow/platinum/master/img/apache_platinum.JPG)
 
